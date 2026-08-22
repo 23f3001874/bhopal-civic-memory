@@ -7,6 +7,9 @@ import { IncidentTimelineEvent, ResolutionVerificationResult } from '@/types/inc
 const MAX_IMAGE_BASE64_LENGTH = 8 * 1024 * 1024; // ~6MB payload limit
 const ALLOWED_MIME_TYPES = ['image/jpeg', 'image/png', 'image/webp', 'image/gif', 'image/svg+xml'];
 
+export const maxDuration = 60;
+export const dynamic = 'force-dynamic';
+
 export async function POST(
   req: NextRequest,
   { params }: { params: Promise<{ id: string }> }

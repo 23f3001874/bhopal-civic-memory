@@ -3,6 +3,9 @@ import { getIncidentFromDatabase, saveIncidentToDatabase } from '@/lib/supabase/
 import { analyzeRecurrenceWithClaude } from '@/lib/ai/claude';
 import { retrieveRelevantEvidence } from '@/lib/knowledge/bhopal/registry';
 
+export const maxDuration = 60;
+export const dynamic = 'force-dynamic';
+
 export async function POST(
   req: NextRequest,
   { params }: { params: Promise<{ id: string }> }
