@@ -17,7 +17,7 @@ import { EvidenceRecord } from '@/lib/knowledge/bhopal/types';
  * Centralized Claude Model Identifier.
  * Set via ANTHROPIC_MODEL environment variable or defaults to standard Claude 3.5 Sonnet.
  */
-export const CLAUDE_MODEL = process.env.ANTHROPIC_MODEL || 'claude-3-5-sonnet-20241022';
+export const CLAUDE_MODEL = process.env.ANTHROPIC_MODEL || 'claude-sonnet-4-5-20250929';
 
 const anthropicApiKey = process.env.ANTHROPIC_API_KEY || '';
 
@@ -221,6 +221,23 @@ Respond in strict JSON:
 }
 `;
 
+function safeExtractJson<T = any>(textOutput: string): T {
+  let cleaned = textOutput.trim();
+  if (cleaned.startsWith('```json')) {
+    cleaned = cleaned.replace(/^```json\s*/, '').replace(/\s*```$/, '');
+  } else if (cleaned.startsWith('```')) {
+    cleaned = cleaned.replace(/^```\s*/, '').replace(/\s*```$/, '');
+  }
+  const jsonMatch = cleaned.match(/\{[\s\S]*\}/);
+  if (!jsonMatch) {
+    throw new Error('Response did not contain valid JSON object');
+  }
+  let jsonString = jsonMatch[0];
+  // Remove trailing commas before closing braces/brackets
+  jsonString = jsonString.replace(/,\s*([\]}])/g, '$1');
+  return JSON.parse(jsonString);
+}
+
 // ============================================================================
 // WORKFLOW 1: TRIAGE CIVIC REPORT
 // ============================================================================
@@ -271,7 +288,7 @@ export async function triageCivicReportWithClaude(params: {
   }
 
   try {
-    const userPromptText = `
+    let userPromptText = `
 CITIZEN INCIDENT REPORT FOR EPISTEMIC TRIAGE:
 - Title: ${params.title}
 - Description: ${params.description}
@@ -295,35 +312,31 @@ INSTRUCTIONS:
         cleanBase64 = cleanBase64.split(',')[1];
       }
       const allowedMediaTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
-      const media_type = allowedMediaTypes.includes(params.imageMimeType)
-        ? (params.imageMimeType as any)
-        : 'image/jpeg';
-
-      userContent.push({
-        type: 'image',
-        source: {
-          type: 'base64',
-          media_type,
-          data: cleanBase64
-        }
-      });
+      if (allowedMediaTypes.includes(params.imageMimeType) && !cleanBase64.startsWith('<svg') && !cleanBase64.startsWith('%3Csvg')) {
+        userContent.push({
+          type: 'image',
+          source: {
+            type: 'base64',
+            media_type: params.imageMimeType as any,
+            data: cleanBase64
+          }
+        });
+      } else {
+        userPromptText += `\n\nATTACHED VISUAL SCHEMATIC / VECTOR EVIDENCE:\n${params.imageBase64.slice(0, 1000)}`;
+        userContent[0] = { type: 'text', text: userPromptText };
+      }
     }
 
     const response = await anthropic.messages.create({
       model: CLAUDE_MODEL,
-      max_tokens: 2000,
+      max_tokens: 4000,
       system: BHOPAL_CIVIC_SYSTEM_PROMPT,
       messages: [{ role: 'user', content: userContent }]
     });
 
     const textOutput =
       response.content[0]?.type === 'text' ? response.content[0].text : '';
-    const jsonMatch = textOutput.match(/\{[\s\S]*\}/);
-    if (!jsonMatch) {
-      throw new Error('Claude response did not contain valid JSON block');
-    }
-
-    const parsed = JSON.parse(jsonMatch[0]) as Partial<CivicTriage>;
+    const parsed = safeExtractJson<Partial<CivicTriage>>(textOutput);
 
     return {
       observations: parsed.observations || ['Physical report logged at specified ward coordinates.'],
@@ -539,19 +552,14 @@ INSTRUCTIONS:
 
     const response = await anthropic.messages.create({
       model: CLAUDE_MODEL,
-      max_tokens: 2000,
+      max_tokens: 4000,
       system: RECURRENCE_REASONING_SYSTEM_PROMPT,
       messages: [{ role: 'user', content: prompt }]
     });
 
     const textOutput =
       response.content[0]?.type === 'text' ? response.content[0].text : '';
-    const jsonMatch = textOutput.match(/\{[\s\S]*\}/);
-    if (!jsonMatch) {
-      throw new Error('Claude recurrence analysis did not return valid JSON');
-    }
-
-    const parsed = JSON.parse(jsonMatch[0]);
+    const parsed = safeExtractJson(textOutput);
 
     return {
       incidentId: incident.id,
@@ -625,19 +633,14 @@ INSTRUCTIONS:
 
     const response = await anthropic.messages.create({
       model: CLAUDE_MODEL,
-      max_tokens: 1500,
+      max_tokens: 4000,
       system: FIELD_INVESTIGATION_SYSTEM_PROMPT,
       messages: [{ role: 'user', content: prompt }]
     });
 
     const textOutput =
       response.content[0]?.type === 'text' ? response.content[0].text : '';
-    const jsonMatch = textOutput.match(/\{[\s\S]*\}/);
-    if (!jsonMatch) {
-      throw new Error('Claude field plan did not return valid JSON');
-    }
-
-    const parsed = JSON.parse(jsonMatch[0]);
+    const parsed = safeExtractJson(textOutput);
 
     return {
       id: `fip-${incident.id}-${Date.now().toString().slice(-4)}`,
@@ -716,7 +719,7 @@ INSTRUCTIONS:
       }
     ];
 
-    if (cleanBefore) {
+    if (cleanBefore && !cleanBefore.startsWith('<svg') && !cleanBefore.startsWith('%3Csvg')) {
       content.push({
         type: 'image',
         source: {
@@ -727,30 +730,29 @@ INSTRUCTIONS:
       });
     }
 
-    content.push({
-      type: 'image',
-      source: {
-        type: 'base64',
-        media_type: mediaType,
-        data: cleanAfter
-      }
-    });
+    if (allowedMediaTypes.includes(afterImageMimeType || '') && !cleanAfter.startsWith('<svg') && !cleanAfter.startsWith('%3Csvg')) {
+      content.push({
+        type: 'image',
+        source: {
+          type: 'base64',
+          media_type: mediaType,
+          data: cleanAfter
+        }
+      });
+    } else {
+      content[0].text += `\n[AFTER IMAGE FIELD NOTE: Field team submitted visual after-clearance inspection photo.]`;
+    }
 
     const response = await anthropic.messages.create({
       model: CLAUDE_MODEL,
-      max_tokens: 1500,
+      max_tokens: 4000,
       system: RESOLUTION_VERIFICATION_SYSTEM_PROMPT,
       messages: [{ role: 'user', content }]
     });
 
     const textOutput =
       response.content[0]?.type === 'text' ? response.content[0].text : '';
-    const jsonMatch = textOutput.match(/\{[\s\S]*\}/);
-    if (!jsonMatch) {
-      throw new Error('Claude vision verification did not return valid JSON');
-    }
-
-    const parsed = JSON.parse(jsonMatch[0]);
+    const parsed = safeExtractJson(textOutput);
 
     return {
       incidentId: incident.id,
