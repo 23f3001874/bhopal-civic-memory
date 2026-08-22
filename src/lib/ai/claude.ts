@@ -15,17 +15,18 @@ import { EvidenceRecord } from '@/lib/knowledge/bhopal/types';
 
 /**
  * Centralized Claude Model Identifier.
- * Set via ANTHROPIC_MODEL environment variable or defaults to standard Claude 3.5 Sonnet.
  */
 export const CLAUDE_MODEL = process.env.ANTHROPIC_MODEL || 'claude-sonnet-4-5-20250929';
 
-const anthropicApiKey = process.env.ANTHROPIC_API_KEY || '';
+export function getAnthropicClient(): { client: Anthropic | null; isConfigured: boolean; model: string } {
+  const key = process.env.ANTHROPIC_API_KEY || '';
+  const model = process.env.ANTHROPIC_MODEL || 'claude-sonnet-4-5-20250929';
+  const isConfigured = Boolean(key && key.trim().length > 0);
+  const client = isConfigured ? new Anthropic({ apiKey: key }) : null;
+  return { client, isConfigured, model };
+}
 
-export const isClaudeConfigured = Boolean(anthropicApiKey);
-
-const anthropic = isClaudeConfigured
-  ? new Anthropic({ apiKey: anthropicApiKey })
-  : null;
+export const isClaudeConfigured = Boolean(process.env.ANTHROPIC_API_KEY);
 
 // ============================================================================
 // SYSTEM PROMPTS
@@ -279,7 +280,9 @@ export async function triageCivicReportWithClaude(params: {
           .join('\n')
       : '\n\nNo pre-indexed external evidence records matched this specific location query.';
 
-  if (!isClaudeConfigured || !anthropic) {
+  const { client, isConfigured, model } = getAnthropicClient();
+
+  if (!isConfigured || !client) {
     return simulateTriageFallback({
       ...params,
       evidenceRecords,
@@ -327,8 +330,8 @@ INSTRUCTIONS:
       }
     }
 
-    const response = await anthropic.messages.create({
-      model: CLAUDE_MODEL,
+    const response = await client.messages.create({
+      model: model,
       max_tokens: 1500,
       system: BHOPAL_CIVIC_SYSTEM_PROMPT,
       messages: [{ role: 'user', content: userContent }]
@@ -404,7 +407,9 @@ export async function evaluateIncidentDuplicateWithClaude(params: {
     };
   }
 
-  if (!isClaudeConfigured || !anthropic) {
+  const { client, isConfigured, model } = getAnthropicClient();
+
+  if (!isConfigured || !client) {
     return simulateDuplicateReasoningFallback({ ...params, generated_at });
   }
 
@@ -443,8 +448,8 @@ INSTRUCTIONS:
 3. Respond in strict JSON according to the schema.
 `;
 
-    const response = await anthropic.messages.create({
-      model: CLAUDE_MODEL,
+    const response = await client.messages.create({
+      model: model,
       max_tokens: 1500,
       system: DUPLICATE_DETECTION_SYSTEM_PROMPT,
       messages: [{ role: 'user', content: prompt }]
@@ -502,7 +507,9 @@ export async function analyzeRecurrenceWithClaude(params: {
   const generated_at = new Date().toISOString();
   const { incident, retrievedEvidence } = params;
 
-  if (!isClaudeConfigured || !anthropic) {
+  const { client, isConfigured, model } = getAnthropicClient();
+
+  if (!isConfigured || !client) {
     return simulateRecurrenceAnalysisFallback({ incident, generated_at });
   }
 
@@ -550,8 +557,8 @@ INSTRUCTIONS:
 5. Respond in strict JSON.
 `;
 
-    const response = await anthropic.messages.create({
-      model: CLAUDE_MODEL,
+    const response = await client.messages.create({
+      model: model,
       max_tokens: 1500,
       system: RECURRENCE_REASONING_SYSTEM_PROMPT,
       messages: [{ role: 'user', content: prompt }]
@@ -606,7 +613,9 @@ export async function generateFieldPlanWithClaude(params: {
   const generated_at = new Date().toISOString();
   const { incident, retrievedEvidence } = params;
 
-  if (!isClaudeConfigured || !anthropic) {
+  const { client, isConfigured, model } = getAnthropicClient();
+
+  if (!isConfigured || !client) {
     return simulateFieldPlanFallback({ incident, generated_at });
   }
 
@@ -631,8 +640,8 @@ INSTRUCTIONS:
 5. Respond in strict JSON.
 `;
 
-    const response = await anthropic.messages.create({
-      model: CLAUDE_MODEL,
+    const response = await client.messages.create({
+      model: model,
       max_tokens: 1500,
       system: FIELD_INVESTIGATION_SYSTEM_PROMPT,
       messages: [{ role: 'user', content: prompt }]
@@ -681,7 +690,9 @@ export async function verifyResolutionWithClaudeVision(params: {
   const generated_at = new Date().toISOString();
   const { incident, afterImageBase64, afterImageMimeType } = params;
 
-  if (!isClaudeConfigured || !anthropic) {
+  const { client, isConfigured, model } = getAnthropicClient();
+
+  if (!isConfigured || !client) {
     return simulateResolutionVerificationFallback({ incident, generated_at });
   }
 
@@ -743,8 +754,8 @@ INSTRUCTIONS:
       content[0].text += `\n[AFTER IMAGE FIELD NOTE: Field team submitted visual after-clearance inspection photo.]`;
     }
 
-    const response = await anthropic.messages.create({
-      model: CLAUDE_MODEL,
+    const response = await client.messages.create({
+      model: model,
       max_tokens: 1500,
       system: RESOLUTION_VERIFICATION_SYSTEM_PROMPT,
       messages: [{ role: 'user', content }]
