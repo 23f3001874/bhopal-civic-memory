@@ -9,14 +9,8 @@ import {
   PlusCircle,
   Shield,
   Clock,
-  Radio,
-  FileText,
-  Sparkles,
-  Database,
-  Cpu
+  FileText
 } from 'lucide-react';
-import { isClaudeConfigured } from '@/lib/ai/claude';
-import { isSupabaseConfigured } from '@/lib/supabase/client';
 
 export function CivicShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
@@ -30,8 +24,7 @@ export function CivicShell({ children }: { children: React.ReactNode }) {
           timeZone: 'Asia/Kolkata',
           hour12: false,
           hour: '2-digit',
-          minute: '2-digit',
-          second: '2-digit'
+          minute: '2-digit'
         }) + ' IST'
       );
     };
@@ -41,81 +34,38 @@ export function CivicShell({ children }: { children: React.ReactNode }) {
   }, []);
 
   const navItems = [
-    { label: 'Intelligence Dashboard', href: '/', icon: Activity },
-    { label: 'Citizen Report', href: '/report', icon: PlusCircle },
+    { label: 'Dashboard', href: '/', icon: Activity },
+    { label: 'File Report', href: '/report', icon: PlusCircle },
     { label: 'Tactical Map', href: '/map', icon: MapIcon },
-    { label: 'Active Incident File', href: '/incidents/inc-001', icon: FileText }
+    { label: 'Incident File', href: '/incidents/inc-003', icon: FileText }
   ];
 
   return (
-    <div className="min-h-screen bg-[#070A11] text-slate-100 flex flex-col font-sans selection:bg-cyan-500 selection:text-black">
-      {/* Topmost Telemetry & System Header */}
-      <header className="sticky top-0 z-50 border-b border-slate-800/80 bg-[#0A0E18]/90 backdrop-blur-xl">
-        {/* System Bar */}
-        <div className="border-b border-slate-800/40 bg-slate-950/60 px-4 py-1.5 text-[11px] font-mono text-slate-400">
-          <div className="mx-auto flex max-w-7xl items-center justify-between">
-            <div className="flex items-center gap-3">
-              <div className="flex items-center gap-1.5 text-emerald-400">
-                <span className="relative flex h-2 w-2">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
-                </span>
-                <span className="font-semibold tracking-wider">MUNICIPAL GRID: ACTIVE</span>
-              </div>
-              <span className="text-slate-700">|</span>
-              <span className="text-slate-400 hidden sm:inline">
-                BHOPAL MUNICIPAL CORPORATION • ZONE 01–14
-              </span>
-              <span className="text-slate-700 hidden sm:inline">|</span>
-              <span className="text-teal-400 hidden md:inline">
-                BHOJTAL WETLAND SENSORS: 85 NODES SYNCED
-              </span>
-            </div>
-
-            <div className="flex items-center gap-4">
-              {/* Claude & Supabase readiness chips */}
-              <div className="hidden lg:flex items-center gap-2">
-                <span className="inline-flex items-center gap-1 rounded bg-purple-950/50 border border-purple-800/40 px-2 py-0.5 text-[10px] text-purple-300">
-                  <Cpu className="h-3 w-3" />
-                  Claude 3.5 Sonnet: {isClaudeConfigured ? 'Ready' : 'Local Ops'}
-                </span>
-                <span className="inline-flex items-center gap-1 rounded bg-emerald-950/50 border border-emerald-800/40 px-2 py-0.5 text-[10px] text-emerald-300">
-                  <Database className="h-3 w-3" />
-                  Supabase: {isSupabaseConfigured ? 'Connected' : 'Local Storage'}
-                </span>
-              </div>
-
-              <div className="flex items-center gap-1.5 text-slate-300 font-medium">
-                <Clock className="h-3.5 w-3.5 text-cyan-400" />
-                <span>{timeString || 'LIVE'}</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Primary Navbar */}
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6">
-          {/* Logo / Brand */}
+    <div className="min-h-screen bg-[#090D16] text-slate-100 flex flex-col font-sans selection:bg-sky-500/30 selection:text-white">
+      {/* Refined Minimal Navigation Bar */}
+      <header className="sticky top-0 z-50 border-b border-slate-800/80 bg-[#090D16]/95 backdrop-blur-md">
+        <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3 sm:px-6">
+          {/* Logo & Brand */}
           <Link href="/" className="flex items-center gap-3 group">
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl border border-cyan-500/40 bg-gradient-to-br from-cyan-950 to-slate-900 shadow-lg shadow-cyan-950/50 group-hover:border-cyan-400 transition-colors">
-              <Shield className="h-5 w-5 text-cyan-400" />
+            <div className="flex h-9 w-9 items-center justify-center rounded-lg border border-slate-700/80 bg-slate-800/80 text-sky-400 group-hover:border-slate-600 transition-colors shadow-sm">
+              <Shield className="h-4 w-4" />
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <span className="font-mono text-base font-bold tracking-tight text-slate-100 group-hover:text-cyan-300 transition-colors">
-                  BHOPAL CIVIC MEMORY
+                <span className="text-sm font-semibold tracking-tight text-slate-100 group-hover:text-white transition-colors">
+                  Bhopal Civic Memory
                 </span>
-                <span className="rounded bg-cyan-950 border border-cyan-800/60 px-1.5 py-0.2 text-[10px] font-mono font-bold text-cyan-400">
+                <span className="rounded bg-slate-800 px-1.5 py-0.5 text-[10px] font-mono text-slate-400 border border-slate-700/60">
                   v2.0
                 </span>
               </div>
-              <p className="text-[11px] font-mono text-slate-400">
-                Civic Intelligence & Urban Incident Repository
+              <p className="text-xs text-slate-400 hidden sm:block">
+                Municipal Operations & Incident Intelligence
               </p>
             </div>
           </Link>
 
-          {/* Navigation Links */}
+          {/* Desktop Navigation Links */}
           <nav className="hidden md:flex items-center gap-1">
             {navItems.map((item) => {
               const isActive = pathname === item.href || (item.href !== '/' && pathname.startsWith(item.href));
@@ -124,33 +74,38 @@ export function CivicShell({ children }: { children: React.ReactNode }) {
                 <Link
                   key={item.href}
                   href={item.href}
-                  className={`flex items-center gap-2 rounded-lg px-3.5 py-2 text-xs font-mono font-medium transition-all ${
+                  className={`flex items-center gap-2 rounded-lg px-3.5 py-2 text-xs font-medium transition-colors ${
                     isActive
-                      ? 'bg-slate-800/90 text-cyan-300 border border-cyan-500/30 shadow-inner'
-                      : 'text-slate-400 hover:bg-slate-800/50 hover:text-slate-200'
+                      ? 'bg-slate-800 text-white font-semibold'
+                      : 'text-slate-400 hover:bg-slate-850 hover:text-slate-200'
                   }`}
                 >
-                  <Icon className={`h-4 w-4 ${isActive ? 'text-cyan-400' : 'text-slate-500'}`} />
+                  <Icon className={`h-4 w-4 ${isActive ? 'text-sky-400' : 'text-slate-400'}`} />
                   {item.label}
                 </Link>
               );
             })}
           </nav>
 
-          {/* Action CTA */}
-          <div className="flex items-center gap-3">
+          {/* Right Header: Clock & Primary CTA */}
+          <div className="flex items-center gap-3.5">
+            <div className="hidden sm:flex items-center gap-1.5 text-xs text-slate-400 font-mono">
+              <Clock className="h-3.5 w-3.5 text-slate-400" />
+              <span>{timeString || 'LIVE'}</span>
+            </div>
+
             <Link
               href="/report"
-              className="inline-flex items-center gap-2 rounded-xl border border-cyan-500/60 bg-gradient-to-r from-cyan-600 to-teal-600 px-4 py-2 text-xs font-mono font-bold text-black shadow-lg shadow-cyan-950/60 hover:from-cyan-400 hover:to-teal-400 transition-all hover:scale-105"
+              className="inline-flex items-center gap-1.5 rounded-lg bg-sky-500 px-3.5 py-2 text-xs font-semibold text-slate-950 hover:bg-sky-400 transition-colors shadow-sm"
             >
-              <PlusCircle className="h-4 w-4" />
-              File Citizen Report
+              <PlusCircle className="h-3.5 w-3.5" />
+              <span>Report Issue</span>
             </Link>
           </div>
         </div>
 
-        {/* Mobile Navigation bar */}
-        <div className="flex md:hidden items-center justify-around border-t border-slate-800/60 bg-slate-950/90 px-2 py-2 text-xs font-mono">
+        {/* Mobile Navigation */}
+        <div className="flex md:hidden items-center justify-around border-t border-slate-800/80 bg-slate-950/80 px-2 py-2 text-xs">
           {navItems.map((item) => {
             const isActive = pathname === item.href;
             const Icon = item.icon;
@@ -159,33 +114,31 @@ export function CivicShell({ children }: { children: React.ReactNode }) {
                 key={item.href}
                 href={item.href}
                 className={`flex flex-col items-center gap-1 p-1.5 ${
-                  isActive ? 'text-cyan-400 font-bold' : 'text-slate-400'
+                  isActive ? 'text-sky-400 font-semibold' : 'text-slate-400'
                 }`}
               >
                 <Icon className="h-4 w-4" />
-                <span className="text-[10px]">{item.label.split(' ')[0]}</span>
+                <span className="text-[11px]">{item.label}</span>
               </Link>
             );
           })}
         </div>
       </header>
 
-      {/* Main Content Body */}
+      {/* Main Content */}
       <main className="flex-1 pb-16">{children}</main>
 
-      {/* Civic Command Footer */}
-      <footer className="border-t border-slate-800/80 bg-[#06080F] py-8 text-xs font-mono text-slate-500">
-        <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 px-4 sm:flex-row sm:px-6">
+      {/* Clean Minimalist Footer */}
+      <footer className="border-t border-slate-800/80 bg-[#070A11] py-6 text-xs text-slate-500">
+        <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-3 px-4 sm:flex-row sm:px-6">
           <div className="flex items-center gap-2 text-slate-400">
-            <Radio className="h-4 w-4 text-emerald-400 animate-pulse" />
-            <span>Bhopal Civic Memory Protocol • Municipal Ward Operations</span>
+            <span className="h-2 w-2 rounded-full bg-emerald-500 inline-block" />
+            <span>Bhopal Civic Memory Protocol • Municipal Operations</span>
           </div>
-          <div className="flex items-center gap-6 text-slate-400">
+          <div className="flex items-center gap-4 text-slate-400 text-xs">
             <span>Bhoj Wetland Ramsar Site #1206</span>
             <span>•</span>
-            <span>Bhopal Smart City Development (BSCDCL)</span>
-            <span>•</span>
-            <span className="text-cyan-400">Claude AI & Supabase Enabled</span>
+            <span>Bhopal Municipal Corporation</span>
           </div>
         </div>
       </footer>

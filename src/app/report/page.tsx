@@ -6,36 +6,31 @@ import { useCivic } from '@/lib/context/CivicContext';
 import { IncidentCategory, IncidentSeverity } from '@/types/incident';
 import {
   Camera,
-  Upload,
-  Sparkles,
   MapPin,
   AlertTriangle,
   FileText,
   ShieldCheck,
   Send,
-  HelpCircle,
-  X,
   RefreshCw,
-  Building,
   CheckCircle2,
   BookmarkCheck,
-  Layers
+  Sparkles
 } from 'lucide-react';
 
 const CATEGORIES: { id: IncidentCategory; label: string; icon: string; desc: string }[] = [
-  { id: 'drainage_flood', label: 'Drainage & Flood', icon: '🌊', desc: 'Waterlogging, choked sumps, Nallah overflow' },
-  { id: 'lake_ecology', label: 'Lake Ecology (Bhoj Wetland)', icon: '🪷', desc: 'Bhojtal, Shahpura, algal blooms, weed choke' },
+  { id: 'drainage_flood', label: 'Drainage & Flood', icon: '🌊', desc: 'Waterlogging, choked sumps, nallah backflow' },
+  { id: 'lake_ecology', label: 'Lake Ecology', icon: '🪷', desc: 'Bhojtal, weed choke, wetland runoff' },
   { id: 'heritage_infrastructure', label: 'Heritage Infrastructure', icon: '🏛️', desc: 'Old City gates, stone masonry, historic structures' },
-  { id: 'road_hazard', label: 'Roads & Bridges', icon: '🚧', desc: 'Potholes, exposed rebar, subsidence' },
-  { id: 'sanitation_waste', label: 'Sanitation & Solid Waste', icon: '🗑️', desc: 'Garbage accumulation, commercial dump' },
-  { id: 'public_lighting', label: 'Public Lighting & Grid', icon: '💡', desc: 'Feeder tripping, blackout on transit avenues' }
+  { id: 'road_hazard', label: 'Roads & Bridges', icon: '🚧', desc: 'Potholes, exposed rebar, pavement depression' },
+  { id: 'sanitation_waste', label: 'Sanitation & Solid Waste', icon: '🗑️', desc: 'Uncollected refuse, commercial debris' },
+  { id: 'public_lighting', label: 'Public Lighting', icon: '💡', desc: 'Streetlight feeder outage, corridor blackout' }
 ];
 
-const SEVERITIES: { id: IncidentSeverity; label: string; color: string; desc: string }[] = [
-  { id: 'critical', label: 'Critical Emergency', color: 'border-rose-500 bg-rose-950/40 text-rose-300', desc: 'Active hazard to life, water supply, or high-density transit' },
-  { id: 'high', label: 'High Priority', color: 'border-amber-500 bg-amber-950/40 text-amber-300', desc: 'Severe disruption requiring response within 24 hours' },
-  { id: 'medium', label: 'Standard Operational', color: 'border-cyan-500 bg-cyan-950/40 text-cyan-300', desc: 'Localized issue scheduled for routine municipal queue' },
-  { id: 'low', label: 'Minor / Preventive', color: 'border-slate-600 bg-slate-900 text-slate-400', desc: 'Non-urgent maintenance or long-term observation' }
+const SEVERITIES: { id: IncidentSeverity; label: string; desc: string }[] = [
+  { id: 'critical', label: 'Critical', desc: 'Active hazard to life or major infrastructure' },
+  { id: 'high', label: 'High Priority', desc: 'Severe disruption requiring 24h response' },
+  { id: 'medium', label: 'Standard', desc: 'Routine municipal maintenance queue' },
+  { id: 'low', label: 'Minor / Advisory', desc: 'Non-urgent observation or preventive maintenance' }
 ];
 
 interface DemoScenario {
@@ -56,8 +51,8 @@ interface DemoScenario {
 const DEMO_SCENARIOS: DemoScenario[] = [
   {
     id: 'demo-sargam-drainage',
-    name: 'Scenario 1 (Featured Judge Demo): Sargam Cinema Drainage Waterlogging',
-    badge: 'Hindi/Hinglish • Recurring Cluster',
+    name: 'Featured Demo: Sargam Cinema Chronic Drainage Recurrence',
+    badge: 'Hindi / Hinglish • Recurring Cluster',
     category: 'drainage_flood',
     severity: 'high',
     wardId: 'ward-45',
@@ -71,7 +66,7 @@ const DEMO_SCENARIOS: DemoScenario[] = [
   {
     id: 'demo-bhojtal-culvert',
     name: 'Scenario 2: Bhojtal VIP Road Water Hyacinth Bloom',
-    badge: 'Ramsar Site #1206 • NGT Protected',
+    badge: 'Ramsar Wetland #1206',
     category: 'lake_ecology',
     severity: 'critical',
     wardId: 'ward-07',
@@ -85,7 +80,7 @@ const DEMO_SCENARIOS: DemoScenario[] = [
   {
     id: 'demo-taj-gate',
     name: 'Scenario 3: Taj-ul-Masajid North Gate Masonry Shift',
-    badge: 'Heritage Zone 1 • Structural Alert',
+    badge: 'Heritage Zone 1 Alert',
     category: 'heritage_infrastructure',
     severity: 'high',
     wardId: 'ward-12',
@@ -100,42 +95,39 @@ const DEMO_SCENARIOS: DemoScenario[] = [
 
 export default function ReportPage() {
   const router = useRouter();
-  const { wards, submitCitizenReport } = useCivic();
+  const { wards } = useCivic();
 
   const [category, setCategory] = useState<IncidentCategory>('drainage_flood');
   const [severity, setSeverity] = useState<IncidentSeverity>('high');
-  const [wardId, setWardId] = useState('ward-45');
-  const [locationName, setLocationName] = useState('Zone II Junction near Sargam Cinema Road');
-  const [landmark, setLandmark] = useState('Behind Bank of Baroda Regional Office');
-  const [title, setTitle] = useState('Sargam Cinema crossroad par naala fir se overflow ho gaya hai');
-  const [description, setDescription] = useState(
+  const [wardId, setWardId] = useState<string>('ward-45');
+  const [locationName, setLocationName] = useState<string>('Zone II Junction near Sargam Cinema Road');
+  const [landmark, setLandmark] = useState<string>('Behind Bank of Baroda Regional Office');
+  const [title, setTitle] = useState<string>('Sargam Cinema crossroad par naala fir se overflow ho gaya hai');
+  const [description, setDescription] = useState<string>(
     'Har baar halki baarish me bhi Sargam Cinema ke paas naala jam ho jata hai aur sadak par 1.5 foot paani bhar jata hai. Pehle suction jetting machine aayi thi par commercial plastic kachra fir se fas gaya hai.'
   );
-  const [reporterName, setReporterName] = useState('Vikram Joshi');
-  const [reporterPhone, setReporterPhone] = useState('9893012345');
-  const [isAnonymous, setIsAnonymous] = useState(false);
+  const [reporterName, setReporterName] = useState<string>('Vikram Joshi');
+  const [reporterPhone, setReporterPhone] = useState<string>('9893012345');
+  const [isAnonymous, setIsAnonymous] = useState<boolean>(false);
 
-  // Photographic evidence state
   const [imageBase64, setImageBase64] = useState<string | null>(DEMO_SCENARIOS[0].imageSample);
-  const [imageMimeType, setImageMimeType] = useState<string | null>('image/svg+xml');
   const [imageFileName, setImageFileName] = useState<string | null>('sargam-waterlogging-demo.svg');
+  const [imageMimeType, setImageMimeType] = useState<string | null>('image/svg+xml');
 
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
-  const selectedWard = wards.find((w) => w.id === wardId);
-
-  const handleApplyScenario = (sc: DemoScenario) => {
-    setCategory(sc.category);
-    setSeverity(sc.severity);
-    setWardId(sc.wardId);
-    setLocationName(sc.locationName);
-    setLandmark(sc.landmark);
-    setTitle(sc.title);
-    setDescription(sc.description);
-    setImageBase64(sc.imageSample);
+  const handleSelectScenario = (scenario: DemoScenario) => {
+    setCategory(scenario.category);
+    setSeverity(scenario.severity);
+    setWardId(scenario.wardId);
+    setLocationName(scenario.locationName);
+    setLandmark(scenario.landmark);
+    setTitle(scenario.title);
+    setDescription(scenario.description);
+    setImageBase64(scenario.imageSample);
+    setImageFileName(`${scenario.id}.svg`);
     setImageMimeType('image/svg+xml');
-    setImageFileName(`${sc.id}.svg`);
   };
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -143,32 +135,27 @@ export default function ReportPage() {
     if (!file) return;
 
     if (file.size > 5 * 1024 * 1024) {
-      alert('Image exceeds 5MB limit. Please upload a smaller image.');
+      setErrorMsg('Image file size exceeds 5MB limit.');
       return;
     }
 
-    setImageMimeType(file.type);
-    setImageFileName(file.name);
-
     const reader = new FileReader();
-    reader.onloadend = () => {
+    reader.onload = () => {
       setImageBase64(reader.result as string);
+      setImageFileName(file.name);
+      setImageMimeType(file.type);
+      setErrorMsg(null);
     };
     reader.readAsDataURL(file);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!title || !description || !locationName) {
-      setErrorMsg('Please fill in all required fields (title, description, location).');
-      return;
-    }
-
     setIsSubmitting(true);
     setErrorMsg(null);
 
     try {
-      const created = await submitCitizenReport({
+      const payload = {
         title,
         description,
         category,
@@ -179,71 +166,73 @@ export default function ReportPage() {
         reporterName: isAnonymous ? undefined : reporterName,
         reporterPhone: isAnonymous ? undefined : reporterPhone,
         isAnonymous,
-        evidenceUrls: imageBase64 ? ['/evidence/citizen-uploaded-photo'] : [],
-        imageBase64: imageBase64 || undefined,
-        imageMimeType: imageMimeType || undefined,
-        imageFileName: imageFileName || undefined
+        imageBase64,
+        imageFileName,
+        imageMimeType
+      };
+
+      const res = await fetch('/api/triage', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
       });
 
-      router.push(`/incidents/${created.id}`);
-    } catch (err) {
-      console.error('Submission failed:', err);
-      setErrorMsg(err instanceof Error ? err.message : 'Report submission failed.');
+      const data = await res.json();
+
+      if (!res.ok || !data.success) {
+        throw new Error(data.error || 'Failed to submit and triage report.');
+      }
+
+      if (data.matched && data.incident?.id) {
+        router.push(`/incidents/${data.incident.id}?matched=true`);
+      } else if (data.incident?.id) {
+        router.push(`/incidents/${data.incident.id}`);
+      } else {
+        router.push('/');
+      }
+    } catch (err: any) {
+      setErrorMsg(err.message || 'An unexpected error occurred.');
       setIsSubmitting(false);
     }
   };
 
   return (
-    <div className="mx-auto max-w-4xl px-4 py-8 sm:px-6 space-y-8">
+    <div className="mx-auto max-w-3xl px-4 py-10 sm:px-6 space-y-8">
       {/* Page Header */}
-      <div className="space-y-2 border-b border-slate-800 pb-6">
-        <div className="inline-flex items-center gap-2 rounded-full border border-cyan-500/40 bg-cyan-950/40 px-3 py-1 font-mono text-xs font-semibold text-cyan-300">
+      <div className="space-y-2 pb-6 border-b border-slate-800/80">
+        <div className="inline-flex items-center gap-1.5 text-xs text-sky-400 font-semibold uppercase tracking-wider">
           <Sparkles className="h-3.5 w-3.5" />
-          <span>Bhopal Civic Memory Intake & Triage Gateway</span>
+          <span>Intake & Triage Gateway</span>
         </div>
-        <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-white font-mono">
-          File Civic Memory Incident Report
+        <h1 className="text-2xl sm:text-3xl font-semibold tracking-tight text-white">
+          File Civic Memory Report
         </h1>
-        <p className="text-sm text-slate-400 font-sans">
-          Submissions are parsed by Claude 3.5 Sonnet, cross-referenced with CPCB/NGT baseline evidence, and checked against historical recurrence files. Hindi & Hinglish text supported.
+        <p className="text-sm text-slate-400 leading-relaxed">
+          Reports are triaged by Claude, cross-referenced with CPCB/NGT baseline records, and matched against historical recurrence clusters. Hindi and English supported.
         </p>
       </div>
 
-      {/* ONE-CLICK JUDGE DEMO SELECTOR */}
-      <div className="rounded-2xl border border-cyan-500/50 bg-gradient-to-r from-cyan-950/40 via-slate-900/90 to-slate-950/90 p-5 space-y-3 shadow-xl backdrop-blur-xl">
+      {/* Demo Scenario Selector */}
+      <div className="rounded-xl border border-slate-800 bg-slate-900/40 p-4 space-y-3">
         <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2 text-cyan-300 font-mono text-xs font-bold uppercase tracking-wider">
-            <BookmarkCheck className="h-4 w-4 text-cyan-400" />
-            Quick Demo Scenario Pre-Loader (Judge Workflow)
+          <div className="flex items-center gap-2 text-xs font-semibold text-slate-200">
+            <BookmarkCheck className="h-4 w-4 text-sky-400" />
+            <span>Pre-load Demo Scenario</span>
           </div>
-          <span className="text-[10px] font-mono text-cyan-400 bg-cyan-950 px-2 py-0.5 rounded border border-cyan-800">
-            One-Click Preload
-          </span>
+          <span className="text-[11px] text-slate-500">Quick Judge Presets</span>
         </div>
-        <p className="text-xs text-slate-300 font-sans">
-          Click a scenario below to instantly populate the form with realistic Hindi/Hinglish text, ward coordinates, and visual evidence:
-        </p>
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-1">
-          {DEMO_SCENARIOS.map((sc) => (
+
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+          {DEMO_SCENARIOS.map((scenario) => (
             <button
-              key={sc.id}
+              key={scenario.id}
               type="button"
-              onClick={() => handleApplyScenario(sc)}
-              className="text-left rounded-xl border border-slate-700 bg-slate-900/80 p-3 hover:border-cyan-500 hover:bg-slate-800/90 transition-all space-y-1.5 group"
+              onClick={() => handleSelectScenario(scenario)}
+              className="text-left rounded-lg border border-slate-800 bg-slate-950/60 p-3 hover:border-slate-700 hover:bg-slate-900 transition-colors space-y-1 group"
             >
-              <div className="flex items-center justify-between">
-                <span className="text-[10px] font-mono font-bold text-cyan-400 uppercase">
-                  {sc.category.replace('_', ' ')}
-                </span>
-                <span className="text-[9px] font-mono text-amber-300 bg-amber-950/80 px-1.5 py-0.5 rounded border border-amber-800/60">
-                  {sc.badge}
-                </span>
-              </div>
-              <div className="text-xs font-semibold text-slate-100 group-hover:text-cyan-300 transition-colors line-clamp-1 font-sans">
-                {sc.title}
-              </div>
-              <div className="text-[11px] text-slate-400 font-mono truncate">
-                Ward: {sc.locationName}
+              <div className="text-[11px] font-medium text-sky-400">{scenario.badge}</div>
+              <div className="text-xs font-medium text-slate-200 group-hover:text-white line-clamp-1">
+                {scenario.title}
               </div>
             </button>
           ))}
@@ -251,37 +240,36 @@ export default function ReportPage() {
       </div>
 
       {errorMsg && (
-        <div className="rounded-xl border border-rose-800/80 bg-rose-950/40 p-4 text-xs font-mono text-rose-300 flex items-center gap-3">
-          <AlertTriangle className="h-5 w-5 text-rose-400 shrink-0" />
+        <div className="rounded-xl border border-rose-800/60 bg-rose-950/30 p-3.5 text-xs text-rose-300 flex items-center gap-2.5">
+          <AlertTriangle className="h-4 w-4 text-rose-400 shrink-0" />
           <span>{errorMsg}</span>
         </div>
       )}
 
-      <form onSubmit={handleSubmit} className="space-y-8">
-        {/* Category Picker */}
-        <div className="space-y-3">
-          <label className="block text-xs font-mono font-bold uppercase tracking-wider text-slate-200">
-            1. Civic Domain Classification
+      {/* Main Report Form */}
+      <form onSubmit={handleSubmit} className="space-y-6">
+        {/* 1. Category Selection */}
+        <div className="space-y-2.5">
+          <label className="block text-xs font-semibold uppercase tracking-wider text-slate-300">
+            1. Civic Domain
           </label>
-          <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5">
             {CATEGORIES.map((cat) => (
               <button
                 key={cat.id}
                 type="button"
                 onClick={() => setCategory(cat.id)}
-                className={`flex flex-col items-start p-3.5 rounded-xl border text-left transition-all ${
+                className={`flex flex-col items-start p-3 rounded-lg border text-left transition-colors ${
                   category === cat.id
-                    ? 'border-cyan-500 bg-cyan-950/40 ring-1 ring-cyan-500 shadow-lg'
-                    : 'border-slate-800 bg-slate-900/60 hover:border-slate-700 hover:bg-slate-900'
+                    ? 'border-sky-500 bg-sky-500/10 text-white'
+                    : 'border-slate-800 bg-slate-900/40 text-slate-300 hover:border-slate-700'
                 }`}
               >
-                <div className="flex items-center gap-2 text-base">
+                <div className="flex items-center gap-2 text-sm">
                   <span>{cat.icon}</span>
-                  <span className="font-mono text-xs font-semibold text-slate-200">
-                    {cat.label}
-                  </span>
+                  <span className="text-xs font-medium">{cat.label}</span>
                 </div>
-                <span className="mt-1 text-[11px] text-slate-400 font-sans line-clamp-2">
+                <span className="mt-1 text-[11px] text-slate-400 line-clamp-1">
                   {cat.desc}
                 </span>
               </button>
@@ -289,46 +277,46 @@ export default function ReportPage() {
           </div>
         </div>
 
-        {/* Severity Picker */}
-        <div className="space-y-3">
-          <label className="block text-xs font-mono font-bold uppercase tracking-wider text-slate-200">
-            2. Citizen-Perceived Severity
+        {/* 2. Severity */}
+        <div className="space-y-2.5">
+          <label className="block text-xs font-semibold uppercase tracking-wider text-slate-300">
+            2. Perceived Urgency
           </label>
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
             {SEVERITIES.map((sev) => (
               <button
                 key={sev.id}
                 type="button"
                 onClick={() => setSeverity(sev.id)}
-                className={`p-3 rounded-xl border text-left transition-all ${
+                className={`p-3 rounded-lg border text-left transition-colors ${
                   severity === sev.id
-                    ? `${sev.color} ring-1 ring-current shadow-md`
-                    : 'border-slate-800 bg-slate-900/60 text-slate-400 hover:border-slate-700'
+                    ? 'border-sky-500 bg-sky-500/10 text-white'
+                    : 'border-slate-800 bg-slate-900/40 text-slate-300 hover:border-slate-700'
                 }`}
               >
-                <div className="font-mono text-xs font-bold">{sev.label}</div>
-                <div className="mt-1 text-[10px] text-slate-400 font-sans">{sev.desc}</div>
+                <div className="text-xs font-medium">{sev.label}</div>
+                <div className="mt-0.5 text-[10px] text-slate-400 line-clamp-1">{sev.desc}</div>
               </button>
             ))}
           </div>
         </div>
 
-        {/* Ward & Spatial Context */}
-        <div className="rounded-2xl border border-slate-800 bg-slate-900/60 p-5 space-y-4">
-          <div className="flex items-center gap-2 font-mono text-xs font-bold uppercase tracking-wider text-slate-200">
-            <MapPin className="h-4 w-4 text-cyan-400" />
-            <span>3. Ward & Spatial Pinpoint</span>
+        {/* 3. Location */}
+        <div className="rounded-xl border border-slate-800 bg-slate-900/30 p-4 space-y-4">
+          <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-slate-300">
+            <MapPin className="h-4 w-4 text-sky-400" />
+            <span>3. Ward & Location</span>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-mono text-slate-400 mb-1">
-                Administrative Ward & Zone
+              <label className="block text-xs text-slate-400 mb-1">
+                Ward & Zone
               </label>
               <select
                 value={wardId}
                 onChange={(e) => setWardId(e.target.value)}
-                className="w-full rounded-xl border border-slate-700 bg-slate-950 px-3.5 py-2.5 text-xs font-mono text-slate-200 focus:border-cyan-500 focus:outline-none"
+                className="w-full rounded-lg border border-slate-800 bg-slate-950 px-3 py-2 text-xs text-slate-200 focus:border-sky-500 focus:outline-none"
               >
                 {wards.map((w) => (
                   <option key={w.id} value={w.id}>
@@ -339,45 +327,45 @@ export default function ReportPage() {
             </div>
 
             <div>
-              <label className="block text-xs font-mono text-slate-400 mb-1">
-                Street / Intersection Name *
+              <label className="block text-xs text-slate-400 mb-1">
+                Street / Intersection *
               </label>
               <input
                 type="text"
                 value={locationName}
                 onChange={(e) => setLocationName(e.target.value)}
-                placeholder="e.g. Zone II Junction near Sargam Cinema Road"
+                placeholder="e.g. Sargam Cinema Road"
                 required
-                className="w-full rounded-xl border border-slate-700 bg-slate-950 px-3.5 py-2.5 text-xs font-mono text-slate-200 focus:border-cyan-500 focus:outline-none"
+                className="w-full rounded-lg border border-slate-800 bg-slate-950 px-3 py-2 text-xs text-slate-200 focus:border-sky-500 focus:outline-none"
               />
             </div>
 
             <div className="sm:col-span-2">
-              <label className="block text-xs font-mono text-slate-400 mb-1">
+              <label className="block text-xs text-slate-400 mb-1">
                 Prominent Landmark (Optional)
               </label>
               <input
                 type="text"
                 value={landmark}
                 onChange={(e) => setLandmark(e.target.value)}
-                placeholder="e.g. Behind Bank of Baroda Regional Office"
-                className="w-full rounded-xl border border-slate-700 bg-slate-950 px-3.5 py-2.5 text-xs font-mono text-slate-200 focus:border-cyan-500 focus:outline-none"
+                placeholder="e.g. Behind Bank of Baroda"
+                className="w-full rounded-lg border border-slate-800 bg-slate-950 px-3 py-2 text-xs text-slate-200 focus:border-sky-500 focus:outline-none"
               />
             </div>
           </div>
         </div>
 
-        {/* Narrative & Photographic Evidence */}
-        <div className="rounded-2xl border border-slate-800 bg-slate-900/60 p-5 space-y-4">
-          <div className="flex items-center gap-2 font-mono text-xs font-bold uppercase tracking-wider text-slate-200">
-            <FileText className="h-4 w-4 text-cyan-400" />
-            <span>4. Incident Description & Evidence (Hindi / English)</span>
+        {/* 4. Incident Narrative & Evidence */}
+        <div className="rounded-xl border border-slate-800 bg-slate-900/30 p-4 space-y-4">
+          <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-slate-300">
+            <FileText className="h-4 w-4 text-sky-400" />
+            <span>4. Description & Evidence</span>
           </div>
 
           <div className="space-y-4">
             <div>
-              <label className="block text-xs font-mono text-slate-400 mb-1">
-                Incident Headline / Title *
+              <label className="block text-xs text-slate-400 mb-1">
+                Incident Headline *
               </label>
               <input
                 type="text"
@@ -385,36 +373,36 @@ export default function ReportPage() {
                 onChange={(e) => setTitle(e.target.value)}
                 placeholder="Brief summary of the issue..."
                 required
-                className="w-full rounded-xl border border-slate-700 bg-slate-950 px-3.5 py-2.5 text-xs font-mono text-slate-200 focus:border-cyan-500 focus:outline-none"
+                className="w-full rounded-lg border border-slate-800 bg-slate-950 px-3 py-2 text-xs text-slate-200 focus:border-sky-500 focus:outline-none"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-mono text-slate-400 mb-1">
-                Detailed Field Description (Hindi / Hinglish / English) *
+              <label className="block text-xs text-slate-400 mb-1">
+                Field Description (Hindi or English) *
               </label>
               <textarea
-                rows={4}
+                rows={3}
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
                 placeholder="Describe the physical condition, recurrence observations, or impact..."
                 required
-                className="w-full rounded-xl border border-slate-700 bg-slate-950 px-3.5 py-2.5 text-xs font-mono text-slate-200 focus:border-cyan-500 focus:outline-none font-sans leading-relaxed"
+                className="w-full rounded-lg border border-slate-800 bg-slate-950 px-3 py-2 text-xs text-slate-200 focus:border-sky-500 focus:outline-none leading-relaxed"
               />
             </div>
 
-            {/* Photo Upload Box */}
+            {/* Photo Attachment */}
             <div className="space-y-2">
-              <label className="block text-xs font-mono text-slate-400">
-                Photographic Evidence Attachment
+              <label className="block text-xs text-slate-400">
+                Photographic Evidence
               </label>
 
               {imageBase64 ? (
-                <div className="relative overflow-hidden rounded-xl border border-cyan-600 bg-slate-950 p-3 space-y-2">
+                <div className="rounded-lg border border-slate-800 bg-slate-950 p-3 space-y-2">
                   <div className="flex items-center justify-between">
-                    <span className="text-xs font-mono text-cyan-300 font-semibold flex items-center gap-1.5">
-                      <CheckCircle2 className="h-4 w-4 text-cyan-400" />
-                      Visual Evidence Attached ({imageFileName || 'photo.jpg'})
+                    <span className="text-xs text-slate-300 font-medium flex items-center gap-1.5">
+                      <CheckCircle2 className="h-4 w-4 text-sky-400" />
+                      Attached: {imageFileName || 'photo.jpg'}
                     </span>
                     <button
                       type="button"
@@ -423,12 +411,12 @@ export default function ReportPage() {
                         setImageFileName(null);
                         setImageMimeType(null);
                       }}
-                      className="text-xs text-slate-400 hover:text-rose-400 p-1 font-mono"
+                      className="text-xs text-slate-400 hover:text-rose-400"
                     >
                       Remove
                     </button>
                   </div>
-                  <div className="h-48 overflow-hidden rounded-lg bg-black/60 flex items-center justify-center">
+                  <div className="h-40 overflow-hidden rounded bg-black/40 flex items-center justify-center">
                     <img
                       src={imageBase64}
                       alt="Uploaded preview"
@@ -437,13 +425,13 @@ export default function ReportPage() {
                   </div>
                 </div>
               ) : (
-                <label className="flex flex-col items-center justify-center p-6 border-2 border-dashed border-slate-700 hover:border-cyan-500 rounded-xl bg-slate-950/40 cursor-pointer transition-colors space-y-2">
-                  <Camera className="h-8 w-8 text-slate-500" />
-                  <span className="text-xs font-mono text-slate-300">
-                    Click to upload photo or drag & drop (Max 5MB)
+                <label className="flex flex-col items-center justify-center p-6 border border-dashed border-slate-800 hover:border-slate-700 rounded-lg bg-slate-950/40 cursor-pointer transition-colors space-y-1">
+                  <Camera className="h-6 w-6 text-slate-500" />
+                  <span className="text-xs text-slate-300">
+                    Click to upload photo (Max 5MB)
                   </span>
-                  <span className="text-[10px] text-slate-500 font-mono">
-                    Parsed directly by Claude 3.5 Sonnet Vision
+                  <span className="text-[11px] text-slate-500">
+                    Parsed by Claude Vision
                   </span>
                   <input
                     type="file"
@@ -457,12 +445,12 @@ export default function ReportPage() {
           </div>
         </div>
 
-        {/* Reporter Identity */}
-        <div className="rounded-2xl border border-slate-800 bg-slate-900/60 p-5 space-y-4">
+        {/* 5. Reporter Identity */}
+        <div className="rounded-xl border border-slate-800 bg-slate-900/30 p-4 space-y-3">
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2 font-mono text-xs font-bold uppercase tracking-wider text-slate-200">
-              <ShieldCheck className="h-4 w-4 text-cyan-400" />
-              <span>5. Reporter Attribution & Privacy</span>
+            <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-slate-300">
+              <ShieldCheck className="h-4 w-4 text-sky-400" />
+              <span>5. Reporter Attribution</span>
             </div>
 
             <label className="flex items-center gap-2 cursor-pointer">
@@ -470,59 +458,55 @@ export default function ReportPage() {
                 type="checkbox"
                 checked={isAnonymous}
                 onChange={(e) => setIsAnonymous(e.target.checked)}
-                className="rounded border-slate-700 bg-slate-950 text-cyan-500 focus:ring-0"
+                className="rounded border-slate-700 bg-slate-950 text-sky-500 focus:ring-0"
               />
-              <span className="text-xs font-mono text-slate-300">Submit Anonymously</span>
+              <span className="text-xs text-slate-300">Submit Anonymously</span>
             </label>
           </div>
 
           {!isAnonymous && (
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
               <div>
-                <label className="block text-xs font-mono text-slate-400 mb-1">
-                  Full Name / Organization
-                </label>
+                <label className="block text-xs text-slate-400 mb-1">Full Name</label>
                 <input
                   type="text"
                   value={reporterName}
                   onChange={(e) => setReporterName(e.target.value)}
                   placeholder="e.g. Vikram Joshi"
-                  className="w-full rounded-xl border border-slate-700 bg-slate-950 px-3.5 py-2.5 text-xs font-mono text-slate-200 focus:border-cyan-500 focus:outline-none"
+                  className="w-full rounded-lg border border-slate-800 bg-slate-950 px-3 py-2 text-xs text-slate-200 focus:border-sky-500 focus:outline-none"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-mono text-slate-400 mb-1">
-                  Phone Number (Masked Publicly)
-                </label>
+                <label className="block text-xs text-slate-400 mb-1">Phone Number</label>
                 <input
                   type="text"
                   value={reporterPhone}
                   onChange={(e) => setReporterPhone(e.target.value)}
                   placeholder="e.g. 9893012345"
-                  className="w-full rounded-xl border border-slate-700 bg-slate-950 px-3.5 py-2.5 text-xs font-mono text-slate-200 focus:border-cyan-500 focus:outline-none"
+                  className="w-full rounded-lg border border-slate-800 bg-slate-950 px-3 py-2 text-xs text-slate-200 focus:border-sky-500 focus:outline-none"
                 />
               </div>
             </div>
           )}
         </div>
 
-        {/* Submission Action */}
+        {/* Submit CTA */}
         <div className="pt-2">
           <button
             type="submit"
             disabled={isSubmitting}
-            className="w-full flex items-center justify-center gap-2 rounded-2xl border border-cyan-500 bg-gradient-to-r from-cyan-600 via-cyan-500 to-teal-500 py-4 px-6 font-mono text-sm font-bold text-slate-950 hover:opacity-95 transition-all shadow-xl shadow-cyan-950/50 disabled:opacity-50"
+            className="w-full flex items-center justify-center gap-2 rounded-xl bg-sky-500 py-3.5 px-6 text-sm font-semibold text-slate-950 hover:bg-sky-400 transition-colors shadow-sm disabled:opacity-50"
           >
             {isSubmitting ? (
               <>
-                <RefreshCw className="h-5 w-5 animate-spin" />
-                <span>Running Candidate Retrieval & Claude Triage...</span>
+                <RefreshCw className="h-4 w-4 animate-spin" />
+                <span>Running Candidate Matching & AI Triage...</span>
               </>
             ) : (
               <>
-                <Send className="h-5 w-5" />
-                <span>Submit to Bhopal Civic Memory & Trigger AI Triage</span>
+                <Send className="h-4 w-4" />
+                <span>Submit to Civic Memory & Triage</span>
               </>
             )}
           </button>

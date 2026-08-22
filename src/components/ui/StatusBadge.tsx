@@ -17,47 +17,41 @@ interface CategoryBadgeProps {
 }
 
 export function StatusBadge({ status, size = 'sm' }: StatusBadgeProps) {
-  const config: Record<IncidentStatus, { label: string; bg: string; text: string; border: string; dot: string }> = {
+  const config: Record<IncidentStatus, { label: string; bg: string; text: string; dot: string }> = {
     reported: {
       label: 'Reported',
-      bg: 'bg-amber-950/40',
+      bg: 'bg-amber-500/10 border-amber-500/20',
       text: 'text-amber-300',
-      border: 'border-amber-700/50',
       dot: 'bg-amber-400'
     },
     triaged: {
       label: 'AI Triaged',
-      bg: 'bg-purple-950/40',
+      bg: 'bg-purple-500/10 border-purple-500/20',
       text: 'text-purple-300',
-      border: 'border-purple-700/50',
-      dot: 'bg-purple-400 animate-pulse'
+      dot: 'bg-purple-400'
     },
     in_progress: {
-      label: 'Field Ops Active',
-      bg: 'bg-cyan-950/40',
-      text: 'text-cyan-300',
-      border: 'border-cyan-700/50',
-      dot: 'bg-cyan-400 animate-pulse'
+      label: 'In Progress',
+      bg: 'bg-sky-500/10 border-sky-500/20',
+      text: 'text-sky-300',
+      dot: 'bg-sky-400'
     },
     verified: {
       label: 'Verified',
-      bg: 'bg-blue-950/40',
+      bg: 'bg-blue-500/10 border-blue-500/20',
       text: 'text-blue-300',
-      border: 'border-blue-700/50',
       dot: 'bg-blue-400'
     },
     resolved: {
       label: 'Resolved',
-      bg: 'bg-emerald-950/40',
+      bg: 'bg-emerald-500/10 border-emerald-500/20',
       text: 'text-emerald-300',
-      border: 'border-emerald-700/50',
       dot: 'bg-emerald-400'
     },
     archived: {
       label: 'Archived',
-      bg: 'bg-slate-900/60',
+      bg: 'bg-slate-800 border-slate-700',
       text: 'text-slate-400',
-      border: 'border-slate-800',
       dot: 'bg-slate-500'
     }
   };
@@ -67,7 +61,7 @@ export function StatusBadge({ status, size = 'sm' }: StatusBadgeProps) {
 
   return (
     <span
-      className={`inline-flex items-center gap-1.5 rounded-full font-mono font-medium border ${item.bg} ${item.text} ${item.border} ${padding}`}
+      className={`inline-flex items-center gap-1.5 rounded-full font-medium border ${item.bg} ${item.text} ${padding}`}
     >
       <span className={`h-1.5 w-1.5 rounded-full ${item.dot}`} />
       {item.label}
@@ -76,39 +70,35 @@ export function StatusBadge({ status, size = 'sm' }: StatusBadgeProps) {
 }
 
 export function SeverityBadge({ severity, size = 'sm' }: SeverityBadgeProps) {
-  const config: Record<IncidentSeverity, { label: string; bg: string; text: string; border: string }> = {
+  const config: Record<IncidentSeverity, { label: string; bg: string; text: string }> = {
     critical: {
-      label: 'CRITICAL',
-      bg: 'bg-red-950/50',
-      text: 'text-red-300',
-      border: 'border-red-600/60'
+      label: 'Critical',
+      bg: 'bg-rose-500/10 border-rose-500/20',
+      text: 'text-rose-300'
     },
     high: {
-      label: 'HIGH',
-      bg: 'bg-orange-950/50',
-      text: 'text-orange-300',
-      border: 'border-orange-600/50'
+      label: 'High',
+      bg: 'bg-orange-500/10 border-orange-500/20',
+      text: 'text-orange-300'
     },
     medium: {
-      label: 'MEDIUM',
-      bg: 'bg-yellow-950/40',
-      text: 'text-yellow-300',
-      border: 'border-yellow-600/40'
+      label: 'Medium',
+      bg: 'bg-amber-500/10 border-amber-500/20',
+      text: 'text-amber-300'
     },
     low: {
-      label: 'LOW',
-      bg: 'bg-slate-900/60',
-      text: 'text-slate-300',
-      border: 'border-slate-700'
+      label: 'Low',
+      bg: 'bg-slate-800/80 border-slate-700/60',
+      text: 'text-slate-300'
     }
   };
 
   const item = config[severity] || config.medium;
-  const padding = size === 'sm' ? 'px-1.5 py-0.5 text-[10px]' : 'px-2 py-1 text-xs';
+  const padding = size === 'sm' ? 'px-2 py-0.5 text-xs' : 'px-2.5 py-1 text-xs';
 
   return (
     <span
-      className={`inline-flex items-center rounded font-mono font-semibold tracking-wider border uppercase ${item.bg} ${item.text} ${item.border} ${padding}`}
+      className={`inline-flex items-center rounded-md font-medium border ${item.bg} ${item.text} ${padding}`}
     >
       {item.label}
     </span>
@@ -116,22 +106,22 @@ export function SeverityBadge({ severity, size = 'sm' }: SeverityBadgeProps) {
 }
 
 export function CategoryBadge({ category, size = 'sm' }: CategoryBadgeProps) {
-  const labels: Record<IncidentCategory, { label: string; color: string }> = {
-    lake_ecology: { label: 'Bhojtal Ecology', color: 'text-teal-300 border-teal-800/60 bg-teal-950/40' },
-    heritage_infrastructure: { label: 'Heritage Corridor', color: 'text-amber-300 border-amber-800/60 bg-amber-950/40' },
-    sanitation_waste: { label: 'Sanitation & SWM', color: 'text-lime-300 border-lime-800/60 bg-lime-950/40' },
-    water_supply: { label: 'Water Supply (PHE)', color: 'text-sky-300 border-sky-800/60 bg-sky-950/40' },
-    road_hazard: { label: 'Road & Transit', color: 'text-rose-300 border-rose-800/60 bg-rose-950/40' },
-    drainage_flood: { label: 'Drainage / Sump', color: 'text-blue-300 border-blue-800/60 bg-blue-950/40' },
-    public_lighting: { label: 'Smart Lighting', color: 'text-yellow-300 border-yellow-800/60 bg-yellow-950/40' },
-    environmental: { label: 'Air & Flora', color: 'text-emerald-300 border-emerald-800/60 bg-emerald-950/40' }
+  const labels: Record<IncidentCategory, { label: string }> = {
+    lake_ecology: { label: 'Lake Ecology' },
+    heritage_infrastructure: { label: 'Heritage Infrastructure' },
+    sanitation_waste: { label: 'Sanitation & Waste' },
+    water_supply: { label: 'Water Supply' },
+    road_hazard: { label: 'Road & Bridge' },
+    drainage_flood: { label: 'Drainage & Sump' },
+    public_lighting: { label: 'Public Lighting' },
+    environmental: { label: 'Environmental' }
   };
 
-  const item = labels[category] || { label: category, color: 'text-slate-300 border-slate-700 bg-slate-900' };
-  const padding = size === 'sm' ? 'px-2 py-0.5 text-[11px]' : 'px-2.5 py-1 text-xs';
+  const item = labels[category] || { label: category };
+  const padding = size === 'sm' ? 'px-2 py-0.5 text-xs' : 'px-2.5 py-1 text-xs';
 
   return (
-    <span className={`inline-flex items-center rounded-md border font-sans font-medium ${item.color} ${padding}`}>
+    <span className={`inline-flex items-center rounded-md border border-slate-700/60 bg-slate-800/60 font-medium text-slate-300 ${padding}`}>
       {item.label}
     </span>
   );

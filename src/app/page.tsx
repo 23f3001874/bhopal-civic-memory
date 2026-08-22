@@ -9,14 +9,12 @@ import { CivicMapCanvas } from '@/components/ui/CivicMapCanvas';
 import {
   AlertTriangle,
   Waves,
-  CheckCircle2,
   Clock,
   Shield,
   Search,
   SlidersHorizontal,
   MapPin,
-  TrendingUp,
-  Brain,
+  Sparkles,
   ArrowRight,
   ExternalLink
 } from 'lucide-react';
@@ -37,14 +35,14 @@ export default function DashboardPage() {
   const [selectedSeverity, setSelectedSeverity] = useState<string | 'all'>('all');
 
   const categories: { label: string; value: IncidentCategory | 'all' }[] = [
-    { label: 'All Categories', value: 'all' },
-    { label: 'Bhojtal Ecology', value: 'lake_ecology' },
-    { label: 'Heritage Corridor', value: 'heritage_infrastructure' },
-    { label: 'Sanitation & Waste', value: 'sanitation_waste' },
-    { label: 'Water Supply (PHE)', value: 'water_supply' },
-    { label: 'Road Hazards', value: 'road_hazard' },
+    { label: 'All', value: 'all' },
+    { label: 'Lake Ecology', value: 'lake_ecology' },
+    { label: 'Heritage', value: 'heritage_infrastructure' },
+    { label: 'Sanitation', value: 'sanitation_waste' },
+    { label: 'Water Supply', value: 'water_supply' },
+    { label: 'Roads & Transit', value: 'road_hazard' },
     { label: 'Drainage & Sump', value: 'drainage_flood' },
-    { label: 'Smart Lighting', value: 'public_lighting' }
+    { label: 'Public Lighting', value: 'public_lighting' }
   ];
 
   // Filtered incidents
@@ -63,104 +61,99 @@ export default function DashboardPage() {
   });
 
   return (
-    <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 space-y-8">
-      {/* Hero Welcome & Emergency Marquee */}
-      <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 rounded-2xl border border-slate-800/80 bg-gradient-to-r from-slate-900/90 via-slate-900/60 to-slate-950/80 p-6 backdrop-blur-xl shadow-2xl">
-        <div className="space-y-1.5">
-          <div className="flex items-center gap-2 text-cyan-400 font-mono text-xs font-semibold uppercase tracking-wider">
-            <Shield className="h-4 w-4" />
-            Bhopal Municipal Command & Control Grid
+    <div className="mx-auto max-w-6xl px-4 py-10 sm:px-6 space-y-10">
+      {/* Clean, Spacious Page Header */}
+      <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 pb-6 border-b border-slate-800/80">
+        <div className="space-y-1.5 max-w-2xl">
+          <div className="flex items-center gap-2 text-sky-400 text-xs font-semibold uppercase tracking-wider">
+            <span>Bhopal Municipal Corporation</span>
           </div>
-          <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">
-            City Intelligence & Civic Pulse
+          <h1 className="text-2xl sm:text-3xl font-semibold tracking-tight text-white">
+            City Intelligence & Incident Memory
           </h1>
-          <p className="text-sm text-slate-400 max-w-2xl">
-            Real-time urban telemetry, Ramsar wetland ecological oversight, heritage infrastructure stability, and citizen-reported municipal incidents.
+          <p className="text-sm text-slate-400 leading-relaxed">
+            Real-time urban telemetry, Ramsar wetland oversight, and historical recurrence analysis across 85 municipal wards.
           </p>
         </div>
 
-        <div className="flex flex-wrap items-center gap-3">
+        <div className="flex items-center gap-3 shrink-0">
           <Link
             href="/map"
-            className="inline-flex items-center gap-2 rounded-xl border border-slate-700 bg-slate-800/80 px-4 py-2.5 font-mono text-xs font-semibold text-slate-200 hover:border-slate-600 hover:bg-slate-700 transition-all"
+            className="inline-flex items-center gap-1.5 rounded-lg border border-slate-700 bg-slate-800 px-3.5 py-2 text-xs font-medium text-slate-200 hover:bg-slate-700 transition-colors shadow-sm"
           >
-            Tactical Map View
-            <ArrowRight className="h-3.5 w-3.5 text-cyan-400" />
+            <span>View Tactical Map</span>
+            <ArrowRight className="h-3.5 w-3.5 text-slate-400" />
           </Link>
           <Link
             href="/report"
-            className="inline-flex items-center gap-2 rounded-xl border border-cyan-500/80 bg-cyan-500 px-4 py-2.5 font-mono text-xs font-bold text-slate-950 hover:bg-cyan-400 transition-all shadow-lg shadow-cyan-950/50"
+            className="inline-flex items-center gap-1.5 rounded-lg bg-sky-500 px-3.5 py-2 text-xs font-semibold text-slate-950 hover:bg-sky-400 transition-colors shadow-sm"
           >
-            + File Citizen Report
+            <span>Report Incident</span>
           </Link>
         </div>
       </div>
 
-      {/* Top Tactical Pulse Metric Cards */}
+      {/* 4 Metric Summary Cards with generous whitespace */}
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
         <MetricCard
           title="Active Civic Incidents"
           value={metrics.totalActiveIncidents}
           subtitle="Across 85 Municipal Wards"
-          trend={{ value: '+4 logged today', isPositive: false }}
+          trend={{ value: '+4 today', isPositive: false }}
           icon={AlertTriangle}
-          accentColor="cyan"
           statusDot
         />
         <MetricCard
           title="Critical Alerts"
           value={metrics.criticalAlerts}
-          subtitle="Immediate dispatch protocol"
-          trend={{ value: '1 under active remediation', isPositive: true }}
+          subtitle="Immediate dispatch priority"
+          trend={{ value: '1 in progress', isPositive: true }}
           icon={Shield}
-          accentColor="rose"
           statusDot
         />
         <MetricCard
           title="Bhojtal Wetland Health"
           value={`${metrics.bhojtalLakeQualityIndex}/100`}
-          subtitle="Ramsar Site 1206 Water Index"
+          subtitle="Ramsar Site #1206 index"
           trend={{ value: 'Normal catchment aerated', isPositive: true }}
           icon={Waves}
-          accentColor="emerald"
         />
         <MetricCard
-          title="Avg Resolution SLA"
+          title="Avg SLA Resolution"
           value={`${metrics.avgResolutionTimeHours}h`}
           subtitle="142 resolved last 7 days"
-          trend={{ value: '-2.1h faster vs last week', isPositive: true }}
+          trend={{ value: '-2.1h vs last week', isPositive: true }}
           icon={Clock}
-          accentColor="amber"
         />
       </div>
 
-      {/* Main Grid: Left is Feed & Filters, Right is Spatial Overview & Ward Telemetry */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-        {/* Left 8 Cols: Incident Feed & Search / Filter Controls */}
+      {/* Main Layout Grid */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        {/* Left Column: Incidents Feed & Search */}
         <div className="lg:col-span-8 space-y-6">
-          {/* Filter Bar */}
-          <div className="rounded-xl border border-slate-800 bg-slate-900/60 p-4 backdrop-blur-md space-y-3">
+          {/* Refined Search & Filter Controls */}
+          <div className="rounded-xl border border-slate-800 bg-slate-900/30 p-4 space-y-3">
             <div className="flex flex-col sm:flex-row items-center gap-3">
-              {/* Search Bar */}
+              {/* Search */}
               <div className="relative flex-1 w-full">
-                <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-500" />
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-500" />
                 <input
                   type="text"
-                  placeholder="Search by token, keyword, landmark (e.g. VIP Road, MP Nagar, Taj-ul-Masajid)..."
+                  placeholder="Search incidents, tokens, or locations (e.g. MP Nagar, Sargam, Bhojtal)..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full rounded-lg border border-slate-700/80 bg-slate-950/80 pl-10 pr-4 py-2 text-xs font-mono text-slate-200 placeholder-slate-500 focus:border-cyan-500 focus:outline-none"
+                  className="w-full rounded-lg border border-slate-800 bg-slate-950 pl-9 pr-3.5 py-2 text-xs text-slate-200 placeholder-slate-500 focus:border-sky-500 focus:outline-none transition-colors"
                 />
               </div>
 
-              {/* Ward Filter */}
-              <div className="w-full sm:w-56">
+              {/* Ward Select */}
+              <div className="w-full sm:w-48">
                 <select
                   value={selectedWardId}
                   onChange={(e) => setSelectedWardId(e.target.value)}
-                  className="w-full rounded-lg border border-slate-700/80 bg-slate-950/80 px-3 py-2 text-xs font-mono text-slate-200 focus:border-cyan-500 focus:outline-none"
+                  className="w-full rounded-lg border border-slate-800 bg-slate-950 px-3 py-2 text-xs text-slate-200 focus:border-sky-500 focus:outline-none transition-colors"
                 >
-                  <option value="all">All Bhopal Wards</option>
+                  <option value="all">All Wards</option>
                   {wards.map((w) => (
                     <option key={w.id} value={w.id}>
                       {w.code} - {w.name}
@@ -169,12 +162,12 @@ export default function DashboardPage() {
                 </select>
               </div>
 
-              {/* Severity Filter */}
-              <div className="w-full sm:w-40">
+              {/* Severity Select */}
+              <div className="w-full sm:w-36">
                 <select
                   value={selectedSeverity}
                   onChange={(e) => setSelectedSeverity(e.target.value)}
-                  className="w-full rounded-lg border border-slate-700/80 bg-slate-950/80 px-3 py-2 text-xs font-mono text-slate-200 focus:border-cyan-500 focus:outline-none"
+                  className="w-full rounded-lg border border-slate-800 bg-slate-950 px-3 py-2 text-xs text-slate-200 focus:border-sky-500 focus:outline-none transition-colors"
                 >
                   <option value="all">All Severities</option>
                   <option value="critical">Critical</option>
@@ -185,16 +178,16 @@ export default function DashboardPage() {
               </div>
             </div>
 
-            {/* Category Filter Chips */}
-            <div className="flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-none text-xs font-mono">
+            {/* Category Pills */}
+            <div className="flex items-center gap-1.5 overflow-x-auto pb-0.5 text-xs">
               {categories.map((cat) => (
                 <button
                   key={cat.value}
                   onClick={() => setSelectedCategory(cat.value)}
-                  className={`rounded-lg px-3 py-1 whitespace-nowrap transition-all ${
+                  className={`rounded-lg px-3 py-1 text-xs font-medium whitespace-nowrap transition-colors ${
                     selectedCategory === cat.value
-                      ? 'bg-cyan-500/20 text-cyan-300 border border-cyan-500/40 font-semibold'
-                      : 'border border-slate-800 bg-slate-950/40 text-slate-400 hover:text-slate-200'
+                      ? 'bg-slate-800 text-white font-semibold border border-slate-700'
+                      : 'text-slate-400 hover:bg-slate-800/40 hover:text-slate-200'
                   }`}
                 >
                   {cat.label}
@@ -203,54 +196,56 @@ export default function DashboardPage() {
             </div>
           </div>
 
-          {/* Incidents Feed */}
+          {/* Incidents Stream */}
           <div className="space-y-4">
-            <div className="flex items-center justify-between">
+            <div className="flex items-center justify-between pb-1">
               <div className="flex items-center gap-2">
-                <h3 className="font-mono text-sm font-bold uppercase tracking-wider text-slate-200">
-                  Live Operations Feed
-                </h3>
-                <span className="rounded-full bg-slate-800 px-2 py-0.5 font-mono text-xs text-cyan-400">
-                  {filteredIncidents.length} Records
+                <h2 className="text-sm font-semibold text-slate-200">
+                  Incident Feed
+                </h2>
+                <span className="rounded-md bg-slate-800 px-2 py-0.5 text-xs text-slate-400 font-mono">
+                  {filteredIncidents.length}
                 </span>
               </div>
-              <span className="font-mono text-[11px] text-slate-500">
-                Auto-updating via telemetry
+              <span className="text-xs text-slate-500">
+                Sorted by latest activity
               </span>
             </div>
 
             {filteredIncidents.length === 0 ? (
-              <div className="rounded-2xl border border-dashed border-slate-800 bg-slate-900/30 p-12 text-center">
-                <SlidersHorizontal className="mx-auto h-8 w-8 text-slate-600 mb-3" />
-                <h4 className="text-base font-semibold text-slate-300">
+              <div className="rounded-xl border border-dashed border-slate-800 bg-slate-900/20 p-12 text-center">
+                <SlidersHorizontal className="mx-auto h-7 w-7 text-slate-600 mb-2.5" />
+                <h3 className="text-sm font-medium text-slate-300">
                   No incidents matching your filter criteria
-                </h4>
-                <p className="mt-1 text-xs text-slate-500 font-mono">
+                </h3>
+                <p className="mt-1 text-xs text-slate-500">
                   Try adjusting the ward, category, or search query.
                 </p>
               </div>
             ) : (
-              filteredIncidents.map((incident) => (
-                <IncidentCard key={incident.id} incident={incident} />
-              ))
+              <div className="space-y-4">
+                {filteredIncidents.map((incident) => (
+                  <IncidentCard key={incident.id} incident={incident} />
+                ))}
+              </div>
             )}
           </div>
         </div>
 
-        {/* Right 4 Cols: Spatial Preview, Ward Matrix, AI Intelligence Digest */}
+        {/* Right Column: Spatial Preview & Status */}
         <div className="lg:col-span-4 space-y-6">
           {/* Spatial Preview Widget */}
-          <div className="rounded-2xl border border-slate-800 bg-slate-900/70 p-4 backdrop-blur-md space-y-3">
+          <div className="rounded-xl border border-slate-800 bg-slate-900/40 p-4 space-y-3">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <MapPin className="h-4 w-4 text-cyan-400" />
-                <h3 className="font-mono text-xs font-bold uppercase tracking-wider text-slate-200">
-                  Spatial Incident Radar
-                </h3>
+                <MapPin className="h-4 w-4 text-sky-400" />
+                <h2 className="text-xs font-semibold uppercase tracking-wider text-slate-300">
+                  Spatial Radar
+                </h2>
               </div>
               <Link
                 href="/map"
-                className="font-mono text-xs text-cyan-400 hover:text-cyan-300 inline-flex items-center gap-1"
+                className="text-xs text-slate-400 hover:text-white inline-flex items-center gap-1 transition-colors"
               >
                 Expand <ExternalLink className="h-3 w-3" />
               </Link>
@@ -259,95 +254,76 @@ export default function DashboardPage() {
             <CivicMapCanvas
               incidents={incidents}
               wards={wards}
-              className="h-[320px] rounded-xl border border-slate-800/80"
+              className="h-[280px] rounded-lg border border-slate-800"
             />
           </div>
 
-          {/* Claude AI Civic Intelligence Insights */}
-          <div className="rounded-2xl border border-purple-900/40 bg-gradient-to-b from-purple-950/20 to-slate-900/60 p-5 backdrop-blur-md space-y-3">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2 text-purple-300">
-                <Brain className="h-4 w-4 text-purple-400" />
-                <h3 className="font-mono text-xs font-bold uppercase tracking-wider">
-                  Claude AI Triaging Digest
-                </h3>
-              </div>
-              <span className="font-mono text-[10px] text-purple-400 bg-purple-950/60 px-2 py-0.5 rounded border border-purple-800/50">
-                Automated
-              </span>
+          {/* AI Intelligence Digest */}
+          <div className="rounded-xl border border-slate-800 bg-slate-900/40 p-4 space-y-3">
+            <div className="flex items-center gap-2 text-slate-200">
+              <Sparkles className="h-4 w-4 text-sky-400" />
+              <h2 className="text-xs font-semibold uppercase tracking-wider">
+                Claude AI Operations Digest
+              </h2>
             </div>
 
-            <div className="space-y-2.5 text-xs text-slate-300">
-              <div className="rounded-lg border border-purple-900/30 bg-purple-950/30 p-3">
-                <div className="font-mono text-[11px] text-purple-300 font-semibold mb-1">
-                  BHOJTAL RUNOFF CORRIDOR (WARD 07)
+            <div className="space-y-2.5 text-xs">
+              <div className="rounded-lg border border-slate-800 bg-slate-950/40 p-3 space-y-1">
+                <div className="text-xs font-medium text-slate-200">
+                  Bhojtal Runoff Catchment (Ward 07)
                 </div>
-                <p className="text-slate-300 leading-relaxed">
-                  High siltation risk detected at Khanoo Gaon culvert. Immediate weed harvester barrier dispatched to safeguard Ramsar wetland aeration.
+                <p className="text-slate-400 leading-relaxed">
+                  High siltation detected near Khanoo Gaon culvert. Silt trap maintenance recommended before monsoon crest.
                 </p>
               </div>
 
-              <div className="rounded-lg border border-slate-800 bg-slate-950/50 p-3">
-                <div className="font-mono text-[11px] text-cyan-400 font-semibold mb-1">
-                  OLD BHOPAL HERITAGE STABILITY (WARD 12)
+              <div className="rounded-lg border border-slate-800 bg-slate-950/40 p-3 space-y-1">
+                <div className="text-xs font-medium text-slate-200">
+                  Old Bhopal Heritage Arcade (Ward 12)
                 </div>
-                <p className="text-slate-300 leading-relaxed">
-                  Taj-ul-Masajid north gate arcade flagged for mortar consolidation. Scaffolding perimeter deployed to prevent pedestrian hazard.
+                <p className="text-slate-400 leading-relaxed">
+                  Taj-ul-Masajid north gate arcade flagged for mortar consolidation. Safety perimeter deployed.
                 </p>
               </div>
             </div>
           </div>
 
-          {/* Ward Health Index Matrix */}
-          <div className="rounded-2xl border border-slate-800 bg-slate-900/70 p-5 backdrop-blur-md space-y-4">
+          {/* Ward Health Summary */}
+          <div className="rounded-xl border border-slate-800 bg-slate-900/40 p-4 space-y-3">
             <div className="flex items-center justify-between">
-              <h3 className="font-mono text-xs font-bold uppercase tracking-wider text-slate-200">
-                Ward Health Matrix
-              </h3>
-              <span className="font-mono text-[11px] text-slate-400">Score / 100</span>
+              <h2 className="text-xs font-semibold uppercase tracking-wider text-slate-300">
+                Ward Health Index
+              </h2>
+              <span className="text-xs text-slate-500 font-mono">Score / 100</span>
             </div>
 
-            <div className="space-y-3">
+            <div className="space-y-2.5">
               {wards.map((ward) => (
                 <div
                   key={ward.id}
                   onClick={() => setSelectedWardId(ward.id)}
-                  className="cursor-pointer group rounded-lg p-2.5 border border-slate-800/60 bg-slate-950/40 hover:border-cyan-800/60 hover:bg-slate-900 transition-all"
+                  className="cursor-pointer rounded-lg p-2.5 border border-slate-800/60 bg-slate-950/30 hover:border-slate-700 hover:bg-slate-900/50 transition-colors"
                 >
                   <div className="flex items-center justify-between text-xs">
-                    <div className="font-mono font-medium text-slate-300 group-hover:text-cyan-300">
+                    <div className="font-medium text-slate-300">
                       {ward.code} • {ward.name.split('&')[0]}
                     </div>
-                    <span
-                      className={`font-mono font-bold ${
-                        ward.healthIndexScore >= 90
-                          ? 'text-emerald-400'
-                          : ward.healthIndexScore >= 80
-                          ? 'text-cyan-400'
-                          : 'text-amber-400'
-                      }`}
-                    >
+                    <span className="font-mono font-semibold text-slate-200">
                       {ward.healthIndexScore}%
                     </span>
                   </div>
 
-                  {/* Progress bar */}
                   <div className="mt-2 h-1.5 w-full overflow-hidden rounded-full bg-slate-800">
                     <div
                       className={`h-full rounded-full ${
                         ward.healthIndexScore >= 90
                           ? 'bg-emerald-400'
                           : ward.healthIndexScore >= 80
-                          ? 'bg-cyan-400'
+                          ? 'bg-sky-400'
                           : 'bg-amber-400'
                       }`}
                       style={{ width: `${ward.healthIndexScore}%` }}
                     />
-                  </div>
-
-                  <div className="mt-1.5 flex items-center justify-between text-[11px] font-mono text-slate-500">
-                    <span>Active: {ward.activeIncidents}</span>
-                    <span>Resolved: {ward.resolvedThisMonth}</span>
                   </div>
                 </div>
               ))}
