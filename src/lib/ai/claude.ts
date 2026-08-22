@@ -329,7 +329,7 @@ INSTRUCTIONS:
 
     const response = await anthropic.messages.create({
       model: CLAUDE_MODEL,
-      max_tokens: 4000,
+      max_tokens: 1500,
       system: BHOPAL_CIVIC_SYSTEM_PROMPT,
       messages: [{ role: 'user', content: userContent }]
     });
@@ -552,7 +552,7 @@ INSTRUCTIONS:
 
     const response = await anthropic.messages.create({
       model: CLAUDE_MODEL,
-      max_tokens: 4000,
+      max_tokens: 1500,
       system: RECURRENCE_REASONING_SYSTEM_PROMPT,
       messages: [{ role: 'user', content: prompt }]
     });
@@ -633,7 +633,7 @@ INSTRUCTIONS:
 
     const response = await anthropic.messages.create({
       model: CLAUDE_MODEL,
-      max_tokens: 4000,
+      max_tokens: 1500,
       system: FIELD_INVESTIGATION_SYSTEM_PROMPT,
       messages: [{ role: 'user', content: prompt }]
     });
@@ -745,7 +745,7 @@ INSTRUCTIONS:
 
     const response = await anthropic.messages.create({
       model: CLAUDE_MODEL,
-      max_tokens: 4000,
+      max_tokens: 1500,
       system: RESOLUTION_VERIFICATION_SYSTEM_PROMPT,
       messages: [{ role: 'user', content }]
     });
