@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=DM+Serif+Display:ital@0;1&family=Instrument+Serif:ital@0;1&display=swap');
 @import "tailwindcss";
 
 @layer base {
@@ -11,6 +12,16 @@
     --text-primary: #F5F7FA;
     --text-secondary: #A7AFBD;
     --text-muted: #687386;
+
+    /* Warm Bhojtal Sunset Palette Tokens */
+    --warm-ivory: #F8F3EC;
+    --warm-cream: #FFF9F2;
+    --warm-peach: #EFCFC1;
+    --dusty-rose: #D8B5B8;
+    --warm-lavender: #B7AEC4;
+    --muted-sky: #9DAFC2;
+    --water-teal: #527F7B;
+    --editorial-charcoal: #171717;
   }
 
   body {
@@ -35,6 +46,16 @@
   }
 }
 
+/* Custom Editorial Serif Typography Utility */
+.font-editorial {
+  font-family: 'DM Serif Display', 'Instrument Serif', 'Cormorant Garamond', Georgia, serif;
+  letter-spacing: -0.04em;
+}
+
+.font-garamond {
+  font-family: 'Cormorant Garamond', 'Instrument Serif', Georgia, serif;
+}
+
 /* Custom scrollbars for high-density command center UI */
 ::-webkit-scrollbar {
   width: 5px;
@@ -55,6 +76,27 @@
 }
 
 /* Design System Utilities */
+.bg-warm-hero-atmosphere {
+  background: linear-gradient(
+    180deg,
+    rgba(255, 249, 242, 0.88) 0%,
+    rgba(248, 218, 204, 0.55) 30%,
+    rgba(218, 190, 204, 0.40) 60%,
+    rgba(157, 175, 194, 0.35) 85%,
+    rgba(5, 7, 11, 0.95) 100%
+  );
+}
+
+.bg-warm-footer-atmosphere {
+  background: linear-gradient(
+    180deg,
+    rgba(5, 7, 11, 0.92) 0%,
+    rgba(218, 190, 204, 0.25) 40%,
+    rgba(248, 218, 204, 0.45) 80%,
+    rgba(255, 249, 242, 0.70) 100%
+  );
+}
+
 .bg-radial-atmosphere {
   background-image:
     radial-gradient(circle at 18% 8%, rgba(0, 124, 240, 0.12), transparent 36%),
@@ -100,21 +142,32 @@
 }
 
 .btn-primary:hover {
-  filter: brightness(1.1);
-  box-shadow: 0 4px 16px rgba(0, 124, 240, 0.25);
+  background: linear-gradient(135deg, #0068D0 0%, #0095C2 100%);
+  transform: translateY(-1px);
 }
 
 .btn-secondary {
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.04);
   color: #F5F7FA;
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 8px;
   font-weight: 500;
   transition: all 180ms ease;
 }
 
 .btn-secondary:hover {
-  background: rgba(255, 255, 255, 0.06);
-  border-color: rgba(255, 255, 255, 0.15);
-  color: #ffffff;
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.16);
+  transform: translateY(-1px);
+}
+
+/* Cinematic Slow Zoom Animation */
+@keyframes ambientZoom {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.035); }
+  100% { transform: scale(1); }
+}
+
+.animate-ambient-zoom {
+  animation: ambientZoom 16s ease-in-out infinite;
 }
