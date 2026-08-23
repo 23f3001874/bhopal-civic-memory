@@ -205,10 +205,10 @@ export default function ReportPage() {
           <span>INTAKE TERMINAL / BHOPAL CIVIC RECONNAISSANCE</span>
         </div>
         <h1 className="text-3xl sm:text-4xl font-semibold tracking-tight text-[#F5F7FA]">
-          REPORT A CIVIC ISSUE
+          See something? Give Bhopal the evidence to remember it.
         </h1>
         <p className="text-xs sm:text-sm text-[#A7AFBD] leading-relaxed">
-          Give the city enough context to understand what is happening. Reports are triaged by Claude, cross-referenced with CPCB/NGT baseline records, and matched against historical recurrence clusters.
+          Report civic disruptions in English or Hindi (<span className="text-[#F5F7FA] font-medium">हिंदी / Hinglish</span>). Claude triages raw claims into grounded observations, cross-references CPCB/NGT baseline records, and flags recurring institutional failures.
         </p>
 
         {/* Minimal Segmented Step Indicator */}

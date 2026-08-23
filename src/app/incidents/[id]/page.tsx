@@ -426,12 +426,15 @@ export default function IncidentDetailPage() {
         </div>
       </div>
 
+      {/* "WHY?" REASONING CHAIN UI (ANALYTICAL DECOMPOSITION) */}
       <div className="card-surface p-6 space-y-4 shadow-xl">
-        <div className="flex items-center justify-between pb-3 border-b border-white/[0.08]">
+        <div className="flex flex-wrap items-center justify-between gap-2 pb-3 border-b border-white/[0.08]">
           <div className="flex items-center gap-2">
-            <Sparkles className="h-4 w-4 text-[#00DFD8]" />
+            <span className="inline-flex items-center gap-1.5 rounded bg-[#007CF0]/10 border border-[#007CF0]/25 px-2 py-0.5 font-mono text-[10px] uppercase tracking-wider text-[#00DFD8] font-semibold">
+              CLAUDE REASONING
+            </span>
             <h2 className="text-sm font-semibold text-[#F5F7FA]">
-              Epistemic Reasoning Chain: "Why Did Claude Arrive at This?"
+              "Why Did Claude Arrive at This?" — Epistemic Chain
             </h2>
           </div>
           <span className="font-mono text-[10px] text-[#687386] uppercase tracking-wider">
@@ -439,13 +442,16 @@ export default function IncidentDetailPage() {
           </span>
         </div>
 
+        {/* Analytical Flow Chain */}
         <div className="grid grid-cols-1 md:grid-cols-5 gap-3 relative pt-2">
+          {/* Node 1: Report */}
           <div className="rounded-lg border border-white/[0.08] bg-white/[0.02] p-3 space-y-1.5 relative">
             <div className="font-mono text-[10px] text-[#A7AFBD] uppercase tracking-wider">01 REPORT</div>
             <div className="text-xs font-semibold text-[#F5F7FA] truncate">{incident.title}</div>
             <p className="text-[11px] text-[#687386] line-clamp-2">Citizen intake text & location coordinates</p>
           </div>
 
+          {/* Node 2: Observation */}
           <div className="rounded-lg border border-white/[0.08] bg-white/[0.02] p-3 space-y-1.5 relative">
             <div className="font-mono text-[10px] text-[#00DFD8] uppercase tracking-wider">02 OBSERVATION</div>
             <div className="text-xs font-semibold text-[#F5F7FA] truncate">
@@ -454,6 +460,7 @@ export default function IncidentDetailPage() {
             <p className="text-[11px] text-[#687386] line-clamp-2">Direct perceptual visual & sensor data</p>
           </div>
 
+          {/* Node 3: Evidence */}
           <div className="rounded-lg border border-white/[0.08] bg-white/[0.02] p-3 space-y-1.5 relative">
             <div className="font-mono text-[10px] text-[#007CF0] uppercase tracking-wider">03 EVIDENCE</div>
             <div className="text-xs font-semibold text-[#F5F7FA] truncate">
@@ -462,6 +469,7 @@ export default function IncidentDetailPage() {
             <p className="text-[11px] text-[#687386] line-clamp-2">Cross-referenced against verified registry</p>
           </div>
 
+          {/* Node 4: Inference */}
           <div className="rounded-lg border border-white/[0.08] bg-white/[0.02] p-3 space-y-1.5 relative">
             <div className="font-mono text-[10px] text-purple-400 uppercase tracking-wider">04 INFERENCE</div>
             <div className="text-xs font-semibold text-[#F5F7FA] truncate">
@@ -470,6 +478,7 @@ export default function IncidentDetailPage() {
             <p className="text-[11px] text-[#687386] line-clamp-2">Bounded deduction from observations + baselines</p>
           </div>
 
+          {/* Node 5: Hypothesis */}
           <div className="rounded-lg border border-white/[0.08] bg-white/[0.02] p-3 space-y-1.5 relative">
             <div className="font-mono text-[10px] text-emerald-400 uppercase tracking-wider">05 HYPOTHESIS</div>
             <div className="text-xs font-semibold text-[#F5F7FA] truncate">
@@ -480,15 +489,18 @@ export default function IncidentDetailPage() {
         </div>
       </div>
 
+      {/* RESOLUTION VERIFICATION RESULTS IF VERIFIED */}
       {verificationResult && (
         <div className="card-surface p-5 space-y-3 border border-emerald-500/25 bg-emerald-500/[0.03]">
           <div className="flex flex-wrap items-center justify-between gap-2 pb-2.5 border-b border-emerald-500/20">
-            <div className="flex items-center gap-2 text-emerald-300 text-xs font-mono font-medium uppercase tracking-wider">
-              <FileCheck2 className="h-4 w-4 text-emerald-400" />
-              <span>Resolution Verification (Before vs After Visual Audit)</span>
+            <div className="flex items-center gap-2">
+              <span className="inline-flex items-center gap-1.5 rounded bg-emerald-500/10 border border-emerald-500/25 px-2 py-0.5 font-mono text-[10px] uppercase tracking-wider text-emerald-300 font-semibold">
+                CLAUDE VISION
+              </span>
+              <span className="text-xs font-medium text-[#F5F7FA]">Resolution Verification (Before vs After Audit)</span>
             </div>
             <span className="font-mono text-xs text-emerald-400">
-              Score: {verificationResult.confidence_score.toFixed(2)}
+              Confidence: {verificationResult.confidence_score.toFixed(2)}
             </span>
           </div>
 
@@ -531,9 +543,11 @@ export default function IncidentDetailPage() {
       {fieldPlan && (
         <div className="card-surface p-5 space-y-4 border border-purple-500/25 bg-purple-500/[0.03]">
           <div className="flex flex-wrap items-center justify-between gap-2 pb-2.5 border-b border-purple-500/20">
-            <div className="flex items-center gap-2 text-purple-300 text-xs font-mono font-medium uppercase tracking-wider">
-              <ClipboardList className="h-4 w-4 text-purple-400" />
-              <span>Civic Memory Field Investigation Plan</span>
+            <div className="flex items-center gap-2">
+              <span className="inline-flex items-center gap-1.5 rounded bg-purple-500/10 border border-purple-500/25 px-2 py-0.5 font-mono text-[10px] uppercase tracking-wider text-purple-300 font-semibold">
+                FIELD VERIFICATION REQUIRED
+              </span>
+              <span className="text-xs font-medium text-[#F5F7FA]">Civic Memory Field Investigation Plan</span>
             </div>
             <span className="font-mono text-[10px] text-amber-300 bg-amber-500/10 px-2 py-0.5 rounded border border-amber-500/20">
               {fieldPlan.disclaimer}
@@ -712,13 +726,14 @@ export default function IncidentDetailPage() {
                     </button>
                   ))}
                 </div>
-
                 <div className="space-y-3 text-xs">
                   {(activeEpistemicTab === 'all' || activeEpistemicTab === 'evidence') && (
                     <div className="rounded-lg border border-white/[0.08] bg-white/[0.02] p-4 space-y-3">
-                      <div className="flex items-center gap-2 font-semibold text-[#F5F7FA]">
-                        <Database className="h-3.5 w-3.5 text-[#00DFD8]" />
-                        <span>Verified Evidence Records</span>
+                      <div className="flex items-center gap-2">
+                        <span className="inline-flex items-center gap-1.5 rounded bg-emerald-500/10 border border-emerald-500/25 px-2 py-0.5 font-mono text-[10px] uppercase tracking-wider text-emerald-300 font-semibold">
+                          EVIDENCE GROUNDED
+                        </span>
+                        <span className="text-xs font-semibold text-[#F5F7FA]">Verified Evidence Records (CPCB / NGT)</span>
                       </div>
                       <div className="space-y-2.5">
                         {externalEvidence.map((ev, i) => (
