@@ -45,33 +45,33 @@ export function CivicShell({ children }: { children: React.ReactNode }) {
   ];
 
   return (
-    <div className="min-h-screen bg-[#070B14] text-slate-100 flex flex-col font-sans selection:bg-blue-500/30 selection:text-white">
+    <div className="min-h-screen bg-black text-slate-100 flex flex-col font-sans selection:bg-orange-500/30 selection:text-white">
       {/* Refined Dark Navigation Bar */}
-      <header className="sticky top-0 z-50 border-b border-slate-800/80 bg-[#070B14]/95 backdrop-blur-md">
+      <header className="sticky top-0 z-50 border-b border-zinc-850 bg-black/90 backdrop-blur-md">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3.5 sm:px-6">
           {/* Logo & Brand matching design */}
           <Link href="/" className="flex items-center gap-3 group">
-            <div className="flex h-10 w-10 items-center justify-center rounded-full border border-slate-700/80 bg-slate-900 text-sky-400 group-hover:border-sky-500/50 transition-colors shadow-sm">
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl border border-zinc-800 bg-zinc-950 text-orange-500 group-hover:border-orange-500/50 transition-colors shadow-sm">
               {/* Taj-ul-Masajid / Bhopal Arch Landmark Emblem SVG */}
-              <svg className="h-5 w-5 text-slate-200 group-hover:text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6">
+              <svg className="h-5 w-5 text-orange-400 group-hover:text-orange-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
                 <path d="M3 21h18M4 21V10l8-6 8 6v11M9 21v-6a3 3 0 0 1 6 0v6" />
                 <path d="M12 4v2M7 13v3M17 13v3" strokeLinecap="round" />
               </svg>
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <span className="text-base font-semibold tracking-tight text-white group-hover:text-sky-300 transition-colors">
+                <span className="text-base font-bold tracking-tight text-white group-hover:text-orange-400 transition-colors">
                   Bhopal Civic Memory
                 </span>
               </div>
-              <p className="text-[11px] text-amber-300/80 font-medium tracking-wide">
+              <p className="text-[11px] text-orange-400/90 font-medium tracking-wide">
                 {t('nav_tagline', 'Yaad rakhein. Behtar banaayein.')}
               </p>
             </div>
           </Link>
 
           {/* Desktop Navigation Links */}
-          <nav className="hidden md:flex items-center gap-6 text-sm font-medium">
+          <nav className="hidden md:flex items-center gap-7 text-sm font-medium">
             {navItems.map((item) => {
               const isActive = pathname === item.href;
               return (
@@ -80,8 +80,8 @@ export function CivicShell({ children }: { children: React.ReactNode }) {
                   href={item.href}
                   className={`transition-colors text-xs tracking-wide ${
                     isActive
-                      ? 'text-white font-semibold'
-                      : 'text-slate-300 hover:text-white'
+                      ? 'text-orange-400 font-semibold'
+                      : 'text-zinc-300 hover:text-white'
                   }`}
                 >
                   {item.label}
@@ -95,17 +95,17 @@ export function CivicShell({ children }: { children: React.ReactNode }) {
             {/* Language Switch Pill */}
             <button
               onClick={() => setLanguage(language === 'en' ? 'hi' : 'en')}
-              className="rounded-full border border-slate-700/80 bg-slate-900/90 px-3.5 py-1.5 text-xs font-medium text-slate-200 hover:border-slate-500 hover:text-white transition-colors flex items-center gap-1.5"
+              className="rounded-full border border-zinc-800 bg-zinc-950 px-3.5 py-1.5 text-xs font-medium text-zinc-200 hover:border-orange-500/50 hover:text-white transition-colors flex items-center gap-1.5 shadow-sm"
               title="Toggle Hindi / English localization"
             >
-              <span className={language === 'hi' ? 'font-bold text-sky-400' : 'text-slate-400'}>हिंदी</span>
-              <span className="text-slate-600">/</span>
-              <span className={language === 'en' ? 'font-bold text-sky-400' : 'text-slate-400'}>English</span>
+              <span className={language === 'hi' ? 'font-bold text-orange-400' : 'text-zinc-400'}>हिंदी</span>
+              <span className="text-zinc-700">/</span>
+              <span className={language === 'en' ? 'font-bold text-orange-400' : 'text-zinc-400'}>English</span>
             </button>
 
             <Link
               href="/report"
-              className="hidden sm:inline-flex items-center gap-1.5 rounded-lg bg-blue-600 px-3.5 py-1.5 text-xs font-semibold text-white hover:bg-blue-500 transition-colors shadow-sm"
+              className="hidden sm:inline-flex items-center gap-1.5 rounded-xl bg-orange-500 px-4 py-2 text-xs font-semibold text-white hover:bg-orange-600 transition-all shadow-md shadow-orange-500/20 hover:shadow-orange-500/35"
             >
               <PlusCircle className="h-3.5 w-3.5" />
               <span>{t('nav_report_btn', 'Report')}</span>
@@ -114,12 +114,12 @@ export function CivicShell({ children }: { children: React.ReactNode }) {
         </div>
 
         {/* Mobile Navigation */}
-        <div className="flex md:hidden items-center justify-around border-t border-slate-800/80 bg-slate-950/90 px-2 py-2 text-xs">
+        <div className="flex md:hidden items-center justify-around border-t border-zinc-850 bg-black/95 px-2 py-2 text-xs">
           {navItems.slice(0, 4).map((item) => (
             <Link
               key={item.label}
               href={item.href}
-              className="p-1.5 text-slate-300 hover:text-white text-[11px]"
+              className="p-1.5 text-zinc-300 hover:text-orange-400 text-[11px]"
             >
               {item.label}
             </Link>
@@ -131,13 +131,13 @@ export function CivicShell({ children }: { children: React.ReactNode }) {
       <main className="flex-1 pb-16">{children}</main>
 
       {/* Clean Minimalist Footer */}
-      <footer className="border-t border-slate-800/80 bg-[#070A11] py-6 text-xs text-slate-500">
+      <footer className="border-t border-zinc-850 bg-black py-6 text-xs text-zinc-500">
         <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-3 px-4 sm:flex-row sm:px-6">
-          <div className="flex items-center gap-2 text-slate-400">
-            <span className="h-2 w-2 rounded-full bg-emerald-500 inline-block" />
+          <div className="flex items-center gap-2 text-zinc-400">
+            <span className="h-2 w-2 rounded-full bg-orange-500 inline-block" />
             <span>Bhopal Civic Memory Protocol • Municipal Operations</span>
           </div>
-          <div className="flex items-center gap-4 text-slate-400 text-xs">
+          <div className="flex items-center gap-4 text-zinc-400 text-xs">
             <span>Bhoj Wetland Ramsar Site #1206</span>
             <span>•</span>
             <span>Bhopal Municipal Corporation</span>

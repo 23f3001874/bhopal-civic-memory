@@ -1,23 +1,27 @@
-@import url('https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
 @import "tailwindcss";
 
 @layer base {
   :root {
-    --background: #070a11;
+    --background: #000000;
     --foreground: #f8fafc;
-    --font-silkscreen: 'Silkscreen', monospace;
   }
 
   body {
-    background-color: var(--background);
-    color: var(--foreground);
-    font-family: 'Silkscreen', 'JetBrains Mono', monospace, sans-serif;
-    letter-spacing: 0.02em;
+    background-color: #000000;
+    color: #f8fafc;
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    letter-spacing: -0.01em;
   }
 
-  h1, h2, h3, h4, h5, h6, button, input, select, textarea, .font-bitmap {
-    font-family: 'Silkscreen', monospace, sans-serif;
-    letter-spacing: 0.03em;
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    letter-spacing: -0.02em;
+    font-weight: 700;
+  }
+
+  code, kbd, samp, pre, .font-mono {
+    font-family: 'JetBrains Mono', monospace;
   }
 }
 
