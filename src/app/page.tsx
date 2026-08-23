@@ -28,17 +28,17 @@ import {
 } from 'lucide-react';
 import { IncidentCategory } from '@/types/incident';
 
-// Hotspots positioned over the Bhopal map corresponding to the landmark nodes in the hero image
+// Precisely verified Bhopal landmark coordinates on satellite map canvas
 const MAP_HOTSPOTS = [
   {
     id: 'bhojtal',
     label: 'Bhojtal',
-    subtext: 'Ramsar Site #1206 • Upper Lake Catchment',
+    subtext: 'Ramsar Wetland Site #1206 • Upper Lake Catchment',
     telemetry: 'Water Quality Class B • DO: 6.4 mg/L',
     status: 'monitored',
     color: 'emerald',
-    top: '42%',
-    left: '64%'
+    top: '46%',
+    left: '58%'
   },
   {
     id: 'kolar',
@@ -47,7 +47,7 @@ const MAP_HOTSPOTS = [
     telemetry: '2 Active Incidents • Runoff Silt Moderate',
     status: 'active',
     color: 'blue',
-    top: '15%',
+    top: '18%',
     left: '46%'
   },
   {
@@ -57,8 +57,8 @@ const MAP_HOTSPOTS = [
     telemetry: 'All 3 Sump Stations Operational',
     status: 'monitored',
     color: 'blue',
-    top: '16%',
-    left: '77%'
+    top: '20%',
+    left: '76%'
   },
   {
     id: 'ttnagar',
@@ -67,7 +67,7 @@ const MAP_HOTSPOTS = [
     telemetry: 'Recurrence Risk Flagged • Sargam Cinema',
     status: 'warning',
     color: 'emerald',
-    top: '27%',
+    top: '32%',
     left: '50%'
   },
   {
@@ -77,8 +77,8 @@ const MAP_HOTSPOTS = [
     telemetry: '1 Pavement Fissure Case Logged',
     status: 'critical',
     color: 'red',
-    top: '37%',
-    left: '43%'
+    top: '38%',
+    left: '42%'
   },
   {
     id: 'govindpura',
@@ -87,7 +87,7 @@ const MAP_HOTSPOTS = [
     telemetry: 'Trash Interceptor Inspection Due',
     status: 'warning',
     color: 'blue',
-    top: '65%',
+    top: '67%',
     left: '52%'
   },
   {
@@ -97,8 +97,8 @@ const MAP_HOTSPOTS = [
     telemetry: 'Pre-Monsoon Suction Jetting Logged',
     status: 'monitored',
     color: 'blue',
-    top: '34%',
-    left: '86%'
+    top: '36%',
+    left: '84%'
   },
   {
     id: 'bhel',
@@ -107,7 +107,7 @@ const MAP_HOTSPOTS = [
     telemetry: 'Stormwater Inlets Clear • 0 Overflows',
     status: 'monitored',
     color: 'blue',
-    top: '51%',
+    top: '52%',
     left: '92%'
   },
   {
@@ -117,8 +117,8 @@ const MAP_HOTSPOTS = [
     telemetry: 'Feeder Canal Water Level Normal',
     status: 'monitored',
     color: 'emerald',
-    top: '65%',
-    left: '73%'
+    top: '67%',
+    left: '74%'
   }
 ];
 
@@ -177,57 +177,58 @@ export default function DashboardPage() {
   });
 
   return (
-    <div className="flex flex-col min-h-screen bg-[#070B14] text-slate-100 selection:bg-blue-500/30">
+    <div className="flex flex-col min-h-screen bg-[#070B14] text-slate-100 selection:bg-blue-500/30 font-bitmap">
       
       {/* =========================================================================
-          HERO SECTION (CLEAN DESIGNER REFINEMENT - ZERO CLUTTER)
+          HERO SECTION (VIVID SATELLITE MAP + BITMAP COMMAND CENTER)
           ========================================================================= */}
       <section
         ref={heroRef}
         onMouseMove={handleMouseMove}
-        className="relative min-h-[92vh] w-full overflow-hidden flex flex-col justify-between border-b border-slate-800/60 bg-[#070B14]"
+        className="relative min-h-[92vh] w-full overflow-hidden flex flex-col justify-between border-b border-slate-800/80 bg-[#070B14]"
       >
-        {/* Dark Sat Map Background positioned right with solid gradient mask on text */}
+        {/* Bright, Vivid High-Contrast Satellite Map Background */}
         <div className="absolute inset-0 pointer-events-none z-0">
-          <div className="absolute right-0 top-0 bottom-0 w-full lg:w-[65%] h-full">
+          <div className="absolute inset-0 w-full h-full">
             <Image
               src="/bhopal-map-hero.jpg"
               alt="Bhopal Civic Memory Spatial Radar"
               fill
               priority
-              className="object-cover object-right opacity-70 brightness-90 contrast-110"
+              className="object-cover object-center lg:object-right opacity-95 brightness-110 contrast-125 saturate-125"
             />
           </div>
 
-          {/* Solid Left Gradient to eliminate background ghosting text */}
-          <div className="absolute inset-0 bg-gradient-to-r from-[#070B14] from-40% via-[#070B14]/90 via-60% to-transparent" />
+          {/* Clean Left Shadow for High-Contrast Text Readability without fainting the map */}
+          <div className="absolute inset-0 bg-gradient-to-r from-[#070B14] from-25% via-[#070B14]/85 via-50% to-transparent/10" />
+          
           {/* Subtle Top & Bottom Vignette */}
-          <div className="absolute inset-x-0 top-0 h-28 bg-gradient-to-b from-[#070B14] to-transparent" />
-          <div className="absolute inset-x-0 bottom-0 h-44 bg-gradient-to-t from-[#070B14] via-[#070B14]/80 to-transparent" />
+          <div className="absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-[#070B14] to-transparent" />
+          <div className="absolute inset-x-0 bottom-0 h-36 bg-gradient-to-t from-[#070B14] via-[#070B14]/90 to-transparent" />
 
           {/* Interactive Mouse Hover Spotlight Glow */}
           <div
-            className="pointer-events-none absolute -inset-px opacity-30 transition-opacity duration-300 hidden lg:block"
+            className="pointer-events-none absolute -inset-px opacity-40 transition-opacity duration-300 hidden lg:block"
             style={{
-              background: `radial-gradient(600px circle at ${mousePos.x}px ${mousePos.y}px, rgba(59, 130, 246, 0.15), transparent 80%)`
+              background: `radial-gradient(600px circle at ${mousePos.x}px ${mousePos.y}px, rgba(59, 130, 246, 0.2), transparent 80%)`
             }}
           />
         </div>
 
-        {/* Clean Interactive Radar Beacons (Hover for Telemetry HUD) */}
+        {/* Interactive Tactical Radar Hotspots with Bitmap Badges */}
         <div className="absolute inset-0 pointer-events-auto z-10 hidden md:block">
           {MAP_HOTSPOTS.map((spot) => (
             <div
               key={spot.id}
               style={{ top: spot.top, left: spot.left }}
-              className="absolute -translate-x-1/2 -translate-y-1/2 group cursor-pointer p-3"
+              className="absolute -translate-x-1/2 -translate-y-1/2 group cursor-pointer"
               onMouseEnter={() => setActiveHotspot(spot)}
               onMouseLeave={() => setActiveHotspot(null)}
             >
-              {/* Radar Pulsing Rings */}
+              {/* Radar Pulsing Rings & Beacon */}
               <div className="relative flex items-center justify-center">
                 <span
-                  className={`absolute h-7 w-7 animate-ping rounded-full opacity-50 ${
+                  className={`absolute h-8 w-8 animate-ping rounded-full opacity-60 ${
                     spot.color === 'red'
                       ? 'bg-rose-500'
                       : spot.color === 'emerald'
@@ -236,7 +237,7 @@ export default function DashboardPage() {
                   }`}
                 />
                 <span
-                  className={`relative flex h-3.5 w-3.5 rounded-full border-2 border-slate-950 shadow-xl transition-transform group-hover:scale-125 ${
+                  className={`relative flex h-4 w-4 rounded-full border-2 border-slate-950 shadow-2xl transition-transform group-hover:scale-125 ${
                     spot.color === 'red'
                       ? 'bg-rose-500'
                       : spot.color === 'emerald'
@@ -244,20 +245,25 @@ export default function DashboardPage() {
                       : 'bg-blue-400'
                   }`}
                 />
+
+                {/* Tactical Bitmap Landmark Label */}
+                <span className="ml-2 rounded border border-slate-700/80 bg-slate-950/80 px-1.5 py-0.5 text-[9px] font-mono tracking-widest text-slate-200 group-hover:text-white group-hover:border-sky-500 uppercase backdrop-blur-sm shadow-md transition-colors">
+                  {spot.label}
+                </span>
               </div>
 
               {/* Hover Popover Tooltip */}
               {activeHotspot?.id === spot.id && (
-                <div className="absolute left-1/2 bottom-full mb-3 -translate-x-1/2 w-64 rounded-xl border border-slate-700/80 bg-slate-900/95 p-3.5 shadow-2xl backdrop-blur-md z-50 text-left pointer-events-none animate-in fade-in zoom-in-95 duration-150">
+                <div className="absolute left-1/2 bottom-full mb-3 -translate-x-1/2 w-64 rounded-xl border border-slate-700 bg-slate-950/95 p-3.5 shadow-2xl backdrop-blur-md z-50 text-left pointer-events-none animate-in fade-in zoom-in-95 duration-150 font-bitmap">
                   <div className="flex items-center justify-between pb-1.5 border-b border-slate-800">
                     <span className="text-xs font-bold text-white tracking-wide">{spot.label}</span>
-                    <span className={`text-[10px] font-mono uppercase px-1.5 py-0.5 rounded font-semibold ${
+                    <span className={`text-[9px] font-mono uppercase px-1.5 py-0.5 rounded font-bold ${
                       spot.color === 'red' ? 'bg-rose-500/20 text-rose-300' : 'bg-emerald-500/20 text-emerald-300'
                     }`}>
                       {spot.status}
                     </span>
                   </div>
-                  <p className="text-[11px] text-slate-400 mt-1.5 leading-relaxed">{spot.subtext}</p>
+                  <p className="text-[10px] text-slate-400 mt-1.5 leading-relaxed">{spot.subtext}</p>
                   <div className="mt-2 flex items-center gap-1.5 text-[10px] text-sky-400 font-mono">
                     <Sparkles className="h-3 w-3 shrink-0" />
                     <span>{spot.telemetry}</span>
