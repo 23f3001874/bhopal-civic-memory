@@ -34,25 +34,25 @@ export default function MapPage() {
   });
 
   return (
-    <div className="mx-auto max-w-6xl px-4 py-10 sm:px-6 space-y-8">
+    <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 space-y-8 bg-[#05070B] text-[#F5F7FA]">
       {/* Header Banner */}
-      <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 pb-6 border-b border-slate-800/80">
+      <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 pb-6 border-b border-white/[0.08]">
         <div className="space-y-1.5 max-w-2xl">
-          <div className="flex items-center gap-2 text-sky-400 text-xs font-semibold uppercase tracking-wider">
-            <Layers className="h-4 w-4" />
-            <span>Spatial Operations</span>
+          <div className="inline-flex items-center gap-2 rounded-full border border-white/[0.08] bg-white/[0.03] px-3 py-1 text-[11px] font-mono uppercase tracking-widest text-[#A7AFBD]">
+            <Layers className="h-3.5 w-3.5 text-[#00DFD8]" />
+            <span>GEOSPATIAL INTELLIGENCE & WARD RECONNAISSANCE</span>
           </div>
-          <h1 className="text-2xl sm:text-3xl font-semibold tracking-tight text-white">
+          <h1 className="text-3xl sm:text-4xl font-semibold tracking-tight text-[#F5F7FA]">
             Municipal Ward & Catchment Map
           </h1>
-          <p className="text-sm text-slate-400 leading-relaxed">
+          <p className="text-xs sm:text-sm text-[#A7AFBD] leading-relaxed">
             Multi-layered spatial visualization of Bhoj Wetland (Ramsar Site #1206), heritage corridors, and municipal dispatches.
           </p>
         </div>
 
         <Link
           href="/report"
-          className="inline-flex items-center gap-1.5 rounded-lg bg-sky-500 px-3.5 py-2 text-xs font-semibold text-slate-950 hover:bg-sky-400 transition-colors shadow-sm shrink-0"
+          className="inline-flex items-center gap-1.5 btn-primary px-3.5 py-2 text-xs font-medium text-white shadow-sm shrink-0"
         >
           <span>Report at Location</span>
         </Link>
@@ -62,16 +62,16 @@ export default function MapPage() {
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
         {/* Left Side: Incidents Sidebar (4 Cols) */}
         <div className="lg:col-span-4 space-y-4">
-          <div className="rounded-xl border border-slate-800 bg-slate-900/30 p-4 space-y-3">
+          <div className="card-surface p-4 space-y-3">
             {/* Search */}
             <div className="relative">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-slate-500" />
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-[#687386]" />
               <input
                 type="text"
                 placeholder="Search pins or wards..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full rounded-lg border border-slate-800 bg-slate-950 pl-9 pr-3 py-1.5 text-xs text-slate-200 placeholder-slate-500 focus:border-sky-500 focus:outline-none"
+                className="w-full rounded-lg border border-white/[0.08] bg-[#05070B] pl-9 pr-3 py-1.5 text-xs text-[#F5F7FA] placeholder-[#687386] focus:border-[#007CF0]/50 focus:outline-none"
               />
             </div>
 
@@ -80,7 +80,7 @@ export default function MapPage() {
               <select
                 value={categoryFilter}
                 onChange={(e) => setCategoryFilter(e.target.value)}
-                className="rounded-lg border border-slate-800 bg-slate-950 px-2.5 py-1.5 text-xs text-slate-200 focus:border-sky-500 focus:outline-none"
+                className="rounded-lg border border-white/[0.08] bg-[#05070B] px-2.5 py-1.5 text-xs text-[#A7AFBD] focus:border-[#007CF0]/50 focus:outline-none"
               >
                 <option value="all">All Domains</option>
                 <option value="lake_ecology">Lake Ecology</option>
@@ -92,7 +92,7 @@ export default function MapPage() {
               <select
                 value={severityFilter}
                 onChange={(e) => setSeverityFilter(e.target.value)}
-                className="rounded-lg border border-slate-800 bg-slate-950 px-2.5 py-1.5 text-xs text-slate-200 focus:border-sky-500 focus:outline-none"
+                className="rounded-lg border border-white/[0.08] bg-[#05070B] px-2.5 py-1.5 text-xs text-[#A7AFBD] focus:border-[#007CF0]/50 focus:outline-none"
               >
                 <option value="all">All Severities</option>
                 <option value="critical">Critical</option>
@@ -104,10 +104,10 @@ export default function MapPage() {
           </div>
 
           {/* Incident Pins List */}
-          <div className="rounded-xl border border-slate-800 bg-slate-900/30 p-4 space-y-3">
-            <div className="flex items-center justify-between text-xs pb-2 border-b border-slate-800 text-slate-400">
-              <span className="font-semibold text-slate-200">Incident Locations</span>
-              <span className="font-mono">{filteredIncidents.length} pins</span>
+          <div className="card-surface p-4 space-y-3">
+            <div className="flex items-center justify-between text-xs pb-2 border-b border-white/[0.06] text-[#A7AFBD]">
+              <span className="font-semibold text-[#F5F7FA]">Incident Locations</span>
+              <span className="font-mono text-[11px] text-[#687386]">{filteredIncidents.length} pins</span>
             </div>
 
             <div className="max-h-[440px] space-y-2 overflow-y-auto pr-1">
@@ -117,19 +117,19 @@ export default function MapPage() {
                   <div
                     key={inc.id}
                     onClick={() => setSelectedIncident(inc)}
-                    className={`cursor-pointer rounded-lg p-3 border transition-colors space-y-1.5 text-xs ${
+                    className={`cursor-pointer rounded-lg p-3 border transition-all space-y-1.5 text-xs ${
                       isSelected
-                        ? 'border-sky-500/50 bg-sky-500/10'
-                        : 'border-slate-800/80 bg-slate-950/40 hover:border-slate-700'
+                        ? 'border-[#007CF0]/50 bg-[#007CF0]/10'
+                        : 'border-white/[0.06] bg-white/[0.02] hover:border-white/[0.12] hover:bg-white/[0.04]'
                     }`}
                   >
                     <div className="flex items-center justify-between">
-                      <span className="font-mono text-[11px] text-slate-400">{inc.trackingToken}</span>
+                      <span className="font-mono text-[10px] text-[#A7AFBD]">{inc.trackingToken}</span>
                       <SeverityBadge severity={inc.severity} />
                     </div>
-                    <div className="font-medium text-slate-200 line-clamp-1">{inc.title}</div>
-                    <div className="flex items-center gap-1 text-[11px] text-slate-400">
-                      <MapPin className="h-3 w-3 text-slate-500" />
+                    <div className="font-medium text-[#F5F7FA] line-clamp-1">{inc.title}</div>
+                    <div className="flex items-center gap-1 text-[11px] text-[#687386]">
+                      <MapPin className="h-3 w-3 text-[#687386]" />
                       <span>{inc.wardName}</span>
                     </div>
                   </div>
@@ -141,21 +141,21 @@ export default function MapPage() {
 
         {/* Right Side: Map Canvas & Selected Pin Detail (8 Cols) */}
         <div className="lg:col-span-8 space-y-4">
-          <div className="rounded-xl border border-slate-800 bg-slate-900/30 p-4 space-y-3">
+          <div className="card-surface p-2 sm:p-3 shadow-xl">
             <CivicMapCanvas
               incidents={filteredIncidents}
               wards={wards}
               selectedIncidentId={selectedIncident?.id}
-              className="h-[460px] rounded-lg border border-slate-800"
+              className="h-[480px] rounded-lg border border-white/[0.06]"
             />
           </div>
 
           {/* Selected Incident Drawer */}
           {selectedIncident && (
-            <div className="rounded-xl border border-slate-800 bg-slate-900/40 p-5 space-y-3">
-              <div className="flex flex-wrap items-center justify-between gap-2 pb-2.5 border-b border-slate-800">
+            <div className="card-surface p-5 space-y-3 shadow-xl animate-in fade-in duration-200">
+              <div className="flex flex-wrap items-center justify-between gap-2 pb-2.5 border-b border-white/[0.08]">
                 <div className="flex items-center gap-2">
-                  <span className="font-mono text-xs text-slate-400 bg-slate-800 px-2 py-0.5 rounded border border-slate-700">
+                  <span className="font-mono text-xs text-[#A7AFBD] bg-white/[0.04] px-2 py-0.5 rounded border border-white/[0.08]">
                     {selectedIncident.trackingToken}
                   </span>
                   <CategoryBadge category={selectedIncident.category} />
@@ -164,20 +164,20 @@ export default function MapPage() {
 
                 <Link
                   href={`/incidents/${selectedIncident.id}`}
-                  className="inline-flex items-center gap-1 text-xs font-medium text-sky-400 hover:text-sky-300"
+                  className="inline-flex items-center gap-1 text-xs font-medium text-[#00DFD8] hover:text-[#007CF0] transition-colors"
                 >
                   View Full File <ArrowUpRight className="h-3.5 w-3.5" />
                 </Link>
               </div>
 
               <div className="space-y-1">
-                <h3 className="text-sm font-semibold text-white">{selectedIncident.title}</h3>
-                <p className="text-xs text-slate-300 leading-relaxed">{selectedIncident.description}</p>
+                <h3 className="text-sm font-semibold text-[#F5F7FA]">{selectedIncident.title}</h3>
+                <p className="text-xs text-[#A7AFBD] leading-relaxed">{selectedIncident.description}</p>
               </div>
 
-              <div className="flex items-center gap-4 text-xs text-slate-400 pt-2 border-t border-slate-800/80">
-                <span className="flex items-center gap-1">
-                  <MapPin className="h-3.5 w-3.5 text-slate-500" />
+              <div className="flex items-center gap-4 text-xs text-[#687386] pt-2 border-t border-white/[0.06]">
+                <span className="flex items-center gap-1 text-[#A7AFBD]">
+                  <MapPin className="h-3.5 w-3.5 text-[#687386]" />
                   {selectedIncident.wardName}
                 </span>
                 <span>•</span>

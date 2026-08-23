@@ -28,7 +28,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark h-full">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} min-h-screen bg-[#070A11] text-slate-100 antialiased font-sans`}
+        className={`${geistSans.variable} ${geistMono.variable} min-h-screen bg-[#05070B] text-[#F5F7FA] antialiased font-sans selection:bg-[#007CF0]/25 selection:text-white`}
       >
         <CivicProvider>
           <CivicShell>{children}</CivicShell>

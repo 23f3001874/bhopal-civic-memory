@@ -197,29 +197,45 @@ export default function ReportPage() {
   };
 
   return (
-    <div className="mx-auto max-w-3xl px-4 py-10 sm:px-6 space-y-8">
+    <div className="mx-auto max-w-3xl px-4 py-12 sm:px-6 space-y-8 bg-[#05070B] text-[#F5F7FA]">
       {/* Page Header */}
-      <div className="space-y-2 pb-6 border-b border-slate-800/80">
-        <div className="inline-flex items-center gap-1.5 text-xs text-sky-400 font-semibold uppercase tracking-wider">
-          <Sparkles className="h-3.5 w-3.5" />
-          <span>Intake & Triage Gateway</span>
+      <div className="space-y-3 pb-6 border-b border-white/[0.08]">
+        <div className="inline-flex items-center gap-2 rounded-full border border-white/[0.08] bg-white/[0.03] px-3 py-1 text-[11px] font-mono uppercase tracking-widest text-[#A7AFBD]">
+          <span className="h-1.5 w-1.5 rounded-full bg-[#00DFD8]" />
+          <span>INTAKE TERMINAL / BHOPAL CIVIC RECONNAISSANCE</span>
         </div>
-        <h1 className="text-2xl sm:text-3xl font-semibold tracking-tight text-white">
-          File Civic Memory Report
+        <h1 className="text-3xl sm:text-4xl font-semibold tracking-tight text-[#F5F7FA]">
+          REPORT A CIVIC ISSUE
         </h1>
-        <p className="text-sm text-slate-400 leading-relaxed">
-          Reports are triaged by Claude, cross-referenced with CPCB/NGT baseline records, and matched against historical recurrence clusters. Hindi and English supported.
+        <p className="text-xs sm:text-sm text-[#A7AFBD] leading-relaxed">
+          Give the city enough context to understand what is happening. Reports are triaged by Claude, cross-referenced with CPCB/NGT baseline records, and matched against historical recurrence clusters.
         </p>
+
+        {/* Minimal Segmented Step Indicator */}
+        <div className="grid grid-cols-4 gap-2 pt-3">
+          <div className="border-t-2 border-[#00DFD8] pt-1.5">
+            <div className="font-mono text-[10px] text-[#00DFD8] uppercase tracking-wider font-semibold">01 CONTEXT</div>
+          </div>
+          <div className="border-t-2 border-[#007CF0] pt-1.5">
+            <div className="font-mono text-[10px] text-[#007CF0] uppercase tracking-wider font-semibold">02 LOCATION</div>
+          </div>
+          <div className="border-t-2 border-purple-400 pt-1.5">
+            <div className="font-mono text-[10px] text-purple-400 uppercase tracking-wider font-semibold">03 EVIDENCE</div>
+          </div>
+          <div className="border-t-2 border-white/[0.12] pt-1.5">
+            <div className="font-mono text-[10px] text-[#687386] uppercase tracking-wider font-semibold">04 REVIEW</div>
+          </div>
+        </div>
       </div>
 
       {/* Demo Scenario Selector */}
-      <div className="rounded-xl border border-slate-800 bg-slate-900/40 p-4 space-y-3">
+      <div className="card-surface p-4 space-y-3">
         <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2 text-xs font-semibold text-slate-200">
-            <BookmarkCheck className="h-4 w-4 text-sky-400" />
+          <div className="flex items-center gap-2 text-xs font-semibold text-[#F5F7FA]">
+            <BookmarkCheck className="h-3.5 w-3.5 text-[#00DFD8]" />
             <span>Pre-load Demo Scenario</span>
           </div>
-          <span className="text-[11px] text-slate-500">Quick Judge Presets</span>
+          <span className="font-mono text-[10px] text-[#687386] uppercase tracking-wider">Quick Presets</span>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
@@ -228,10 +244,10 @@ export default function ReportPage() {
               key={scenario.id}
               type="button"
               onClick={() => handleSelectScenario(scenario)}
-              className="text-left rounded-lg border border-slate-800 bg-slate-950/60 p-3 hover:border-slate-700 hover:bg-slate-900 transition-colors space-y-1 group"
+              className="text-left rounded-lg border border-white/[0.06] bg-white/[0.02] p-3 hover:border-white/[0.15] hover:bg-white/[0.04] transition-all space-y-1 group"
             >
-              <div className="text-[11px] font-medium text-sky-400">{scenario.badge}</div>
-              <div className="text-xs font-medium text-slate-200 group-hover:text-white line-clamp-1">
+              <div className="font-mono text-[10px] text-[#00DFD8]">{scenario.badge}</div>
+              <div className="text-xs font-medium text-[#F5F7FA] group-hover:text-white line-clamp-1">
                 {scenario.title}
               </div>
             </button>
@@ -240,7 +256,7 @@ export default function ReportPage() {
       </div>
 
       {errorMsg && (
-        <div className="rounded-xl border border-rose-800/60 bg-rose-950/30 p-3.5 text-xs text-rose-300 flex items-center gap-2.5">
+        <div className="rounded-lg border border-rose-500/30 bg-rose-500/10 p-3.5 text-xs text-rose-300 flex items-center gap-2.5">
           <AlertTriangle className="h-4 w-4 text-rose-400 shrink-0" />
           <span>{errorMsg}</span>
         </div>
@@ -250,7 +266,7 @@ export default function ReportPage() {
       <form onSubmit={handleSubmit} className="space-y-6">
         {/* 1. Category Selection */}
         <div className="space-y-2.5">
-          <label className="block text-xs font-semibold uppercase tracking-wider text-slate-300">
+          <label className="block font-mono text-[11px] uppercase tracking-wider text-[#A7AFBD] font-medium">
             1. Civic Domain
           </label>
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5">
@@ -259,17 +275,17 @@ export default function ReportPage() {
                 key={cat.id}
                 type="button"
                 onClick={() => setCategory(cat.id)}
-                className={`flex flex-col items-start p-3 rounded-lg border text-left transition-colors ${
+                className={`flex flex-col items-start p-3 rounded-lg border text-left transition-all ${
                   category === cat.id
-                    ? 'border-sky-500 bg-sky-500/10 text-white'
-                    : 'border-slate-800 bg-slate-900/40 text-slate-300 hover:border-slate-700'
+                    ? 'border-[#007CF0]/50 bg-[#007CF0]/10 text-[#F5F7FA] shadow-sm'
+                    : 'border-white/[0.06] bg-white/[0.02] text-[#A7AFBD] hover:border-white/[0.12] hover:bg-white/[0.04]'
                 }`}
               >
                 <div className="flex items-center gap-2 text-sm">
                   <span>{cat.icon}</span>
                   <span className="text-xs font-medium">{cat.label}</span>
                 </div>
-                <span className="mt-1 text-[11px] text-slate-400 line-clamp-1">
+                <span className="mt-1 text-[10px] text-[#687386] line-clamp-1">
                   {cat.desc}
                 </span>
               </button>
@@ -279,7 +295,7 @@ export default function ReportPage() {
 
         {/* 2. Severity */}
         <div className="space-y-2.5">
-          <label className="block text-xs font-semibold uppercase tracking-wider text-slate-300">
+          <label className="block font-mono text-[11px] uppercase tracking-wider text-[#A7AFBD] font-medium">
             2. Perceived Urgency
           </label>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
@@ -288,35 +304,35 @@ export default function ReportPage() {
                 key={sev.id}
                 type="button"
                 onClick={() => setSeverity(sev.id)}
-                className={`p-3 rounded-lg border text-left transition-colors ${
+                className={`p-3 rounded-lg border text-left transition-all ${
                   severity === sev.id
-                    ? 'border-sky-500 bg-sky-500/10 text-white'
-                    : 'border-slate-800 bg-slate-900/40 text-slate-300 hover:border-slate-700'
+                    ? 'border-[#00DFD8]/50 bg-[#00DFD8]/10 text-[#F5F7FA] shadow-sm'
+                    : 'border-white/[0.06] bg-white/[0.02] text-[#A7AFBD] hover:border-white/[0.12] hover:bg-white/[0.04]'
                 }`}
               >
                 <div className="text-xs font-medium">{sev.label}</div>
-                <div className="mt-0.5 text-[10px] text-slate-400 line-clamp-1">{sev.desc}</div>
+                <div className="mt-0.5 text-[10px] text-[#687386] line-clamp-1">{sev.desc}</div>
               </button>
             ))}
           </div>
         </div>
 
         {/* 3. Location */}
-        <div className="rounded-xl border border-slate-800 bg-slate-900/30 p-4 space-y-4">
-          <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-slate-300">
-            <MapPin className="h-4 w-4 text-sky-400" />
+        <div className="card-surface p-5 space-y-4">
+          <div className="flex items-center gap-2 font-mono text-[11px] uppercase tracking-wider text-[#A7AFBD] font-medium">
+            <MapPin className="h-3.5 w-3.5 text-[#00DFD8]" />
             <span>3. Ward & Location</span>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs text-slate-400 mb-1">
+              <label className="block text-xs text-[#A7AFBD] mb-1">
                 Ward & Zone
               </label>
               <select
                 value={wardId}
                 onChange={(e) => setWardId(e.target.value)}
-                className="w-full rounded-lg border border-slate-800 bg-slate-950 px-3 py-2 text-xs text-slate-200 focus:border-sky-500 focus:outline-none"
+                className="w-full rounded-lg border border-white/[0.08] bg-[#05070B] px-3 py-2 text-xs text-[#F5F7FA] focus:border-[#007CF0]/50 focus:outline-none"
               >
                 {wards.map((w) => (
                   <option key={w.id} value={w.id}>
@@ -327,7 +343,7 @@ export default function ReportPage() {
             </div>
 
             <div>
-              <label className="block text-xs text-slate-400 mb-1">
+              <label className="block text-xs text-[#A7AFBD] mb-1">
                 Street / Intersection *
               </label>
               <input
@@ -336,12 +352,12 @@ export default function ReportPage() {
                 onChange={(e) => setLocationName(e.target.value)}
                 placeholder="e.g. Sargam Cinema Road"
                 required
-                className="w-full rounded-lg border border-slate-800 bg-slate-950 px-3 py-2 text-xs text-slate-200 focus:border-sky-500 focus:outline-none"
+                className="w-full rounded-lg border border-white/[0.08] bg-[#05070B] px-3 py-2 text-xs text-[#F5F7FA] focus:border-[#007CF0]/50 focus:outline-none"
               />
             </div>
 
             <div className="sm:col-span-2">
-              <label className="block text-xs text-slate-400 mb-1">
+              <label className="block text-xs text-[#A7AFBD] mb-1">
                 Prominent Landmark (Optional)
               </label>
               <input
@@ -349,22 +365,22 @@ export default function ReportPage() {
                 value={landmark}
                 onChange={(e) => setLandmark(e.target.value)}
                 placeholder="e.g. Behind Bank of Baroda"
-                className="w-full rounded-lg border border-slate-800 bg-slate-950 px-3 py-2 text-xs text-slate-200 focus:border-sky-500 focus:outline-none"
+                className="w-full rounded-lg border border-white/[0.08] bg-[#05070B] px-3 py-2 text-xs text-[#F5F7FA] focus:border-[#007CF0]/50 focus:outline-none"
               />
             </div>
           </div>
         </div>
 
         {/* 4. Incident Narrative & Evidence */}
-        <div className="rounded-xl border border-slate-800 bg-slate-900/30 p-4 space-y-4">
-          <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-slate-300">
-            <FileText className="h-4 w-4 text-sky-400" />
+        <div className="card-surface p-5 space-y-4">
+          <div className="flex items-center gap-2 font-mono text-[11px] uppercase tracking-wider text-[#A7AFBD] font-medium">
+            <FileText className="h-3.5 w-3.5 text-[#007CF0]" />
             <span>4. Description & Evidence</span>
           </div>
 
           <div className="space-y-4">
             <div>
-              <label className="block text-xs text-slate-400 mb-1">
+              <label className="block text-xs text-[#A7AFBD] mb-1">
                 Incident Headline *
               </label>
               <input
@@ -373,12 +389,12 @@ export default function ReportPage() {
                 onChange={(e) => setTitle(e.target.value)}
                 placeholder="Brief summary of the issue..."
                 required
-                className="w-full rounded-lg border border-slate-800 bg-slate-950 px-3 py-2 text-xs text-slate-200 focus:border-sky-500 focus:outline-none"
+                className="w-full rounded-lg border border-white/[0.08] bg-[#05070B] px-3 py-2 text-xs text-[#F5F7FA] focus:border-[#007CF0]/50 focus:outline-none"
               />
             </div>
 
             <div>
-              <label className="block text-xs text-slate-400 mb-1">
+              <label className="block text-xs text-[#A7AFBD] mb-1">
                 Field Description (Hindi or English) *
               </label>
               <textarea
@@ -387,21 +403,21 @@ export default function ReportPage() {
                 onChange={(e) => setDescription(e.target.value)}
                 placeholder="Describe the physical condition, recurrence observations, or impact..."
                 required
-                className="w-full rounded-lg border border-slate-800 bg-slate-950 px-3 py-2 text-xs text-slate-200 focus:border-sky-500 focus:outline-none leading-relaxed"
+                className="w-full rounded-lg border border-white/[0.08] bg-[#05070B] px-3 py-2 text-xs text-[#F5F7FA] focus:border-[#007CF0]/50 focus:outline-none leading-relaxed"
               />
             </div>
 
-            {/* Photo Attachment */}
+            {/* Photo Attachment Drop Area */}
             <div className="space-y-2">
-              <label className="block text-xs text-slate-400">
+              <label className="block text-xs text-[#A7AFBD]">
                 Photographic Evidence
               </label>
 
               {imageBase64 ? (
-                <div className="rounded-lg border border-slate-800 bg-slate-950 p-3 space-y-2">
+                <div className="rounded-lg border border-white/[0.08] bg-white/[0.02] p-3 space-y-2">
                   <div className="flex items-center justify-between">
-                    <span className="text-xs text-slate-300 font-medium flex items-center gap-1.5">
-                      <CheckCircle2 className="h-4 w-4 text-sky-400" />
+                    <span className="text-xs text-[#F5F7FA] font-medium flex items-center gap-1.5">
+                      <CheckCircle2 className="h-3.5 w-3.5 text-emerald-400" />
                       Attached: {imageFileName || 'photo.jpg'}
                     </span>
                     <button
@@ -411,12 +427,12 @@ export default function ReportPage() {
                         setImageFileName(null);
                         setImageMimeType(null);
                       }}
-                      className="text-xs text-slate-400 hover:text-rose-400"
+                      className="text-xs text-[#687386] hover:text-rose-400 transition-colors"
                     >
                       Remove
                     </button>
                   </div>
-                  <div className="h-40 overflow-hidden rounded bg-black/40 flex items-center justify-center">
+                  <div className="h-44 overflow-hidden rounded-lg bg-black/60 border border-white/[0.06] flex items-center justify-center">
                     <img
                       src={imageBase64}
                       alt="Uploaded preview"
@@ -425,13 +441,15 @@ export default function ReportPage() {
                   </div>
                 </div>
               ) : (
-                <label className="flex flex-col items-center justify-center p-6 border border-dashed border-slate-800 hover:border-slate-700 rounded-lg bg-slate-950/40 cursor-pointer transition-colors space-y-1">
-                  <Camera className="h-6 w-6 text-slate-500" />
-                  <span className="text-xs text-slate-300">
-                    Click to upload photo (Max 5MB)
+                <label className="flex flex-col items-center justify-center p-8 border border-dashed border-white/[0.12] hover:border-[#00DFD8]/50 hover:bg-[#00DFD8]/[0.02] rounded-xl bg-white/[0.01] cursor-pointer transition-all space-y-2 group">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-white/[0.03] border border-white/[0.08] text-[#A7AFBD] group-hover:text-[#00DFD8] group-hover:border-[#00DFD8]/30 transition-colors">
+                    <Camera className="h-5 w-5" />
+                  </div>
+                  <span className="text-xs font-medium text-[#F5F7FA]">
+                    Drop photographic evidence here
                   </span>
-                  <span className="text-[11px] text-slate-500">
-                    Parsed by Claude Vision
+                  <span className="font-mono text-[10px] text-[#687386]">
+                    Max 5MB • Parsed by Claude Vision for resolution audits
                   </span>
                   <input
                     type="file"
@@ -446,10 +464,10 @@ export default function ReportPage() {
         </div>
 
         {/* 5. Reporter Identity */}
-        <div className="rounded-xl border border-slate-800 bg-slate-900/30 p-4 space-y-3">
+        <div className="card-surface p-5 space-y-3">
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-slate-300">
-              <ShieldCheck className="h-4 w-4 text-sky-400" />
+            <div className="flex items-center gap-2 font-mono text-[11px] uppercase tracking-wider text-[#A7AFBD] font-medium">
+              <ShieldCheck className="h-3.5 w-3.5 text-emerald-400" />
               <span>5. Reporter Attribution</span>
             </div>
 
@@ -458,33 +476,33 @@ export default function ReportPage() {
                 type="checkbox"
                 checked={isAnonymous}
                 onChange={(e) => setIsAnonymous(e.target.checked)}
-                className="rounded border-slate-700 bg-slate-950 text-sky-500 focus:ring-0"
+                className="rounded border-white/[0.15] bg-[#05070B] text-[#007CF0] focus:ring-0"
               />
-              <span className="text-xs text-slate-300">Submit Anonymously</span>
+              <span className="text-xs text-[#A7AFBD]">Submit Anonymously</span>
             </label>
           </div>
 
           {!isAnonymous && (
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
               <div>
-                <label className="block text-xs text-slate-400 mb-1">Full Name</label>
+                <label className="block text-xs text-[#A7AFBD] mb-1">Full Name</label>
                 <input
                   type="text"
                   value={reporterName}
                   onChange={(e) => setReporterName(e.target.value)}
                   placeholder="e.g. Vikram Joshi"
-                  className="w-full rounded-lg border border-slate-800 bg-slate-950 px-3 py-2 text-xs text-slate-200 focus:border-sky-500 focus:outline-none"
+                  className="w-full rounded-lg border border-white/[0.08] bg-[#05070B] px-3 py-2 text-xs text-[#F5F7FA] focus:border-[#007CF0]/50 focus:outline-none"
                 />
               </div>
 
               <div>
-                <label className="block text-xs text-slate-400 mb-1">Phone Number</label>
+                <label className="block text-xs text-[#A7AFBD] mb-1">Phone Number</label>
                 <input
                   type="text"
                   value={reporterPhone}
                   onChange={(e) => setReporterPhone(e.target.value)}
                   placeholder="e.g. 9893012345"
-                  className="w-full rounded-lg border border-slate-800 bg-slate-950 px-3 py-2 text-xs text-slate-200 focus:border-sky-500 focus:outline-none"
+                  className="w-full rounded-lg border border-white/[0.08] bg-[#05070B] px-3 py-2 text-xs text-[#F5F7FA] focus:border-[#007CF0]/50 focus:outline-none"
                 />
               </div>
             </div>
@@ -496,12 +514,12 @@ export default function ReportPage() {
           <button
             type="submit"
             disabled={isSubmitting}
-            className="w-full flex items-center justify-center gap-2 rounded-xl bg-sky-500 py-3.5 px-6 text-sm font-semibold text-slate-950 hover:bg-sky-400 transition-colors shadow-sm disabled:opacity-50"
+            className="w-full flex items-center justify-center gap-2 btn-primary py-3.5 px-6 text-xs font-medium text-white shadow-md disabled:opacity-50"
           >
             {isSubmitting ? (
               <>
                 <RefreshCw className="h-4 w-4 animate-spin" />
-                <span>Running Candidate Matching & AI Triage...</span>
+                <span className="font-mono text-xs">Running Candidate Matching & Claude Triage...</span>
               </>
             ) : (
               <>

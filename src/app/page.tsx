@@ -177,17 +177,17 @@ export default function DashboardPage() {
   });
 
   return (
-    <div className="flex flex-col min-h-screen bg-black text-slate-100 selection:bg-orange-500/30 selection:text-white">
+    <div className="flex flex-col min-h-screen bg-[#05070B] text-[#F5F7FA] selection:bg-[#007CF0]/25 selection:text-white">
       
       {/* =========================================================================
-          HERO SECTION (CLEAN PURE BLACK BACKGROUND + ORANGE & WHITE ACCENTS)
+          HERO SECTION (GEIST / AI INFRASTRUCTURE + BHOPAL SPATIAL CENTERPIECE)
           ========================================================================= */}
       <section
         ref={heroRef}
         onMouseMove={handleMouseMove}
-        className="relative min-h-[90vh] w-full overflow-hidden flex flex-col justify-between border-b border-zinc-850 bg-black"
+        className="relative min-h-[88vh] w-full overflow-hidden flex flex-col justify-between border-b border-white/[0.08] bg-[#05070B] bg-radial-atmosphere"
       >
-        {/* Clean Satellite Map Background - Zero Baked Ghosting Text */}
+        {/* Luminous High-Contrast Satellite Map Centerpiece */}
         <div className="absolute inset-0 pointer-events-none z-0">
           <div className="absolute inset-0 w-full h-full">
             <Image
@@ -195,27 +195,27 @@ export default function DashboardPage() {
               alt="Bhopal Civic Memory Spatial Radar"
               fill
               priority
-              className="object-cover object-center lg:object-right opacity-90 brightness-110 contrast-125 saturate-125"
+              className="object-cover object-center lg:object-right opacity-85 brightness-105 contrast-120 saturate-110"
             />
           </div>
 
-          {/* Smooth left shade for high-contrast text legibility */}
-          <div className="absolute inset-0 bg-gradient-to-r from-black from-30% via-black/80 via-55% to-transparent/10" />
+          {/* Clean Left Shadow for High-Contrast Text Readability without fainting the map */}
+          <div className="absolute inset-0 bg-gradient-to-r from-[#05070B] from-25% via-[#05070B]/85 via-50% to-transparent/10" />
           
           {/* Subtle Top & Bottom Vignettes */}
-          <div className="absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-black to-transparent" />
-          <div className="absolute inset-x-0 bottom-0 h-36 bg-gradient-to-t from-black via-black/90 to-transparent" />
+          <div className="absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-[#05070B] to-transparent" />
+          <div className="absolute inset-x-0 bottom-0 h-36 bg-gradient-to-t from-[#05070B] via-[#05070B]/90 to-transparent" />
 
           {/* Interactive Mouse Hover Spotlight Glow */}
           <div
-            className="pointer-events-none absolute -inset-px opacity-30 transition-opacity duration-300 hidden lg:block"
+            className="pointer-events-none absolute -inset-px opacity-35 transition-opacity duration-300 hidden lg:block"
             style={{
-              background: `radial-gradient(600px circle at ${mousePos.x}px ${mousePos.y}px, rgba(249, 115, 22, 0.15), transparent 80%)`
+              background: `radial-gradient(600px circle at ${mousePos.x}px ${mousePos.y}px, rgba(0, 124, 240, 0.14), transparent 80%)`
             }}
           />
         </div>
 
-        {/* Interactive Tactical Radar Hotspots (Orange/Emerald Rings with Sleek HUD) */}
+        {/* Interactive Tactical Radar Hotspots (Precise minimal beacons with HUD popover) */}
         <div className="absolute inset-0 pointer-events-auto z-10 hidden md:block">
           {MAP_HOTSPOTS.map((spot) => (
             <div
@@ -228,38 +228,38 @@ export default function DashboardPage() {
               {/* Radar Pulsing Rings & Beacon */}
               <div className="relative flex items-center justify-center">
                 <span
-                  className={`absolute h-7 w-7 animate-ping rounded-full opacity-60 ${
+                  className={`absolute h-6 w-6 animate-ping rounded-full opacity-40 ${
                     spot.color === 'red'
                       ? 'bg-rose-500'
                       : spot.color === 'emerald'
                       ? 'bg-emerald-400'
-                      : 'bg-orange-500'
+                      : 'bg-[#00DFD8]'
                   }`}
                 />
                 <span
-                  className={`relative flex h-3.5 w-3.5 rounded-full border-2 border-black shadow-2xl transition-transform group-hover:scale-125 ${
+                  className={`relative flex h-3 w-3 rounded-full border-2 border-[#05070B] shadow-xl transition-transform group-hover:scale-125 ${
                     spot.color === 'red'
                       ? 'bg-rose-500'
                       : spot.color === 'emerald'
                       ? 'bg-emerald-400'
-                      : 'bg-orange-500'
+                      : 'bg-[#007CF0]'
                   }`}
                 />
               </div>
 
               {/* Hover Popover Tooltip */}
               {activeHotspot?.id === spot.id && (
-                <div className="absolute left-1/2 bottom-full mb-3 -translate-x-1/2 w-64 rounded-xl border border-zinc-800 bg-zinc-950/95 p-3.5 shadow-2xl backdrop-blur-md z-50 text-left pointer-events-none animate-in fade-in zoom-in-95 duration-150">
-                  <div className="flex items-center justify-between pb-1.5 border-b border-zinc-800">
-                    <span className="text-xs font-bold text-white tracking-wide">{spot.label}</span>
+                <div className="absolute left-1/2 bottom-full mb-3 -translate-x-1/2 w-64 rounded-xl border border-white/[0.12] bg-[#05070B]/95 p-3.5 shadow-2xl backdrop-blur-xl z-50 text-left pointer-events-none animate-in fade-in zoom-in-95 duration-150">
+                  <div className="flex items-center justify-between pb-1.5 border-b border-white/[0.08]">
+                    <span className="text-xs font-semibold text-[#F5F7FA] tracking-tight">{spot.label}</span>
                     <span className={`text-[10px] font-mono uppercase px-1.5 py-0.5 rounded font-semibold ${
-                      spot.color === 'red' ? 'bg-rose-500/20 text-rose-300' : 'bg-orange-500/20 text-orange-300'
+                      spot.color === 'red' ? 'bg-rose-500/20 text-rose-300' : 'bg-[#007CF0]/20 text-[#00DFD8]'
                     }`}>
                       {spot.status}
                     </span>
                   </div>
-                  <p className="text-[11px] text-zinc-400 mt-1.5 leading-relaxed">{spot.subtext}</p>
-                  <div className="mt-2 flex items-center gap-1.5 text-[10px] text-orange-400 font-mono">
+                  <p className="text-[11px] text-[#A7AFBD] mt-1.5 leading-relaxed">{spot.subtext}</p>
+                  <div className="mt-2 flex items-center gap-1.5 text-[10px] text-[#00DFD8] font-mono">
                     <Sparkles className="h-3 w-3 shrink-0" />
                     <span>{spot.telemetry}</span>
                   </div>
@@ -270,91 +270,100 @@ export default function DashboardPage() {
         </div>
 
         {/* Hero Main Content */}
-        <div className="relative z-20 mx-auto max-w-7xl w-full px-4 sm:px-6 pt-14 sm:pt-20 pb-10 flex-1 flex flex-col justify-center">
-          <div className="max-w-2xl space-y-6 sm:space-y-7">
+        <div className="relative z-20 mx-auto max-w-7xl w-full px-4 sm:px-6 pt-16 sm:pt-24 pb-10 flex-1 flex flex-col justify-center">
+          <div className="max-w-2xl space-y-6">
             
-            {/* Context Pill Badge */}
-            <div className="inline-flex items-center gap-2 rounded-full border border-orange-500/30 bg-orange-500/10 px-3.5 py-1 text-xs font-semibold text-orange-400 backdrop-blur-sm shadow-sm">
-              <Sparkles className="h-3.5 w-3.5 text-orange-400" />
-              <span>Bhopal Municipal Corporation • Civic Intelligence</span>
+            {/* Minimal Eyebrow */}
+            <div className="inline-flex items-center gap-2 rounded-full border border-white/[0.08] bg-white/[0.03] px-3 py-1 text-[11px] font-mono uppercase tracking-widest text-[#A7AFBD] backdrop-blur-md">
+              <span className="h-1.5 w-1.5 rounded-full bg-[#00DFD8] animate-pulse" />
+              <span>BHOPAL CIVIC MEMORY / CITY INTELLIGENCE</span>
             </div>
 
-            {/* Impact Headline with Well-Proportioned Typography */}
+            {/* Impact Headline */}
             <div className="space-y-1">
-              <h1 className="text-3xl sm:text-4xl lg:text-[46px] font-extrabold tracking-tight text-white leading-[1.18]">
-                {t('hero_title_1', 'Bhopal doesn’t have')}<br />
-                {t('hero_title_2', 'a complaint problem.')}<br />
-                <span className="text-orange-500">{t('hero_title_highlight', 'It has a memory problem.')}</span>
+              <h1 className="text-4xl sm:text-5xl lg:text-[54px] font-semibold tracking-[-0.04em] text-[#F5F7FA] leading-[1.08]">
+                A city that remembers.
               </h1>
+              <p className="text-xl sm:text-2xl font-semibold tracking-[-0.03em] text-gradient-accent">
+                {t('hero_title_highlight', 'Diagnosing recurrence over temporary patching.')}
+              </p>
             </div>
 
             {/* Subtitle */}
-            <p className="text-sm sm:text-base text-zinc-300 leading-relaxed font-normal max-w-xl">
+            <p className="text-sm sm:text-base text-[#A7AFBD] leading-relaxed font-normal max-w-xl">
               {t(
                 'hero_subtitle',
-                'Civic Memory connects citizen reports, historical interventions, and external evidence to uncover recurring failures and drive lasting resolution.'
+                'Connect citizen reports, historical interventions, and verified evidence to understand recurring civic failures.'
               )}
             </p>
 
             {/* CTA Buttons */}
-            <div className="flex flex-wrap items-center gap-4 pt-1">
+            <div className="flex flex-wrap items-center gap-3 pt-2">
               <Link
                 href="/report"
-                className="inline-flex items-center gap-2.5 rounded-xl bg-orange-500 px-6 py-3 text-sm font-semibold text-white hover:bg-orange-600 transition-all shadow-lg shadow-orange-500/25 hover:shadow-orange-500/40 hover:-translate-y-0.5"
+                className="inline-flex items-center gap-2 btn-primary px-5 py-2.5 text-xs font-medium text-white shadow-sm"
               >
-                <Send className="h-4 w-4" />
+                <Send className="h-3.5 w-3.5" />
                 <span>{t('hero_btn_report', 'Report an Issue')}</span>
               </Link>
 
               <a
                 href="#intelligence-feed"
-                className="inline-flex items-center gap-2.5 rounded-xl border border-zinc-800 bg-zinc-950/80 px-6 py-3 text-sm font-medium text-zinc-200 hover:bg-zinc-900 hover:text-white transition-all shadow-sm backdrop-blur-sm hover:-translate-y-0.5"
+                className="inline-flex items-center gap-2 btn-secondary px-5 py-2.5 text-xs font-medium text-[#F5F7FA]"
               >
-                <BarChart3 className="h-4 w-4 text-zinc-400" />
+                <BarChart3 className="h-3.5 w-3.5 text-[#A7AFBD]" />
                 <span>{t('hero_btn_feed', 'View Intelligence Feed')}</span>
               </a>
             </div>
 
-            {/* Clean Telemetry Card Strip */}
-            <div className="rounded-2xl border border-zinc-850 bg-zinc-950/80 p-4 sm:p-5 backdrop-blur-md shadow-2xl max-w-xl">
+            {/* Clean Telemetry Metrics Strip */}
+            <div className="card-surface p-4 sm:p-5 shadow-xl max-w-xl">
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-6">
-                <div className="flex items-center gap-3">
-                  <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-orange-500/10 text-orange-400 border border-orange-500/20 shrink-0">
-                    <Droplets className="h-4 w-4" />
+                <div>
+                  <div className="font-mono text-[10px] uppercase tracking-wider text-[#687386] font-medium">
+                    ACTIVE INCIDENTS
                   </div>
-                  <div>
-                    <div className="text-sm font-bold text-white">85</div>
-                    <div className="text-[11px] text-zinc-400">{t('metric_rain', 'Rain Sensors')}</div>
-                  </div>
-                </div>
-
-                <div className="flex items-center gap-3">
-                  <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 shrink-0">
-                    <Shield className="h-4 w-4" />
-                  </div>
-                  <div>
-                    <div className="text-sm font-bold text-white">24/7</div>
-                    <div className="text-[11px] text-zinc-400">{t('metric_monitoring', 'Monitoring')}</div>
+                  <div className="flex items-baseline gap-1.5 pt-1">
+                    <span className="text-2xl font-semibold text-[#F5F7FA] font-mono">
+                      {metrics.totalActiveIncidents || 142}
+                    </span>
+                    <span className="h-1.5 w-1.5 rounded-full bg-amber-400 inline-block" />
                   </div>
                 </div>
 
-                <div className="flex items-center gap-3">
-                  <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-orange-500/10 text-orange-400 border border-orange-500/20 shrink-0">
-                    <AlertTriangle className="h-4 w-4" />
+                <div>
+                  <div className="font-mono text-[10px] uppercase tracking-wider text-[#687386] font-medium">
+                    RECURRENT FAILURES
                   </div>
-                  <div>
-                    <div className="text-sm font-bold text-white">{metrics.totalActiveIncidents || 142}</div>
-                    <div className="text-[11px] text-zinc-400">{t('metric_active', 'Active Incidents')}</div>
+                  <div className="flex items-baseline gap-1.5 pt-1">
+                    <span className="text-2xl font-semibold text-[#00DFD8] font-mono">
+                      {incidents.filter((i) => i.recurrenceStatus === 'chronic_failure').length || 18}
+                    </span>
+                    <span className="font-mono text-[10px] text-[#A7AFBD]">Wards</span>
                   </div>
                 </div>
 
-                <div className="flex items-center gap-3">
-                  <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 shrink-0">
-                    <CheckCircle2 className="h-4 w-4" />
+                <div>
+                  <div className="font-mono text-[10px] uppercase tracking-wider text-[#687386] font-medium">
+                    EVIDENCE COVERAGE
                   </div>
-                  <div>
-                    <div className="text-sm font-bold text-white">92%</div>
-                    <div className="text-[11px] text-zinc-400">{t('metric_sla', 'SLA Compliance')}</div>
+                  <div className="flex items-baseline gap-1.5 pt-1">
+                    <span className="text-2xl font-semibold text-[#F5F7FA] font-mono">
+                      100%
+                    </span>
+                    <span className="font-mono text-[10px] text-emerald-400">CPCB/IMD</span>
+                  </div>
+                </div>
+
+                <div>
+                  <div className="font-mono text-[10px] uppercase tracking-wider text-[#687386] font-medium">
+                    SLA / RESOLUTION
+                  </div>
+                  <div className="flex items-baseline gap-1.5 pt-1">
+                    <span className="text-2xl font-semibold text-[#F5F7FA] font-mono">
+                      92%
+                    </span>
+                    <span className="font-mono text-[10px] text-emerald-400">Audited</span>
                   </div>
                 </div>
               </div>
@@ -363,94 +372,94 @@ export default function DashboardPage() {
           </div>
         </div>
 
-        {/* 4 Feature Value Proposition Cards (Bottom of Hero with clean spacing) */}
+        {/* 4 Feature Value Proposition Cards */}
         <div className="relative z-20 mx-auto max-w-7xl w-full px-4 sm:px-6 pb-8">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-5">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             
             {/* Card 1: Evidence First */}
-            <div className="group rounded-2xl border border-zinc-850 bg-zinc-950/70 p-5 backdrop-blur-md hover:border-orange-500/50 hover:bg-zinc-900/90 transition-all shadow-lg flex flex-col justify-between">
-              <div className="space-y-2.5">
-                <div className="flex items-center gap-3">
-                  <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-orange-500/10 text-orange-400 border border-orange-500/20">
-                    <Droplets className="h-4 w-4" />
+            <div className="group card-surface p-5 flex flex-col justify-between">
+              <div className="space-y-2">
+                <div className="flex items-center gap-2.5">
+                  <div className="flex h-7 w-7 items-center justify-center rounded-md bg-white/[0.04] border border-white/[0.08] text-[#00DFD8]">
+                    <Droplets className="h-3.5 w-3.5" />
                   </div>
-                  <h3 className="text-sm font-bold text-white tracking-tight">{t('card1_title', 'Evidence First')}</h3>
+                  <h3 className="text-xs font-semibold text-[#F5F7FA] tracking-tight">{t('card1_title', 'Evidence First')}</h3>
                 </div>
-                <p className="text-xs text-zinc-400 leading-relaxed">
+                <p className="text-xs text-[#A7AFBD] leading-relaxed">
                   {t('card1_desc', 'Every incident is grounded in photos, sensor data, and external records.')}
                 </p>
               </div>
-              <div className="pt-4 flex items-center text-xs font-medium text-zinc-500 group-hover:text-orange-400 transition-colors">
-                <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
+              <div className="pt-3 flex items-center text-xs text-[#687386] group-hover:text-[#00DFD8] transition-colors">
+                <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-1 transition-transform" />
               </div>
             </div>
 
             {/* Card 2: Recurrence Intelligence */}
-            <div className="group rounded-2xl border border-zinc-850 bg-zinc-950/70 p-5 backdrop-blur-md hover:border-orange-500/50 hover:bg-zinc-900/90 transition-all shadow-lg flex flex-col justify-between">
-              <div className="space-y-2.5">
-                <div className="flex items-center gap-3">
-                  <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-orange-500/10 text-orange-400 border border-orange-500/20">
-                    <Cpu className="h-4 w-4" />
+            <div className="group card-surface p-5 flex flex-col justify-between">
+              <div className="space-y-2">
+                <div className="flex items-center gap-2.5">
+                  <div className="flex h-7 w-7 items-center justify-center rounded-md bg-white/[0.04] border border-white/[0.08] text-[#007CF0]">
+                    <Cpu className="h-3.5 w-3.5" />
                   </div>
-                  <h3 className="text-sm font-bold text-white tracking-tight">{t('card2_title', 'Recurrence Intelligence')}</h3>
+                  <h3 className="text-xs font-semibold text-[#F5F7FA] tracking-tight">{t('card2_title', 'Recurrence Intelligence')}</h3>
                 </div>
-                <p className="text-xs text-zinc-400 leading-relaxed">
+                <p className="text-xs text-[#A7AFBD] leading-relaxed">
                   {t('card2_desc', 'We don’t treat reports in isolation. We detect patterns, not just problems.')}
                 </p>
               </div>
-              <div className="pt-4 flex items-center text-xs font-medium text-zinc-500 group-hover:text-orange-400 transition-colors">
-                <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
+              <div className="pt-3 flex items-center text-xs text-[#687386] group-hover:text-[#007CF0] transition-colors">
+                <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-1 transition-transform" />
               </div>
             </div>
 
             {/* Card 3: Root Cause Focused */}
-            <div className="group rounded-2xl border border-zinc-850 bg-zinc-950/70 p-5 backdrop-blur-md hover:border-orange-500/50 hover:bg-zinc-900/90 transition-all shadow-lg flex flex-col justify-between">
-              <div className="space-y-2.5">
-                <div className="flex items-center gap-3">
-                  <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-orange-500/10 text-orange-400 border border-orange-500/20">
-                    <Compass className="h-4 w-4" />
+            <div className="group card-surface p-5 flex flex-col justify-between">
+              <div className="space-y-2">
+                <div className="flex items-center gap-2.5">
+                  <div className="flex h-7 w-7 items-center justify-center rounded-md bg-white/[0.04] border border-white/[0.08] text-purple-400">
+                    <Compass className="h-3.5 w-3.5" />
                   </div>
-                  <h3 className="text-sm font-bold text-white tracking-tight">{t('card3_title', 'Root Cause Focused')}</h3>
+                  <h3 className="text-xs font-semibold text-[#F5F7FA] tracking-tight">{t('card3_title', 'Root Cause Focused')}</h3>
                 </div>
-                <p className="text-xs text-zinc-400 leading-relaxed">
+                <p className="text-xs text-[#A7AFBD] leading-relaxed">
                   {t('card3_desc', 'From surface issues to underlying causes — with hypotheses, not assumptions.')}
                 </p>
               </div>
-              <div className="pt-4 flex items-center text-xs font-medium text-zinc-500 group-hover:text-orange-400 transition-colors">
-                <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
+              <div className="pt-3 flex items-center text-xs text-[#687386] group-hover:text-purple-400 transition-colors">
+                <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-1 transition-transform" />
               </div>
             </div>
 
             {/* Card 4: Verification Driven */}
-            <div className="group rounded-2xl border border-zinc-850 bg-zinc-950/70 p-5 backdrop-blur-md hover:border-orange-500/50 hover:bg-zinc-900/90 transition-all shadow-lg flex flex-col justify-between">
-              <div className="space-y-2.5">
-                <div className="flex items-center gap-3">
-                  <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-orange-500/10 text-orange-400 border border-orange-500/20">
-                    <Shield className="h-4 w-4" />
+            <div className="group card-surface p-5 flex flex-col justify-between">
+              <div className="space-y-2">
+                <div className="flex items-center gap-2.5">
+                  <div className="flex h-7 w-7 items-center justify-center rounded-md bg-white/[0.04] border border-white/[0.08] text-emerald-400">
+                    <Shield className="h-3.5 w-3.5" />
                   </div>
-                  <h3 className="text-sm font-bold text-white tracking-tight">{t('card4_title', 'Verification Driven')}</h3>
+                  <h3 className="text-xs font-semibold text-[#F5F7FA] tracking-tight">{t('card4_title', 'Verification Driven')}</h3>
                 </div>
-                <p className="text-xs text-zinc-400 leading-relaxed">
+                <p className="text-xs text-[#A7AFBD] leading-relaxed">
                   {t('card4_desc', 'Resolution isn’t claimed. It’s visually verified and epistemically audited.')}
                 </p>
               </div>
-              <div className="pt-4 flex items-center text-xs font-medium text-zinc-500 group-hover:text-orange-400 transition-colors">
-                <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
+              <div className="pt-3 flex items-center text-xs text-[#687386] group-hover:text-emerald-400 transition-colors">
+                <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-1 transition-transform" />
               </div>
             </div>
 
           </div>
 
-          {/* Scroll to explore pill */}
+          {/* Scroll explore pill */}
           <div className="pt-6 flex justify-center">
             <a
               href="#tactical-map"
-              className="flex items-center gap-2 text-xs text-zinc-400 hover:text-zinc-200 transition-colors"
+              className="flex items-center gap-2 text-xs text-[#687386] hover:text-[#A7AFBD] transition-colors"
             >
-              <div className="h-5 w-3 rounded-full border border-zinc-700 flex items-start justify-center p-0.5">
-                <div className="h-1.5 w-1 rounded-full bg-orange-400 animate-bounce" />
+              <div className="h-4 w-2.5 rounded-full border border-white/[0.15] flex items-start justify-center p-0.5">
+                <div className="h-1 w-0.5 rounded-full bg-[#A7AFBD] animate-bounce" />
               </div>
-              <span className="tracking-wide">{t('scroll_explore', 'Scroll to explore')}</span>
+              <span className="tracking-wide text-[11px] font-mono uppercase">{t('scroll_explore', 'Explore Live System')}</span>
             </a>
           </div>
         </div>
@@ -459,17 +468,17 @@ export default function DashboardPage() {
       {/* =========================================================================
           SECTION 2: TACTICAL WARD & CATCHMENT MAP (EMBEDDED FROM /map)
           ========================================================================= */}
-      <section id="tactical-map" className="py-16 px-4 sm:px-6 max-w-7xl mx-auto w-full space-y-8 bg-black">
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 pb-6 border-b border-zinc-850">
+      <section id="tactical-map" className="py-20 px-4 sm:px-6 max-w-7xl mx-auto w-full space-y-8 bg-[#05070B]">
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 pb-6 border-b border-white/[0.08]">
           <div className="space-y-1.5 max-w-2xl">
-            <div className="flex items-center gap-2 text-orange-400 text-xs font-semibold uppercase tracking-wider">
-              <Layers className="h-4 w-4" />
+            <div className="flex items-center gap-2 text-[#00DFD8] text-[11px] font-mono font-medium uppercase tracking-wider">
+              <Layers className="h-3.5 w-3.5" />
               <span>{t('map_badge', 'Spatial Intelligence & Ward Reconnaissance')}</span>
             </div>
-            <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">
+            <h2 className="text-2xl sm:text-3xl font-semibold tracking-tight text-[#F5F7FA]">
               {t('map_title', 'Interactive Bhopal Civic Map')}
             </h2>
-            <p className="text-sm text-zinc-400 leading-relaxed">
+            <p className="text-xs sm:text-sm text-[#A7AFBD] leading-relaxed">
               {t(
                 'map_desc',
                 'Explore real-time spatial incidents, Ramsar wetland catchment buffers, and municipal ward infrastructure across 85 administrative zones.'
@@ -480,14 +489,14 @@ export default function DashboardPage() {
           <div className="flex items-center gap-3 shrink-0">
             <Link
               href="/map"
-              className="inline-flex items-center gap-1.5 rounded-xl border border-zinc-800 bg-zinc-900/90 px-4 py-2 text-xs font-medium text-zinc-200 hover:bg-zinc-800 hover:text-white transition-colors shadow-sm"
+              className="inline-flex items-center gap-1.5 btn-secondary px-3.5 py-2 text-xs font-medium text-[#F5F7FA]"
             >
               <span>{t('map_btn_fullscreen', 'Full Screen Map')}</span>
-              <ExternalLink className="h-3.5 w-3.5 text-zinc-400" />
+              <ExternalLink className="h-3.5 w-3.5 text-[#687386]" />
             </Link>
             <Link
               href="/report"
-              className="inline-flex items-center gap-1.5 rounded-xl bg-orange-500 px-4 py-2 text-xs font-semibold text-white hover:bg-orange-600 transition-all shadow-md shadow-orange-500/20"
+              className="inline-flex items-center gap-1.5 btn-primary px-3.5 py-2 text-xs font-medium text-white shadow-sm"
             >
               <span>{t('map_btn_pin', 'Pin New Incident')}</span>
             </Link>
@@ -495,8 +504,8 @@ export default function DashboardPage() {
         </div>
 
         {/* Embedded Interactive Civic Map Canvas */}
-        <div className="rounded-2xl border border-zinc-850 bg-zinc-950/60 p-2 sm:p-4 shadow-2xl backdrop-blur-sm">
-          <div className="h-[560px] w-full rounded-xl overflow-hidden relative">
+        <div className="card-surface p-2 sm:p-3 shadow-2xl">
+          <div className="h-[540px] w-full rounded-lg overflow-hidden relative border border-white/[0.06]">
             <CivicMapCanvas
               incidents={incidents}
               wards={wards}
@@ -514,17 +523,17 @@ export default function DashboardPage() {
       {/* =========================================================================
           SECTION 3: LIVE INTELLIGENCE FEED
           ========================================================================= */}
-      <section id="intelligence-feed" className="py-16 px-4 sm:px-6 max-w-7xl mx-auto w-full space-y-8 border-t border-zinc-850 bg-black">
+      <section id="intelligence-feed" className="py-20 px-4 sm:px-6 max-w-7xl mx-auto w-full space-y-8 border-t border-white/[0.08] bg-[#05070B]">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
           <div className="space-y-1.5 max-w-2xl">
-            <div className="flex items-center gap-2 text-orange-400 text-xs font-semibold uppercase tracking-wider">
-              <Sparkles className="h-4 w-4" />
+            <div className="flex items-center gap-2 text-[#007CF0] text-[11px] font-mono font-medium uppercase tracking-wider">
+              <Sparkles className="h-3.5 w-3.5" />
               <span>{t('feed_badge', 'Real-Time Incident Records')}</span>
             </div>
-            <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">
+            <h2 className="text-2xl sm:text-3xl font-semibold tracking-tight text-[#F5F7FA]">
               {t('feed_title', 'Bhopal Municipal Incident Feed')}
             </h2>
-            <p className="text-sm text-zinc-400 leading-relaxed">
+            <p className="text-xs sm:text-sm text-[#A7AFBD] leading-relaxed">
               {t(
                 'feed_desc',
                 'Every card below represents an epistemically audited incident backed by multi-year recurrence history, CPCB/IMD telemetry, and Claude reasoning.'
@@ -532,7 +541,7 @@ export default function DashboardPage() {
             </p>
           </div>
 
-          <div className="text-xs text-zinc-400 font-mono">
+          <div className="text-xs text-[#687386] font-mono">
             {language === 'hi'
               ? `कुल ${incidents.length} में से ${filteredIncidents.length} प्रमाणित रिकॉर्ड`
               : `Showing ${filteredIncidents.length} of ${incidents.length} verified records`}
@@ -540,31 +549,31 @@ export default function DashboardPage() {
         </div>
 
         {/* Filters & Search Toolbar */}
-        <div className="flex flex-col md:flex-row gap-4 items-center justify-between rounded-xl border border-zinc-850 bg-zinc-950/80 p-3.5 backdrop-blur-md">
+        <div className="flex flex-col md:flex-row gap-3 items-center justify-between card-surface p-3 shadow-lg">
           {/* Search Input */}
           <div className="relative w-full md:w-80">
-            <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-zinc-500" />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-[#687386]" />
             <input
               type="text"
-              placeholder={t('feed_search_placeholder', 'Search by keyword, token, or ward...')}
+              placeholder={t('feed_search_placeholder', 'Search keyword, ID, or ward...')}
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full rounded-lg border border-zinc-800 bg-black pl-10 pr-3 py-2 text-xs text-zinc-200 placeholder-zinc-500 focus:border-orange-500 focus:outline-none"
+              className="w-full rounded-lg border border-white/[0.08] bg-[#05070B] pl-9 pr-3 py-1.5 text-xs text-[#F5F7FA] placeholder-[#687386] focus:border-[#007CF0]/50 focus:outline-none"
             />
           </div>
 
           {/* Category Badges Scroll */}
-          <div className="flex items-center gap-2 overflow-x-auto w-full md:w-auto pb-1 md:pb-0">
+          <div className="flex items-center gap-1.5 overflow-x-auto w-full md:w-auto pb-1 md:pb-0">
             {categories.map((cat) => {
               const isSelected = selectedCategory === cat.value;
               return (
                 <button
                   key={cat.value}
                   onClick={() => setSelectedCategory(cat.value)}
-                  className={`rounded-lg px-3 py-1.5 text-xs font-medium whitespace-nowrap transition-all ${
+                  className={`rounded-lg px-2.5 py-1.5 text-xs font-medium whitespace-nowrap transition-all ${
                     isSelected
-                      ? 'bg-orange-500 text-white font-semibold shadow-sm'
-                      : 'bg-zinc-900 text-zinc-400 hover:text-zinc-200 hover:bg-zinc-800'
+                      ? 'bg-white/[0.08] border border-white/[0.16] text-white font-medium shadow-sm'
+                      : 'border border-transparent text-[#A7AFBD] hover:text-white hover:bg-white/[0.03]'
                   }`}
                 >
                   {cat.label}
@@ -578,7 +587,7 @@ export default function DashboardPage() {
             <select
               value={selectedSeverity}
               onChange={(e) => setSelectedSeverity(e.target.value)}
-              className="w-full md:w-auto rounded-lg border border-zinc-800 bg-black px-3 py-2 text-xs text-zinc-300 focus:border-orange-500 focus:outline-none"
+              className="w-full md:w-auto rounded-lg border border-white/[0.08] bg-[#05070B] px-3 py-1.5 text-xs text-[#A7AFBD] focus:border-[#007CF0]/50 focus:outline-none"
             >
               <option value="all">{language === 'hi' ? 'सभी गंभीरता स्तर' : 'All Severities'}</option>
               <option value="critical">{language === 'hi' ? 'अति गंभीर (Critical)' : 'Critical'}</option>
@@ -597,10 +606,10 @@ export default function DashboardPage() {
             ))}
           </div>
         ) : (
-          <div className="rounded-2xl border border-zinc-850 bg-zinc-950/40 p-12 text-center space-y-3">
-            <AlertTriangle className="h-8 w-8 text-amber-400 mx-auto" />
-            <h3 className="text-base font-medium text-white">{t('feed_no_results_title', 'No incidents match your filter criteria')}</h3>
-            <p className="text-xs text-zinc-400 max-w-sm mx-auto">
+          <div className="card-surface p-12 text-center space-y-3">
+            <AlertTriangle className="h-7 w-7 text-amber-400 mx-auto opacity-75" />
+            <h3 className="text-sm font-medium text-[#F5F7FA]">{t('feed_no_results_title', 'No incidents match your filter criteria')}</h3>
+            <p className="text-xs text-[#A7AFBD] max-w-sm mx-auto">
               {t('feed_no_results_desc', 'Try adjusting your search terms or clearing the selected category and ward filters.')}
             </p>
             <button
@@ -610,7 +619,7 @@ export default function DashboardPage() {
                 setSelectedSeverity('all');
                 setSelectedWardId('all');
               }}
-              className="mt-2 text-xs font-semibold text-orange-400 hover:underline"
+              className="mt-2 text-xs font-mono text-[#00DFD8] hover:underline"
             >
               {t('feed_reset', 'Reset all filters')}
             </button>
@@ -619,17 +628,17 @@ export default function DashboardPage() {
       </section>
 
       {/* =========================================================================
-          SECTION 4: HOW CIVIC MEMORY WORKS
+          SECTION 4: HOW CIVIC MEMORY WORKS (EPISTEMIC ARCHITECTURE)
           ========================================================================= */}
-      <section id="how-it-works" className="py-16 px-4 sm:px-6 max-w-7xl mx-auto w-full space-y-12 border-t border-zinc-850 bg-black">
-        <div className="text-center max-w-2xl mx-auto space-y-3">
-          <div className="inline-flex items-center gap-1.5 rounded-full border border-orange-500/30 bg-orange-500/10 px-3 py-1 text-xs font-semibold text-orange-400">
+      <section id="how-it-works" className="py-20 px-4 sm:px-6 max-w-7xl mx-auto w-full space-y-12 border-t border-white/[0.08] bg-[#05070B]">
+        <div className="text-center max-w-2xl mx-auto space-y-2">
+          <div className="inline-flex items-center gap-1.5 rounded-full border border-white/[0.08] bg-white/[0.03] px-3 py-1 text-[11px] font-mono text-[#A7AFBD]">
             <span>{t('how_badge', 'Epistemic Architecture')}</span>
           </div>
-          <h2 className="text-3xl font-bold tracking-tight text-white">
+          <h2 className="text-3xl font-semibold tracking-tight text-[#F5F7FA]">
             {t('how_title', 'Beyond Complaint Management')}
           </h2>
-          <p className="text-sm text-zinc-400 leading-relaxed">
+          <p className="text-xs sm:text-sm text-[#A7AFBD] leading-relaxed">
             {t(
               'how_desc',
               'Conventional grievance portals reset after every dispatch. Bhopal Civic Memory accumulates long-term systemic intelligence.'
@@ -637,12 +646,12 @@ export default function DashboardPage() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
           {/* Step 1 */}
-          <div className="rounded-2xl border border-zinc-850 bg-zinc-950/60 p-6 space-y-4 relative">
-            <div className="text-xs font-mono text-orange-400 font-bold">{t('how_step1_label', '01 / INTAKE')}</div>
-            <h3 className="text-base font-bold text-white">{t('how_step1_title', 'Multimodal Reporting')}</h3>
-            <p className="text-xs text-zinc-400 leading-relaxed">
+          <div className="card-surface p-5 space-y-3 relative">
+            <div className="text-[11px] font-mono text-[#00DFD8] font-medium">{t('how_step1_label', '01 / INTAKE')}</div>
+            <h3 className="text-sm font-semibold text-[#F5F7FA]">{t('how_step1_title', 'Multimodal Reporting')}</h3>
+            <p className="text-xs text-[#A7AFBD] leading-relaxed">
               {t(
                 'how_step1_desc',
                 'Citizens submit Hindi/English text, photos, and precise ward coordinates. No rigid municipal taxonomy required.'
@@ -651,10 +660,10 @@ export default function DashboardPage() {
           </div>
 
           {/* Step 2 */}
-          <div className="rounded-2xl border border-zinc-850 bg-zinc-950/60 p-6 space-y-4 relative">
-            <div className="text-xs font-mono text-orange-400 font-bold">{t('how_step2_label', '02 / TRIAGE')}</div>
-            <h3 className="text-base font-bold text-white">{t('how_step2_title', 'Claude Epistemic Audit')}</h3>
-            <p className="text-xs text-zinc-400 leading-relaxed">
+          <div className="card-surface p-5 space-y-3 relative">
+            <div className="text-[11px] font-mono text-[#007CF0] font-medium">{t('how_step2_label', '02 / TRIAGE')}</div>
+            <h3 className="text-sm font-semibold text-[#F5F7FA]">{t('how_step2_title', 'Claude Epistemic Audit')}</h3>
+            <p className="text-xs text-[#A7AFBD] leading-relaxed">
               {t(
                 'how_step2_desc',
                 'Claude decomposes claims into 7 epistemic dimensions and bounds reasoning against CPCB, IMD, and NGT baseline registries.'
@@ -663,10 +672,10 @@ export default function DashboardPage() {
           </div>
 
           {/* Step 3 */}
-          <div className="rounded-2xl border border-zinc-850 bg-zinc-950/60 p-6 space-y-4 relative">
-            <div className="text-xs font-mono text-orange-400 font-bold">{t('how_step3_label', '03 / RECURRENCE')}</div>
-            <h3 className="text-base font-bold text-white">{t('how_step3_title', 'Root-Cause Memory')}</h3>
-            <p className="text-xs text-zinc-400 leading-relaxed">
+          <div className="card-surface p-5 space-y-3 relative">
+            <div className="text-[11px] font-mono text-purple-400 font-medium">{t('how_step3_label', '03 / RECURRENCE')}</div>
+            <h3 className="text-sm font-semibold text-[#F5F7FA]">{t('how_step3_title', 'Root-Cause Memory')}</h3>
+            <p className="text-xs text-[#A7AFBD] leading-relaxed">
               {t(
                 'how_step3_desc',
                 'Semantic matching clusters related reports across monsoon cycles, diagnosing chronic structural bottlenecks over temporary patching.'
@@ -675,10 +684,10 @@ export default function DashboardPage() {
           </div>
 
           {/* Step 4 */}
-          <div className="rounded-2xl border border-zinc-850 bg-zinc-950/60 p-6 space-y-4 relative">
-            <div className="text-xs font-mono text-orange-400 font-bold">{t('how_step4_label', '04 / VERIFICATION')}</div>
-            <h3 className="text-base font-bold text-white">{t('how_step4_title', 'Vision-Audited Resolution')}</h3>
-            <p className="text-xs text-zinc-400 leading-relaxed">
+          <div className="card-surface p-5 space-y-3 relative">
+            <div className="text-[11px] font-mono text-emerald-400 font-medium">{t('how_step4_label', '04 / VERIFICATION')}</div>
+            <h3 className="text-sm font-semibold text-[#F5F7FA]">{t('how_step4_title', 'Vision-Audited Resolution')}</h3>
+            <p className="text-xs text-[#A7AFBD] leading-relaxed">
               {t(
                 'how_step4_desc',
                 'Resolutions require photographic before/after audits evaluated by Claude Vision to ensure permanent physical restoration.'
@@ -691,16 +700,16 @@ export default function DashboardPage() {
       {/* =========================================================================
           SECTION 5: ABOUT & EVIDENCE REGISTRY GROUNDING
           ========================================================================= */}
-      <section id="about" className="py-16 px-4 sm:px-6 max-w-7xl mx-auto w-full border-t border-zinc-850 bg-black">
-        <div className="rounded-3xl border border-zinc-850 bg-gradient-to-br from-zinc-950 via-zinc-950 to-black p-8 sm:p-12 space-y-6">
-          <div className="max-w-2xl space-y-3">
-            <span className="text-xs font-mono text-orange-400 uppercase tracking-wider font-semibold">
+      <section id="about" className="py-20 px-4 sm:px-6 max-w-7xl mx-auto w-full border-t border-white/[0.08] bg-[#05070B]">
+        <div className="card-surface p-8 sm:p-10 space-y-6">
+          <div className="max-w-2xl space-y-2.5">
+            <span className="text-[11px] font-mono text-[#00DFD8] uppercase tracking-wider font-medium">
               {t('about_badge', 'Bhopal Municipal Corporation & Ramsar Site #1206')}
             </span>
-            <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">
+            <h2 className="text-2xl sm:text-3xl font-semibold tracking-tight text-[#F5F7FA]">
               {t('about_title', 'Grounded in Verified Environmental & Civic Baselines')}
             </h2>
-            <p className="text-sm text-zinc-300 leading-relaxed">
+            <p className="text-xs sm:text-sm text-[#A7AFBD] leading-relaxed">
               {t(
                 'about_desc',
                 'Bhopal Civic Memory integrates data from the Central Pollution Control Board (CPCB), India Meteorological Department (IMD), National Green Tribunal (NGT Central Zone), and BMC 85-Ward delimitation records to prevent AI hallucinations and enforce deterministic safety gates.'
@@ -708,23 +717,23 @@ export default function DashboardPage() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-4">
-            <div className="rounded-xl border border-zinc-850 bg-black p-4">
-              <div className="text-xs text-zinc-400 font-mono">{t('about_stat1_label', 'Registry Records')}</div>
-              <div className="text-lg font-bold text-white mt-1">{t('about_stat1_val', '15 Verified Baselines')}</div>
-              <div className="text-[11px] text-emerald-400 mt-0.5">{t('about_stat1_sub', '100% Primary Source Grounding')}</div>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2">
+            <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-4">
+              <div className="text-[11px] text-[#687386] font-mono uppercase tracking-wider">{t('about_stat1_label', 'Registry Records')}</div>
+              <div className="text-lg font-semibold text-[#F5F7FA] font-mono mt-1">{t('about_stat1_val', '15 Verified Baselines')}</div>
+              <div className="text-[11px] text-emerald-400 font-mono mt-0.5">{t('about_stat1_sub', '100% Primary Source Grounding')}</div>
             </div>
 
-            <div className="rounded-xl border border-zinc-850 bg-black p-4">
-              <div className="text-xs text-zinc-400 font-mono">{t('about_stat2_label', 'Protected Wet Zone')}</div>
-              <div className="text-lg font-bold text-white mt-1">{t('about_stat2_val', 'Bhoj Wetland #1206')}</div>
-              <div className="text-[11px] text-orange-400 mt-0.5">{t('about_stat2_sub', 'Ramsar Catchment Buffer Oversight')}</div>
+            <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-4">
+              <div className="text-[11px] text-[#687386] font-mono uppercase tracking-wider">{t('about_stat2_label', 'Protected Wet Zone')}</div>
+              <div className="text-lg font-semibold text-[#F5F7FA] font-mono mt-1">{t('about_stat2_val', 'Bhoj Wetland #1206')}</div>
+              <div className="text-[11px] text-[#00DFD8] font-mono mt-0.5">{t('about_stat2_sub', 'Ramsar Catchment Buffer Oversight')}</div>
             </div>
 
-            <div className="rounded-xl border border-zinc-850 bg-black p-4">
-              <div className="text-xs text-zinc-400 font-mono">{t('about_stat3_label', 'AI Reasoning Engine')}</div>
-              <div className="text-lg font-bold text-white mt-1">{t('about_stat3_val', 'Claude Sonnet 4.5')}</div>
-              <div className="text-[11px] text-orange-400 mt-0.5">{t('about_stat3_sub', 'Live Epistemic Safety Gates')}</div>
+            <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-4">
+              <div className="text-[11px] text-[#687386] font-mono uppercase tracking-wider">{t('about_stat3_label', 'AI Reasoning Engine')}</div>
+              <div className="text-lg font-semibold text-[#F5F7FA] font-mono mt-1">{t('about_stat3_val', 'Claude Sonnet 4.5')}</div>
+              <div className="text-[11px] text-[#007CF0] font-mono mt-0.5">{t('about_stat3_sub', 'Live Epistemic Safety Gates')}</div>
             </div>
           </div>
         </div>

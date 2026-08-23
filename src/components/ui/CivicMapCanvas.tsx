@@ -64,53 +64,53 @@ export function CivicMapCanvas({
 
   return (
     <div
-      className={`relative w-full h-[580px] rounded-xl border border-slate-800 bg-[#080C14] overflow-hidden select-none shadow-sm ${className}`}
+      className={`relative w-full h-[580px] rounded-xl border border-white/[0.08] bg-[#05070B] overflow-hidden select-none shadow-sm ${className}`}
     >
       {/* Background Grid */}
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,#1e293b12_1px,transparent_1px),linear-gradient(to_bottom,#1e293b12_1px,transparent_1px)] bg-[size:28px_28px] pointer-events-none" />
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:28px_28px] pointer-events-none" />
 
-      {/* Top Map Tactical Bar (only if showControls is true and height is spacious) */}
+      {/* Top Map Tactical Bar */}
       {showControls && (
         <div className="absolute top-3 left-3 right-3 z-20 flex flex-wrap items-center justify-between gap-2 pointer-events-auto">
-          <div className="flex items-center gap-2 rounded-lg border border-slate-800 bg-slate-900/90 px-3 py-1.5 backdrop-blur-md">
-            <Navigation className="h-3.5 w-3.5 text-sky-400" />
-            <span className="text-xs font-semibold text-slate-200">
+          <div className="flex items-center gap-2 rounded-lg border border-white/[0.08] bg-[#05070B]/90 px-3 py-1.5 backdrop-blur-xl">
+            <Navigation className="h-3 w-3 text-[#00DFD8]" />
+            <span className="text-xs font-semibold text-[#F5F7FA]">
               Bhopal Spatial Grid
             </span>
-            <span className="text-slate-600 hidden sm:inline">•</span>
-            <span className="text-[11px] text-slate-400 font-mono hidden sm:inline">
-              Ramsar Wetland #1206
+            <span className="text-white/20 hidden sm:inline">•</span>
+            <span className="text-[10px] text-[#A7AFBD] font-mono hidden sm:inline">
+              Ramsar Site #1206
             </span>
           </div>
 
           {/* Layer Filters */}
-          <div className="flex items-center gap-1 rounded-lg border border-slate-800 bg-slate-900/90 p-1 backdrop-blur-md text-xs">
+          <div className="flex items-center gap-1 rounded-lg border border-white/[0.08] bg-[#05070B]/90 p-1 backdrop-blur-xl text-xs">
             <button
               onClick={() => setActiveLayer('all')}
-              className={`rounded px-2 py-0.5 transition-colors ${
+              className={`rounded px-2.5 py-1 text-xs transition-colors ${
                 activeLayer === 'all'
-                  ? 'bg-slate-800 text-white font-medium'
-                  : 'text-slate-400 hover:text-slate-200'
+                  ? 'bg-white/[0.08] text-white font-medium shadow-sm'
+                  : 'text-[#A7AFBD] hover:text-[#F5F7FA]'
               }`}
             >
               All ({incidents.length})
             </button>
             <button
               onClick={() => setActiveLayer('critical')}
-              className={`rounded px-2 py-0.5 transition-colors ${
+              className={`rounded px-2.5 py-1 text-xs transition-colors ${
                 activeLayer === 'critical'
                   ? 'bg-rose-500/20 text-rose-300 font-medium'
-                  : 'text-slate-400 hover:text-slate-200'
+                  : 'text-[#A7AFBD] hover:text-[#F5F7FA]'
               }`}
             >
               Critical
             </button>
             <button
               onClick={() => setActiveLayer('lake_ecology')}
-              className={`rounded px-2 py-0.5 transition-colors ${
+              className={`rounded px-2.5 py-1 text-xs transition-colors ${
                 activeLayer === 'lake_ecology'
-                  ? 'bg-sky-500/20 text-sky-300 font-medium'
-                  : 'text-slate-400 hover:text-slate-200'
+                  ? 'bg-[#00DFD8]/20 text-[#00DFD8] font-medium'
+                  : 'text-[#A7AFBD] hover:text-[#F5F7FA]'
               }`}
             >
               Lake Ecology
@@ -123,12 +123,12 @@ export function CivicMapCanvas({
       <svg className="w-full h-full" viewBox="0 0 1000 620" preserveAspectRatio="none">
         <defs>
           <linearGradient id="lakeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="#0284c7" stopOpacity="0.25" />
-            <stop offset="100%" stopColor="#0369a1" stopOpacity="0.15" />
+            <stop offset="0%" stopColor="#007CF0" stopOpacity="0.25" />
+            <stop offset="100%" stopColor="#00DFD8" stopOpacity="0.12" />
           </linearGradient>
           <linearGradient id="lowerLakeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="#0284c7" stopOpacity="0.25" />
-            <stop offset="100%" stopColor="#075985" stopOpacity="0.15" />
+            <stop offset="0%" stopColor="#007CF0" stopOpacity="0.22" />
+            <stop offset="100%" stopColor="#7928CA" stopOpacity="0.12" />
           </linearGradient>
         </defs>
 
@@ -136,18 +136,18 @@ export function CivicMapCanvas({
         <path
           d="M 120 280 Q 180 200 320 240 T 460 300 Q 420 370 330 380 T 160 340 Z"
           fill="url(#lakeGrad)"
-          stroke="#0284c7"
+          stroke="#007CF0"
           strokeWidth="1.2"
           strokeDasharray="4 2"
         />
         <text
           x="260"
           y="300"
-          fill="#38bdf8"
-          fontSize="12"
+          fill="#00DFD8"
+          fontSize="11"
           fontWeight="600"
-          letterSpacing="1"
-          opacity="0.8"
+          letterSpacing="1.5"
+          opacity="0.85"
         >
           BHOJTAL / UPPER LAKE
         </text>
@@ -156,7 +156,7 @@ export function CivicMapCanvas({
         <path
           d="M 280 230 Q 360 250 440 270"
           stroke="#f59e0b"
-          strokeWidth="2"
+          strokeWidth="1.5"
           strokeLinecap="round"
           strokeDasharray="4 3"
         />
@@ -168,10 +168,10 @@ export function CivicMapCanvas({
         <path
           d="M 440 320 Q 490 310 520 345 T 480 375 Q 435 360 440 320 Z"
           fill="url(#lowerLakeGrad)"
-          stroke="#0284c7"
+          stroke="#007CF0"
           strokeWidth="1"
         />
-        <text x="455" y="348" fill="#38bdf8" fontSize="10" opacity="0.7">
+        <text x="455" y="348" fill="#00DFD8" fontSize="9" opacity="0.75">
           LOWER LAKE
         </text>
 
@@ -182,13 +182,12 @@ export function CivicMapCanvas({
           width="190"
           height="140"
           rx="8"
-          fill="#1e293b"
-          fillOpacity="0.2"
-          stroke="#334155"
+          fill="rgba(255,255,255,0.02)"
+          stroke="rgba(255,255,255,0.08)"
           strokeWidth="1"
           strokeDasharray="3 3"
         />
-        <text x="435" y="135" fill="#94a3b8" fontSize="10" fontWeight="500">
+        <text x="435" y="135" fill="#A7AFBD" fontSize="10" fontWeight="500">
           W-12 • Old City / Chowk
         </text>
 
@@ -198,13 +197,12 @@ export function CivicMapCanvas({
           width="170"
           height="120"
           rx="8"
-          fill="#1e293b"
-          fillOpacity="0.2"
-          stroke="#334155"
+          fill="rgba(255,255,255,0.02)"
+          stroke="rgba(255,255,255,0.08)"
           strokeWidth="1"
           strokeDasharray="3 3"
         />
-        <text x="395" y="395" fill="#94a3b8" fontSize="10" fontWeight="500">
+        <text x="395" y="395" fill="#A7AFBD" fontSize="10" fontWeight="500">
           W-24 • TT Nagar
         </text>
 
@@ -214,13 +212,12 @@ export function CivicMapCanvas({
           width="200"
           height="140"
           rx="8"
-          fill="#1e293b"
-          fillOpacity="0.2"
-          stroke="#334155"
+          fill="rgba(255,255,255,0.02)"
+          stroke="rgba(255,255,255,0.08)"
           strokeWidth="1"
           strokeDasharray="3 3"
         />
-        <text x="615" y="305" fill="#94a3b8" fontSize="10" fontWeight="500">
+        <text x="615" y="305" fill="#A7AFBD" fontSize="10" fontWeight="500">
           W-45 • MP Nagar
         </text>
 
@@ -230,13 +227,12 @@ export function CivicMapCanvas({
           width="190"
           height="120"
           rx="8"
-          fill="#1e293b"
-          fillOpacity="0.2"
-          stroke="#334155"
+          fill="rgba(255,255,255,0.02)"
+          stroke="rgba(255,255,255,0.08)"
           strokeWidth="1"
           strokeDasharray="3 3"
         />
-        <text x="595" y="460" fill="#94a3b8" fontSize="10" fontWeight="500">
+        <text x="595" y="460" fill="#A7AFBD" fontSize="10" fontWeight="500">
           W-52 • Arera Colony
         </text>
 
@@ -246,13 +242,12 @@ export function CivicMapCanvas({
           width="170"
           height="100"
           rx="8"
-          fill="#1e293b"
-          fillOpacity="0.2"
-          stroke="#334155"
+          fill="rgba(255,255,255,0.02)"
+          stroke="rgba(255,255,255,0.08)"
           strokeWidth="1"
           strokeDasharray="3 3"
         />
-        <text x="455" y="525" fill="#94a3b8" fontSize="10" fontWeight="500">
+        <text x="455" y="525" fill="#A7AFBD" fontSize="10" fontWeight="500">
           W-33 • Kolar Road
         </text>
 
@@ -262,13 +257,12 @@ export function CivicMapCanvas({
           width="180"
           height="140"
           rx="8"
-          fill="#1e293b"
-          fillOpacity="0.2"
-          stroke="#334155"
+          fill="rgba(255,255,255,0.02)"
+          stroke="rgba(255,255,255,0.08)"
           strokeWidth="1"
           strokeDasharray="3 3"
         />
-        <text x="795" y="175" fill="#94a3b8" fontSize="10" fontWeight="500">
+        <text x="795" y="175" fill="#A7AFBD" fontSize="10" fontWeight="500">
           W-68 • BHEL Township
         </text>
       </svg>
@@ -281,13 +275,15 @@ export function CivicMapCanvas({
           const isCritical = incident.severity === 'critical';
 
           const markerColor =
-            incident.category === 'lake_ecology'
-              ? 'bg-teal-500 text-teal-950 border-teal-200'
-              : incident.category === 'heritage_infrastructure'
-              ? 'bg-amber-500 text-amber-950 border-amber-200'
+            incident.status === 'resolved'
+              ? 'bg-emerald-500 text-black border-emerald-300'
               : isCritical
-              ? 'bg-rose-500 text-rose-950 border-rose-200'
-              : 'bg-sky-500 text-sky-950 border-sky-200';
+              ? 'bg-rose-500 text-white border-rose-300'
+              : incident.severity === 'high'
+              ? 'bg-amber-500 text-black border-amber-300'
+              : incident.category === 'lake_ecology'
+              ? 'bg-[#00DFD8] text-black border-cyan-200'
+              : 'bg-[#007CF0] text-white border-blue-200';
 
           return (
             <div
@@ -299,20 +295,20 @@ export function CivicMapCanvas({
               onMouseLeave={() => setHoveredIncident(null)}
             >
               <div
-                className={`relative flex items-center justify-center h-7 w-7 rounded-full border font-medium text-xs shadow-md transition-transform hover:scale-110 ${markerColor} ${
-                  isSelected ? 'ring-2 ring-white scale-110 z-30' : 'z-10'
+                className={`relative flex items-center justify-center h-6 w-6 rounded-full border text-xs shadow-md transition-all hover:scale-125 ${markerColor} ${
+                  isSelected ? 'ring-2 ring-white scale-125 z-30' : 'z-10'
                 }`}
               >
                 {incident.severity === 'critical' ? (
-                  <ShieldAlert className="h-3.5 w-3.5" />
+                  <ShieldAlert className="h-3 w-3" />
                 ) : (
-                  <MapPin className="h-3.5 w-3.5" />
+                  <MapPin className="h-3 w-3" />
                 )}
               </div>
 
               <div className="absolute left-1/2 bottom-full -translate-x-1/2 mb-1.5 hidden group-hover:flex flex-col items-center z-40 pointer-events-none">
-                <div className="rounded-lg border border-slate-700 bg-slate-900 px-2.5 py-1 shadow-lg text-center whitespace-nowrap">
-                  <p className="text-[11px] font-medium text-slate-200">
+                <div className="card-surface px-2.5 py-1 shadow-xl text-center whitespace-nowrap">
+                  <p className="text-[11px] font-medium text-[#F5F7FA]">
                     {incident.title}
                   </p>
                 </div>
@@ -322,18 +318,18 @@ export function CivicMapCanvas({
         })}
       </div>
 
-      {/* Selected Incident Drawer / Popover - Completely Responsive without clipping */}
+      {/* Selected Incident Drawer / Popover */}
       {activeSelected && (
-        <div className="absolute bottom-3 left-3 right-3 sm:left-auto sm:right-3 sm:w-80 max-h-[calc(100%-1.5rem)] overflow-y-auto z-30 rounded-xl border border-slate-800 bg-slate-900/95 p-4 shadow-xl backdrop-blur-md pointer-events-auto space-y-3">
-          <div className="flex items-start justify-between gap-2 pb-2 border-b border-slate-800">
+        <div className="absolute bottom-3 left-3 right-3 sm:left-auto sm:right-3 sm:w-80 max-h-[calc(100%-1.5rem)] overflow-y-auto z-30 card-surface p-4 shadow-2xl backdrop-blur-xl pointer-events-auto space-y-3">
+          <div className="flex items-start justify-between gap-2 pb-2 border-b border-white/[0.08]">
             <div className="space-y-1 min-w-0 flex-1">
               <div className="flex items-center gap-1.5 flex-wrap">
-                <span className="font-mono text-[11px] text-slate-400 bg-slate-800 px-1.5 py-0.5 rounded">
+                <span className="font-mono text-[11px] text-[#A7AFBD] bg-white/[0.04] border border-white/[0.08] px-1.5 py-0.5 rounded">
                   {activeSelected.trackingToken}
                 </span>
                 <CategoryBadge category={activeSelected.category} />
               </div>
-              <h4 className="text-xs font-semibold text-white truncate">
+              <h4 className="text-xs font-semibold text-[#F5F7FA] truncate">
                 {activeSelected.title}
               </h4>
             </div>
@@ -342,32 +338,32 @@ export function CivicMapCanvas({
                 setSelectedIncidentInternal(null);
                 if (onSelectIncident) onSelectIncident(null);
               }}
-              className="rounded p-1 text-slate-400 hover:bg-slate-800 hover:text-white"
+              className="rounded p-1 text-[#687386] hover:bg-white/[0.06] hover:text-[#F5F7FA] transition-colors"
             >
               <X className="h-3.5 w-3.5" />
             </button>
           </div>
 
-          <div className="space-y-1.5 text-xs text-slate-300">
-            <div className="flex justify-between text-slate-400">
-              <span>Location:</span>
-              <span className="text-slate-200 font-medium truncate max-w-[180px]">
+          <div className="space-y-1.5 text-xs text-[#A7AFBD]">
+            <div className="flex justify-between">
+              <span className="text-[#687386]">Location:</span>
+              <span className="text-[#F5F7FA] font-medium truncate max-w-[180px]">
                 {activeSelected.locationName}
               </span>
             </div>
-            <div className="flex justify-between text-slate-400">
-              <span>Department:</span>
-              <span className="text-slate-200 truncate max-w-[180px]">
+            <div className="flex justify-between">
+              <span className="text-[#687386]">Department:</span>
+              <span className="text-[#A7AFBD] truncate max-w-[180px]">
                 {activeSelected.departmentAssigned}
               </span>
             </div>
           </div>
 
-          <div className="flex items-center justify-between gap-2 pt-2 border-t border-slate-800 text-xs">
+          <div className="flex items-center justify-between gap-2 pt-2 border-t border-white/[0.08] text-xs">
             <StatusBadge status={activeSelected.status} />
             <Link
               href={`/incidents/${activeSelected.id}`}
-              className="inline-flex items-center gap-1 rounded-lg bg-sky-500 px-2.5 py-1 text-xs font-semibold text-slate-950 hover:bg-sky-400 transition-colors"
+              className="inline-flex items-center gap-1 btn-primary px-2.5 py-1 text-xs font-medium text-white shadow-sm"
             >
               <span>Open File</span>
               <ArrowUpRight className="h-3 w-3" />
