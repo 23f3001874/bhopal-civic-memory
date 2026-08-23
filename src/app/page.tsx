@@ -180,26 +180,31 @@ export default function DashboardPage() {
     <div className="flex flex-col min-h-screen bg-[#070B14] text-slate-100 selection:bg-blue-500/30">
       
       {/* =========================================================================
-          HERO SECTION (FAITHFUL TO USER ATTACHED DESIGN)
+          HERO SECTION (CLEAN DESIGNER REFINEMENT - ZERO CLUTTER)
           ========================================================================= */}
       <section
         ref={heroRef}
         onMouseMove={handleMouseMove}
         className="relative min-h-[92vh] w-full overflow-hidden flex flex-col justify-between border-b border-slate-800/60 bg-[#070B14]"
       >
-        {/* Dark Sat Map Background Image */}
+        {/* Dark Sat Map Background positioned right with solid gradient mask on text */}
         <div className="absolute inset-0 pointer-events-none z-0">
-          <Image
-            src="/bhopal-map-hero.jpg"
-            alt="Bhopal Civic Memory Map Overview"
-            fill
-            priority
-            className="object-cover object-center opacity-85 brightness-95 contrast-105"
-          />
-          {/* Subtle Left Radial Gradient for Text Readability */}
-          <div className="absolute inset-0 bg-gradient-to-r from-[#070B14] via-[#070B14]/80 to-transparent lg:via-[#070B14]/40" />
-          {/* Bottom Dark Gradient into Feature Cards */}
-          <div className="absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-[#070B14] via-[#070B14]/70 to-transparent" />
+          <div className="absolute right-0 top-0 bottom-0 w-full lg:w-[65%] h-full">
+            <Image
+              src="/bhopal-map-hero.jpg"
+              alt="Bhopal Civic Memory Spatial Radar"
+              fill
+              priority
+              className="object-cover object-right opacity-70 brightness-90 contrast-110"
+            />
+          </div>
+
+          {/* Solid Left Gradient to eliminate background ghosting text */}
+          <div className="absolute inset-0 bg-gradient-to-r from-[#070B14] from-40% via-[#070B14]/90 via-60% to-transparent" />
+          {/* Subtle Top & Bottom Vignette */}
+          <div className="absolute inset-x-0 top-0 h-28 bg-gradient-to-b from-[#070B14] to-transparent" />
+          <div className="absolute inset-x-0 bottom-0 h-44 bg-gradient-to-t from-[#070B14] via-[#070B14]/80 to-transparent" />
+
           {/* Interactive Mouse Hover Spotlight Glow */}
           <div
             className="pointer-events-none absolute -inset-px opacity-30 transition-opacity duration-300 hidden lg:block"
@@ -209,57 +214,52 @@ export default function DashboardPage() {
           />
         </div>
 
-        {/* Interactive Map Hotspots (Bhojtal, Habibganj, TT Nagar, Kolar, etc.) */}
+        {/* Clean Interactive Radar Beacons (Hover for Telemetry HUD) */}
         <div className="absolute inset-0 pointer-events-auto z-10 hidden md:block">
           {MAP_HOTSPOTS.map((spot) => (
             <div
               key={spot.id}
               style={{ top: spot.top, left: spot.left }}
-              className="absolute -translate-x-1/2 -translate-y-1/2 group cursor-pointer"
+              className="absolute -translate-x-1/2 -translate-y-1/2 group cursor-pointer p-3"
               onMouseEnter={() => setActiveHotspot(spot)}
               onMouseLeave={() => setActiveHotspot(null)}
             >
-              {/* Pulse Ring */}
+              {/* Radar Pulsing Rings */}
               <div className="relative flex items-center justify-center">
                 <span
-                  className={`absolute h-6 w-6 animate-ping rounded-full opacity-60 ${
+                  className={`absolute h-7 w-7 animate-ping rounded-full opacity-50 ${
                     spot.color === 'red'
-                      ? 'bg-red-500'
+                      ? 'bg-rose-500'
                       : spot.color === 'emerald'
                       ? 'bg-emerald-400'
                       : 'bg-blue-400'
                   }`}
                 />
                 <span
-                  className={`relative flex h-3.5 w-3.5 rounded-full border-2 border-slate-950 shadow-lg ${
+                  className={`relative flex h-3.5 w-3.5 rounded-full border-2 border-slate-950 shadow-xl transition-transform group-hover:scale-125 ${
                     spot.color === 'red'
-                      ? 'bg-red-500'
+                      ? 'bg-rose-500'
                       : spot.color === 'emerald'
                       ? 'bg-emerald-400'
                       : 'bg-blue-400'
                   }`}
                 />
-                
-                {/* Hotspot Label Overlay */}
-                <span className="ml-2.5 text-[11px] font-bold tracking-widest text-slate-300/90 group-hover:text-white uppercase drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)] transition-colors">
-                  {spot.label}
-                </span>
               </div>
 
               {/* Hover Popover Tooltip */}
               {activeHotspot?.id === spot.id && (
-                <div className="absolute left-1/2 bottom-full mb-3 -translate-x-1/2 w-64 rounded-xl border border-slate-700 bg-slate-900/95 p-3 shadow-2xl backdrop-blur-md z-50 text-left pointer-events-none animate-in fade-in zoom-in-95 duration-150">
+                <div className="absolute left-1/2 bottom-full mb-3 -translate-x-1/2 w-64 rounded-xl border border-slate-700/80 bg-slate-900/95 p-3.5 shadow-2xl backdrop-blur-md z-50 text-left pointer-events-none animate-in fade-in zoom-in-95 duration-150">
                   <div className="flex items-center justify-between pb-1.5 border-b border-slate-800">
                     <span className="text-xs font-bold text-white tracking-wide">{spot.label}</span>
-                    <span className={`text-[10px] font-mono uppercase px-1.5 py-0.5 rounded ${
-                      spot.color === 'red' ? 'bg-red-500/20 text-red-300' : 'bg-emerald-500/20 text-emerald-300'
+                    <span className={`text-[10px] font-mono uppercase px-1.5 py-0.5 rounded font-semibold ${
+                      spot.color === 'red' ? 'bg-rose-500/20 text-rose-300' : 'bg-emerald-500/20 text-emerald-300'
                     }`}>
                       {spot.status}
                     </span>
                   </div>
-                  <p className="text-[11px] text-slate-400 mt-1.5">{spot.subtext}</p>
+                  <p className="text-[11px] text-slate-400 mt-1.5 leading-relaxed">{spot.subtext}</p>
                   <div className="mt-2 flex items-center gap-1.5 text-[10px] text-sky-400 font-mono">
-                    <Sparkles className="h-3 w-3" />
+                    <Sparkles className="h-3 w-3 shrink-0" />
                     <span>{spot.telemetry}</span>
                   </div>
                 </div>
@@ -269,12 +269,18 @@ export default function DashboardPage() {
         </div>
 
         {/* Hero Main Content */}
-        <div className="relative z-20 mx-auto max-w-7xl px-4 sm:px-6 pt-12 sm:pt-20 pb-8 flex-1 flex flex-col justify-center">
-          <div className="max-w-2xl space-y-6">
+        <div className="relative z-20 mx-auto max-w-7xl w-full px-4 sm:px-6 pt-16 sm:pt-24 pb-12 flex-1 flex flex-col justify-center">
+          <div className="max-w-2xl space-y-8">
             
-            {/* Impact Headline */}
+            {/* Context Pill Badge */}
+            <div className="inline-flex items-center gap-2 rounded-full border border-blue-500/25 bg-blue-500/10 px-3.5 py-1 text-xs font-medium text-sky-400 backdrop-blur-sm shadow-sm">
+              <Sparkles className="h-3.5 w-3.5 text-blue-400" />
+              <span>Bhopal Municipal Corporation • Civic Intelligence</span>
+            </div>
+
+            {/* Impact Headline with Spacious Leading */}
             <div className="space-y-1">
-              <h1 className="text-4xl sm:text-5xl lg:text-[54px] font-bold tracking-tight text-white leading-[1.14]">
+              <h1 className="text-4xl sm:text-5xl lg:text-[56px] font-bold tracking-tight text-white leading-[1.12]">
                 {t('hero_title_1', 'Bhopal doesn’t have')}<br />
                 {t('hero_title_2', 'a complaint problem.')}<br />
                 <span className="text-blue-500">{t('hero_title_highlight', 'It has a memory problem.')}</span>
@@ -290,10 +296,10 @@ export default function DashboardPage() {
             </p>
 
             {/* CTA Buttons */}
-            <div className="flex flex-wrap items-center gap-4 pt-2">
+            <div className="flex flex-wrap items-center gap-4 pt-1">
               <Link
                 href="/report"
-                className="inline-flex items-center gap-2.5 rounded-xl bg-blue-600 px-6 py-3 text-sm font-semibold text-white hover:bg-blue-500 transition-all shadow-lg shadow-blue-600/25 hover:shadow-blue-600/40 hover:-translate-y-0.5"
+                className="inline-flex items-center gap-2.5 rounded-xl bg-blue-600 px-6 py-3.5 text-sm font-semibold text-white hover:bg-blue-500 transition-all shadow-lg shadow-blue-600/25 hover:shadow-blue-600/40 hover:-translate-y-0.5"
               >
                 <Send className="h-4 w-4" />
                 <span>{t('hero_btn_report', 'Report an Issue')}</span>
@@ -301,44 +307,54 @@ export default function DashboardPage() {
 
               <a
                 href="#intelligence-feed"
-                className="inline-flex items-center gap-2.5 rounded-xl border border-slate-700 bg-slate-900/80 px-6 py-3 text-sm font-medium text-slate-200 hover:bg-slate-800 hover:text-white transition-all shadow-sm backdrop-blur-sm hover:-translate-y-0.5"
+                className="inline-flex items-center gap-2.5 rounded-xl border border-slate-700/80 bg-slate-900/80 px-6 py-3.5 text-sm font-medium text-slate-200 hover:bg-slate-800 hover:text-white transition-all shadow-sm backdrop-blur-sm hover:-translate-y-0.5"
               >
                 <BarChart3 className="h-4 w-4 text-slate-400" />
                 <span>{t('hero_btn_feed', 'View Intelligence Feed')}</span>
               </a>
             </div>
 
-            {/* Mini Telemetry Strip */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-6 max-w-xl">
-              <div className="flex items-center gap-2.5">
-                <Droplets className="h-5 w-5 text-blue-400 shrink-0" />
-                <div>
-                  <div className="text-sm font-bold text-white">85</div>
-                  <div className="text-[11px] text-slate-400">{t('metric_rain', 'Rain Sensors')}</div>
+            {/* Clean Telemetry Card Strip */}
+            <div className="rounded-2xl border border-slate-800/80 bg-slate-900/50 p-4 sm:p-5 backdrop-blur-md shadow-xl max-w-xl">
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-6">
+                <div className="flex items-center gap-3">
+                  <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-blue-500/10 text-blue-400 border border-blue-500/20 shrink-0">
+                    <Droplets className="h-4 w-4" />
+                  </div>
+                  <div>
+                    <div className="text-sm font-bold text-white">85</div>
+                    <div className="text-[11px] text-slate-400">{t('metric_rain', 'Rain Sensors')}</div>
+                  </div>
                 </div>
-              </div>
 
-              <div className="flex items-center gap-2.5">
-                <Shield className="h-5 w-5 text-emerald-400 shrink-0" />
-                <div>
-                  <div className="text-sm font-bold text-white">24/7</div>
-                  <div className="text-[11px] text-slate-400">{t('metric_monitoring', 'Monitoring')}</div>
+                <div className="flex items-center gap-3">
+                  <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 shrink-0">
+                    <Shield className="h-4 w-4" />
+                  </div>
+                  <div>
+                    <div className="text-sm font-bold text-white">24/7</div>
+                    <div className="text-[11px] text-slate-400">{t('metric_monitoring', 'Monitoring')}</div>
+                  </div>
                 </div>
-              </div>
 
-              <div className="flex items-center gap-2.5">
-                <AlertTriangle className="h-5 w-5 text-amber-400 shrink-0" />
-                <div>
-                  <div className="text-sm font-bold text-white">{metrics.totalActiveIncidents || 142}</div>
-                  <div className="text-[11px] text-slate-400">{t('metric_active', 'Active Incidents')}</div>
+                <div className="flex items-center gap-3">
+                  <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-amber-500/10 text-amber-400 border border-amber-500/20 shrink-0">
+                    <AlertTriangle className="h-4 w-4" />
+                  </div>
+                  <div>
+                    <div className="text-sm font-bold text-white">{metrics.totalActiveIncidents || 142}</div>
+                    <div className="text-[11px] text-slate-400">{t('metric_active', 'Active Incidents')}</div>
+                  </div>
                 </div>
-              </div>
 
-              <div className="flex items-center gap-2.5">
-                <CheckCircle2 className="h-5 w-5 text-emerald-400 shrink-0" />
-                <div>
-                  <div className="text-sm font-bold text-white">92%</div>
-                  <div className="text-[11px] text-slate-400">{t('metric_sla', 'SLA Compliance')}</div>
+                <div className="flex items-center gap-3">
+                  <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 shrink-0">
+                    <CheckCircle2 className="h-4 w-4" />
+                  </div>
+                  <div>
+                    <div className="text-sm font-bold text-white">92%</div>
+                    <div className="text-[11px] text-slate-400">{t('metric_sla', 'SLA Compliance')}</div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -346,14 +362,14 @@ export default function DashboardPage() {
           </div>
         </div>
 
-        {/* 4 Feature Value Proposition Cards (Bottom of Hero matching image) */}
-        <div className="relative z-20 mx-auto max-w-7xl w-full px-4 sm:px-6 pb-6">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        {/* 4 Feature Value Proposition Cards (Bottom of Hero with clean spacing) */}
+        <div className="relative z-20 mx-auto max-w-7xl w-full px-4 sm:px-6 pb-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-5">
             
             {/* Card 1: Evidence First */}
-            <div className="group rounded-2xl border border-slate-800/80 bg-slate-900/60 p-5 backdrop-blur-md hover:border-blue-500/50 hover:bg-slate-900/80 transition-all shadow-lg flex flex-col justify-between">
-              <div>
-                <div className="flex items-center gap-3 mb-3">
+            <div className="group rounded-2xl border border-slate-800/80 bg-slate-900/60 p-5 backdrop-blur-md hover:border-blue-500/50 hover:bg-slate-900/90 transition-all shadow-lg flex flex-col justify-between">
+              <div className="space-y-2.5">
+                <div className="flex items-center gap-3">
                   <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-blue-500/10 text-blue-400 border border-blue-500/20">
                     <Droplets className="h-4 w-4" />
                   </div>
@@ -363,15 +379,15 @@ export default function DashboardPage() {
                   {t('card1_desc', 'Every incident is grounded in photos, sensor data, and external records.')}
                 </p>
               </div>
-              <div className="pt-4 flex items-center text-xs font-medium text-slate-400 group-hover:text-blue-400 transition-colors">
+              <div className="pt-4 flex items-center text-xs font-medium text-slate-500 group-hover:text-blue-400 transition-colors">
                 <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
               </div>
             </div>
 
             {/* Card 2: Recurrence Intelligence */}
-            <div className="group rounded-2xl border border-slate-800/80 bg-slate-900/60 p-5 backdrop-blur-md hover:border-emerald-500/50 hover:bg-slate-900/80 transition-all shadow-lg flex flex-col justify-between">
-              <div>
-                <div className="flex items-center gap-3 mb-3">
+            <div className="group rounded-2xl border border-slate-800/80 bg-slate-900/60 p-5 backdrop-blur-md hover:border-emerald-500/50 hover:bg-slate-900/90 transition-all shadow-lg flex flex-col justify-between">
+              <div className="space-y-2.5">
+                <div className="flex items-center gap-3">
                   <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
                     <Cpu className="h-4 w-4" />
                   </div>
@@ -381,15 +397,15 @@ export default function DashboardPage() {
                   {t('card2_desc', 'We don’t treat reports in isolation. We detect patterns, not just problems.')}
                 </p>
               </div>
-              <div className="pt-4 flex items-center text-xs font-medium text-slate-400 group-hover:text-emerald-400 transition-colors">
+              <div className="pt-4 flex items-center text-xs font-medium text-slate-500 group-hover:text-emerald-400 transition-colors">
                 <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
               </div>
             </div>
 
             {/* Card 3: Root Cause Focused */}
-            <div className="group rounded-2xl border border-slate-800/80 bg-slate-900/60 p-5 backdrop-blur-md hover:border-amber-500/50 hover:bg-slate-900/80 transition-all shadow-lg flex flex-col justify-between">
-              <div>
-                <div className="flex items-center gap-3 mb-3">
+            <div className="group rounded-2xl border border-slate-800/80 bg-slate-900/60 p-5 backdrop-blur-md hover:border-amber-500/50 hover:bg-slate-900/90 transition-all shadow-lg flex flex-col justify-between">
+              <div className="space-y-2.5">
+                <div className="flex items-center gap-3">
                   <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-amber-500/10 text-amber-400 border border-amber-500/20">
                     <Compass className="h-4 w-4" />
                   </div>
@@ -399,15 +415,15 @@ export default function DashboardPage() {
                   {t('card3_desc', 'From surface issues to underlying causes — with hypotheses, not assumptions.')}
                 </p>
               </div>
-              <div className="pt-4 flex items-center text-xs font-medium text-slate-400 group-hover:text-amber-400 transition-colors">
+              <div className="pt-4 flex items-center text-xs font-medium text-slate-500 group-hover:text-amber-400 transition-colors">
                 <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
               </div>
             </div>
 
             {/* Card 4: Verification Driven */}
-            <div className="group rounded-2xl border border-slate-800/80 bg-slate-900/60 p-5 backdrop-blur-md hover:border-rose-500/50 hover:bg-slate-900/80 transition-all shadow-lg flex flex-col justify-between">
-              <div>
-                <div className="flex items-center gap-3 mb-3">
+            <div className="group rounded-2xl border border-slate-800/80 bg-slate-900/60 p-5 backdrop-blur-md hover:border-rose-500/50 hover:bg-slate-900/90 transition-all shadow-lg flex flex-col justify-between">
+              <div className="space-y-2.5">
+                <div className="flex items-center gap-3">
                   <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-rose-500/10 text-rose-400 border border-rose-500/20">
                     <Shield className="h-4 w-4" />
                   </div>
@@ -417,7 +433,7 @@ export default function DashboardPage() {
                   {t('card4_desc', 'Resolution isn’t claimed. It’s visually verified and epistemically audited.')}
                 </p>
               </div>
-              <div className="pt-4 flex items-center text-xs font-medium text-slate-400 group-hover:text-rose-400 transition-colors">
+              <div className="pt-4 flex items-center text-xs font-medium text-slate-500 group-hover:text-rose-400 transition-colors">
                 <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
               </div>
             </div>
