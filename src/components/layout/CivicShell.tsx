@@ -12,8 +12,11 @@ import {
   FileText
 } from 'lucide-react';
 
+import { useCivic } from '@/lib/context/CivicContext';
+
 export function CivicShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
+  const { language, setLanguage, t } = useCivic();
   const [timeString, setTimeString] = useState<string>('');
 
   useEffect(() => {
@@ -33,14 +36,12 @@ export function CivicShell({ children }: { children: React.ReactNode }) {
     return () => clearInterval(interval);
   }, []);
 
-  const [language, setLanguage] = useState<'en' | 'hi'>('en');
-
   const navItems = [
-    { label: 'Map', href: '/map' },
-    { label: 'Intelligence Feed', href: '/#intelligence-feed' },
-    { label: 'Report Issue', href: '/report' },
-    { label: 'About', href: '/#about' },
-    { label: 'How It Works', href: '/#how-it-works' }
+    { label: t('nav_map', 'Map'), href: '/map' },
+    { label: t('nav_feed', 'Intelligence Feed'), href: '/#intelligence-feed' },
+    { label: t('nav_report', 'Report Issue'), href: '/report' },
+    { label: t('nav_about', 'About'), href: '/#about' },
+    { label: t('nav_how', 'How It Works'), href: '/#how-it-works' }
   ];
 
   return (
@@ -64,7 +65,7 @@ export function CivicShell({ children }: { children: React.ReactNode }) {
                 </span>
               </div>
               <p className="text-[11px] text-amber-300/80 font-medium tracking-wide">
-                Yaad rakhein. Behtar banaayein.
+                {t('nav_tagline', 'Yaad rakhein. Behtar banaayein.')}
               </p>
             </div>
           </Link>
@@ -75,7 +76,7 @@ export function CivicShell({ children }: { children: React.ReactNode }) {
               const isActive = pathname === item.href;
               return (
                 <Link
-                  key={item.label}
+                  key={item.href}
                   href={item.href}
                   className={`transition-colors text-xs tracking-wide ${
                     isActive
@@ -93,11 +94,13 @@ export function CivicShell({ children }: { children: React.ReactNode }) {
           <div className="flex items-center gap-3">
             {/* Language Switch Pill */}
             <button
-              onClick={() => setLanguage(l => l === 'en' ? 'hi' : 'en')}
-              className="rounded-full border border-slate-700/80 bg-slate-900/90 px-3.5 py-1.5 text-xs font-medium text-slate-200 hover:border-slate-500 hover:text-white transition-colors"
+              onClick={() => setLanguage(language === 'en' ? 'hi' : 'en')}
+              className="rounded-full border border-slate-700/80 bg-slate-900/90 px-3.5 py-1.5 text-xs font-medium text-slate-200 hover:border-slate-500 hover:text-white transition-colors flex items-center gap-1.5"
               title="Toggle Hindi / English localization"
             >
-              {language === 'en' ? 'हिंदी / English' : 'English / हिंदी'}
+              <span className={language === 'hi' ? 'font-bold text-sky-400' : 'text-slate-400'}>हिंदी</span>
+              <span className="text-slate-600">/</span>
+              <span className={language === 'en' ? 'font-bold text-sky-400' : 'text-slate-400'}>English</span>
             </button>
 
             <Link
@@ -105,7 +108,7 @@ export function CivicShell({ children }: { children: React.ReactNode }) {
               className="hidden sm:inline-flex items-center gap-1.5 rounded-lg bg-blue-600 px-3.5 py-1.5 text-xs font-semibold text-white hover:bg-blue-500 transition-colors shadow-sm"
             >
               <PlusCircle className="h-3.5 w-3.5" />
-              <span>Report</span>
+              <span>{t('nav_report_btn', 'Report')}</span>
             </Link>
           </div>
         </div>

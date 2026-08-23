@@ -130,7 +130,9 @@ export default function DashboardPage() {
     selectedWardId,
     setSelectedWardId,
     selectedCategory,
-    setSelectedCategory
+    setSelectedCategory,
+    language,
+    t
   } = useCivic();
 
   const [searchQuery, setSearchQuery] = useState('');
@@ -149,14 +151,14 @@ export default function DashboardPage() {
   };
 
   const categories: { label: string; value: IncidentCategory | 'all' }[] = [
-    { label: 'All Domains', value: 'all' },
-    { label: 'Lake Ecology', value: 'lake_ecology' },
-    { label: 'Heritage', value: 'heritage_infrastructure' },
-    { label: 'Sanitation', value: 'sanitation_waste' },
-    { label: 'Water Supply', value: 'water_supply' },
-    { label: 'Roads & Transit', value: 'road_hazard' },
-    { label: 'Drainage & Sump', value: 'drainage_flood' },
-    { label: 'Public Lighting', value: 'public_lighting' }
+    { label: language === 'hi' ? 'सभी क्षेत्र' : 'All Domains', value: 'all' },
+    { label: language === 'hi' ? 'झील पारिस्थितिकी' : 'Lake Ecology', value: 'lake_ecology' },
+    { label: language === 'hi' ? 'धरोहर' : 'Heritage', value: 'heritage_infrastructure' },
+    { label: language === 'hi' ? 'स्वच्छता एवं कचरा' : 'Sanitation', value: 'sanitation_waste' },
+    { label: language === 'hi' ? 'जल आपूर्ति' : 'Water Supply', value: 'water_supply' },
+    { label: language === 'hi' ? 'सड़क एवं परिवहन' : 'Roads & Transit', value: 'road_hazard' },
+    { label: language === 'hi' ? 'ड्रेनेज एवं नाले' : 'Drainage & Sump', value: 'drainage_flood' },
+    { label: language === 'hi' ? 'स्ट्रीट लाइट' : 'Public Lighting', value: 'public_lighting' }
   ];
 
   // Filtered incidents
@@ -272,16 +274,19 @@ export default function DashboardPage() {
             
             {/* Impact Headline */}
             <div className="space-y-1">
-              <h1 className="text-4xl sm:text-5xl lg:text-[54px] font-bold tracking-tight text-white leading-[1.12]">
-                Bhopal doesn’t have<br />
-                a complaint problem.<br />
-                <span className="text-blue-500">It has a memory problem.</span>
+              <h1 className="text-4xl sm:text-5xl lg:text-[54px] font-bold tracking-tight text-white leading-[1.14]">
+                {t('hero_title_1', 'Bhopal doesn’t have')}<br />
+                {t('hero_title_2', 'a complaint problem.')}<br />
+                <span className="text-blue-500">{t('hero_title_highlight', 'It has a memory problem.')}</span>
               </h1>
             </div>
 
             {/* Subtitle */}
             <p className="text-base sm:text-lg text-slate-300/90 leading-relaxed font-normal max-w-xl">
-              Civic Memory connects citizen reports, historical interventions, and external evidence to uncover recurring failures and drive lasting resolution.
+              {t(
+                'hero_subtitle',
+                'Civic Memory connects citizen reports, historical interventions, and external evidence to uncover recurring failures and drive lasting resolution.'
+              )}
             </p>
 
             {/* CTA Buttons */}
@@ -291,7 +296,7 @@ export default function DashboardPage() {
                 className="inline-flex items-center gap-2.5 rounded-xl bg-blue-600 px-6 py-3 text-sm font-semibold text-white hover:bg-blue-500 transition-all shadow-lg shadow-blue-600/25 hover:shadow-blue-600/40 hover:-translate-y-0.5"
               >
                 <Send className="h-4 w-4" />
-                <span>Report an Issue</span>
+                <span>{t('hero_btn_report', 'Report an Issue')}</span>
               </Link>
 
               <a
@@ -299,7 +304,7 @@ export default function DashboardPage() {
                 className="inline-flex items-center gap-2.5 rounded-xl border border-slate-700 bg-slate-900/80 px-6 py-3 text-sm font-medium text-slate-200 hover:bg-slate-800 hover:text-white transition-all shadow-sm backdrop-blur-sm hover:-translate-y-0.5"
               >
                 <BarChart3 className="h-4 w-4 text-slate-400" />
-                <span>View Intelligence Feed</span>
+                <span>{t('hero_btn_feed', 'View Intelligence Feed')}</span>
               </a>
             </div>
 
@@ -309,7 +314,7 @@ export default function DashboardPage() {
                 <Droplets className="h-5 w-5 text-blue-400 shrink-0" />
                 <div>
                   <div className="text-sm font-bold text-white">85</div>
-                  <div className="text-[11px] text-slate-400">Rain Sensors</div>
+                  <div className="text-[11px] text-slate-400">{t('metric_rain', 'Rain Sensors')}</div>
                 </div>
               </div>
 
@@ -317,7 +322,7 @@ export default function DashboardPage() {
                 <Shield className="h-5 w-5 text-emerald-400 shrink-0" />
                 <div>
                   <div className="text-sm font-bold text-white">24/7</div>
-                  <div className="text-[11px] text-slate-400">Monitoring</div>
+                  <div className="text-[11px] text-slate-400">{t('metric_monitoring', 'Monitoring')}</div>
                 </div>
               </div>
 
@@ -325,7 +330,7 @@ export default function DashboardPage() {
                 <AlertTriangle className="h-5 w-5 text-amber-400 shrink-0" />
                 <div>
                   <div className="text-sm font-bold text-white">{metrics.totalActiveIncidents || 142}</div>
-                  <div className="text-[11px] text-slate-400">Active Incidents</div>
+                  <div className="text-[11px] text-slate-400">{t('metric_active', 'Active Incidents')}</div>
                 </div>
               </div>
 
@@ -333,7 +338,7 @@ export default function DashboardPage() {
                 <CheckCircle2 className="h-5 w-5 text-emerald-400 shrink-0" />
                 <div>
                   <div className="text-sm font-bold text-white">92%</div>
-                  <div className="text-[11px] text-slate-400">SLA Compliance</div>
+                  <div className="text-[11px] text-slate-400">{t('metric_sla', 'SLA Compliance')}</div>
                 </div>
               </div>
             </div>
@@ -352,10 +357,10 @@ export default function DashboardPage() {
                   <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-blue-500/10 text-blue-400 border border-blue-500/20">
                     <Droplets className="h-4 w-4" />
                   </div>
-                  <h3 className="text-sm font-semibold text-white tracking-tight">Evidence First</h3>
+                  <h3 className="text-sm font-semibold text-white tracking-tight">{t('card1_title', 'Evidence First')}</h3>
                 </div>
                 <p className="text-xs text-slate-400 leading-relaxed">
-                  Every incident is grounded in photos, sensor data, and external records.
+                  {t('card1_desc', 'Every incident is grounded in photos, sensor data, and external records.')}
                 </p>
               </div>
               <div className="pt-4 flex items-center text-xs font-medium text-slate-400 group-hover:text-blue-400 transition-colors">
@@ -370,10 +375,10 @@ export default function DashboardPage() {
                   <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
                     <Cpu className="h-4 w-4" />
                   </div>
-                  <h3 className="text-sm font-semibold text-white tracking-tight">Recurrence Intelligence</h3>
+                  <h3 className="text-sm font-semibold text-white tracking-tight">{t('card2_title', 'Recurrence Intelligence')}</h3>
                 </div>
                 <p className="text-xs text-slate-400 leading-relaxed">
-                  We don’t treat reports in isolation. We detect patterns, not just problems.
+                  {t('card2_desc', 'We don’t treat reports in isolation. We detect patterns, not just problems.')}
                 </p>
               </div>
               <div className="pt-4 flex items-center text-xs font-medium text-slate-400 group-hover:text-emerald-400 transition-colors">
@@ -388,10 +393,10 @@ export default function DashboardPage() {
                   <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-amber-500/10 text-amber-400 border border-amber-500/20">
                     <Compass className="h-4 w-4" />
                   </div>
-                  <h3 className="text-sm font-semibold text-white tracking-tight">Root Cause Focused</h3>
+                  <h3 className="text-sm font-semibold text-white tracking-tight">{t('card3_title', 'Root Cause Focused')}</h3>
                 </div>
                 <p className="text-xs text-slate-400 leading-relaxed">
-                  From surface issues to underlying causes — with hypotheses, not assumptions.
+                  {t('card3_desc', 'From surface issues to underlying causes — with hypotheses, not assumptions.')}
                 </p>
               </div>
               <div className="pt-4 flex items-center text-xs font-medium text-slate-400 group-hover:text-amber-400 transition-colors">
@@ -406,10 +411,10 @@ export default function DashboardPage() {
                   <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-rose-500/10 text-rose-400 border border-rose-500/20">
                     <Shield className="h-4 w-4" />
                   </div>
-                  <h3 className="text-sm font-semibold text-white tracking-tight">Verification Driven</h3>
+                  <h3 className="text-sm font-semibold text-white tracking-tight">{t('card4_title', 'Verification Driven')}</h3>
                 </div>
                 <p className="text-xs text-slate-400 leading-relaxed">
-                  Resolution isn’t claimed. It’s visually verified and epistemically audited.
+                  {t('card4_desc', 'Resolution isn’t claimed. It’s visually verified and epistemically audited.')}
                 </p>
               </div>
               <div className="pt-4 flex items-center text-xs font-medium text-slate-400 group-hover:text-rose-400 transition-colors">
@@ -428,7 +433,7 @@ export default function DashboardPage() {
               <div className="h-5 w-3 rounded-full border border-slate-600 flex items-start justify-center p-0.5">
                 <div className="h-1.5 w-1 rounded-full bg-slate-400 animate-bounce" />
               </div>
-              <span className="tracking-wide">Scroll to explore</span>
+              <span className="tracking-wide">{t('scroll_explore', 'Scroll to explore')}</span>
             </a>
           </div>
         </div>
@@ -442,13 +447,16 @@ export default function DashboardPage() {
           <div className="space-y-1.5 max-w-2xl">
             <div className="flex items-center gap-2 text-sky-400 text-xs font-semibold uppercase tracking-wider">
               <Layers className="h-4 w-4" />
-              <span>Spatial Intelligence & Ward Reconnaissance</span>
+              <span>{t('map_badge', 'Spatial Intelligence & Ward Reconnaissance')}</span>
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">
-              Interactive Bhopal Civic Map
+              {t('map_title', 'Interactive Bhopal Civic Map')}
             </h2>
             <p className="text-sm text-slate-400 leading-relaxed">
-              Explore real-time spatial incidents, Ramsar wetland catchment buffers, and municipal ward infrastructure across 85 administrative zones.
+              {t(
+                'map_desc',
+                'Explore real-time spatial incidents, Ramsar wetland catchment buffers, and municipal ward infrastructure across 85 administrative zones.'
+              )}
             </p>
           </div>
 
@@ -457,14 +465,14 @@ export default function DashboardPage() {
               href="/map"
               className="inline-flex items-center gap-1.5 rounded-lg border border-slate-700 bg-slate-800/80 px-4 py-2 text-xs font-medium text-slate-200 hover:bg-slate-700 hover:text-white transition-colors"
             >
-              <span>Full Screen Map</span>
+              <span>{t('map_btn_fullscreen', 'Full Screen Map')}</span>
               <ExternalLink className="h-3.5 w-3.5 text-slate-400" />
             </Link>
             <Link
               href="/report"
               className="inline-flex items-center gap-1.5 rounded-lg bg-blue-600 px-4 py-2 text-xs font-semibold text-white hover:bg-blue-500 transition-colors shadow-sm"
             >
-              <span>Pin New Incident</span>
+              <span>{t('map_btn_pin', 'Pin New Incident')}</span>
             </Link>
           </div>
         </div>
@@ -494,18 +502,23 @@ export default function DashboardPage() {
           <div className="space-y-1.5 max-w-2xl">
             <div className="flex items-center gap-2 text-blue-400 text-xs font-semibold uppercase tracking-wider">
               <Sparkles className="h-4 w-4" />
-              <span>Real-Time Incident Records</span>
+              <span>{t('feed_badge', 'Real-Time Incident Records')}</span>
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">
-              Bhopal Municipal Incident Feed
+              {t('feed_title', 'Bhopal Municipal Incident Feed')}
             </h2>
             <p className="text-sm text-slate-400 leading-relaxed">
-              Every card below represents an epistemically audited incident backed by multi-year recurrence history, CPCB/IMD telemetry, and Claude reasoning.
+              {t(
+                'feed_desc',
+                'Every card below represents an epistemically audited incident backed by multi-year recurrence history, CPCB/IMD telemetry, and Claude reasoning.'
+              )}
             </p>
           </div>
 
           <div className="text-xs text-slate-400 font-mono">
-            Showing {filteredIncidents.length} of {incidents.length} verified records
+            {language === 'hi'
+              ? `कुल ${incidents.length} में से ${filteredIncidents.length} प्रमाणित रिकॉर्ड`
+              : `Showing ${filteredIncidents.length} of ${incidents.length} verified records`}
           </div>
         </div>
 
@@ -516,7 +529,7 @@ export default function DashboardPage() {
             <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-500" />
             <input
               type="text"
-              placeholder="Search by keyword, token, or ward..."
+              placeholder={t('feed_search_placeholder', 'Search by keyword, token, or ward...')}
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="w-full rounded-lg border border-slate-700/80 bg-slate-950 pl-10 pr-3 py-2 text-xs text-slate-200 placeholder-slate-500 focus:border-blue-500 focus:outline-none"
@@ -550,11 +563,11 @@ export default function DashboardPage() {
               onChange={(e) => setSelectedSeverity(e.target.value)}
               className="w-full md:w-auto rounded-lg border border-slate-700/80 bg-slate-950 px-3 py-2 text-xs text-slate-300 focus:border-blue-500 focus:outline-none"
             >
-              <option value="all">All Severities</option>
-              <option value="critical">Critical</option>
-              <option value="high">High</option>
-              <option value="medium">Medium</option>
-              <option value="low">Low</option>
+              <option value="all">{language === 'hi' ? 'सभी गंभीरता स्तर' : 'All Severities'}</option>
+              <option value="critical">{language === 'hi' ? 'अति गंभीर (Critical)' : 'Critical'}</option>
+              <option value="high">{language === 'hi' ? 'उच्च (High)' : 'High'}</option>
+              <option value="medium">{language === 'hi' ? 'मध्यम (Medium)' : 'Medium'}</option>
+              <option value="low">{language === 'hi' ? 'सामान्य (Low)' : 'Low'}</option>
             </select>
           </div>
         </div>
@@ -569,9 +582,9 @@ export default function DashboardPage() {
         ) : (
           <div className="rounded-2xl border border-slate-800 bg-slate-900/30 p-12 text-center space-y-3">
             <AlertTriangle className="h-8 w-8 text-amber-400 mx-auto" />
-            <h3 className="text-base font-medium text-white">No incidents match your filter criteria</h3>
+            <h3 className="text-base font-medium text-white">{t('feed_no_results_title', 'No incidents match your filter criteria')}</h3>
             <p className="text-xs text-slate-400 max-w-sm mx-auto">
-              Try adjusting your search terms or clearing the selected category and ward filters.
+              {t('feed_no_results_desc', 'Try adjusting your search terms or clearing the selected category and ward filters.')}
             </p>
             <button
               onClick={() => {
@@ -582,7 +595,7 @@ export default function DashboardPage() {
               }}
               className="mt-2 text-xs font-semibold text-blue-400 hover:underline"
             >
-              Reset all filters
+              {t('feed_reset', 'Reset all filters')}
             </button>
           </div>
         )}
@@ -594,50 +607,65 @@ export default function DashboardPage() {
       <section id="how-it-works" className="py-16 px-4 sm:px-6 max-w-7xl mx-auto w-full space-y-12 border-t border-slate-800/60">
         <div className="text-center max-w-2xl mx-auto space-y-3">
           <div className="inline-flex items-center gap-1.5 rounded-full border border-blue-500/30 bg-blue-500/10 px-3 py-1 text-xs font-semibold text-blue-400">
-            <span>Epistemic Architecture</span>
+            <span>{t('how_badge', 'Epistemic Architecture')}</span>
           </div>
           <h2 className="text-3xl font-bold tracking-tight text-white">
-            Beyond Complaint Management
+            {t('how_title', 'Beyond Complaint Management')}
           </h2>
           <p className="text-sm text-slate-400 leading-relaxed">
-            Conventional grievance portals reset after every dispatch. Bhopal Civic Memory accumulates long-term systemic intelligence.
+            {t(
+              'how_desc',
+              'Conventional grievance portals reset after every dispatch. Bhopal Civic Memory accumulates long-term systemic intelligence.'
+            )}
           </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
           {/* Step 1 */}
           <div className="rounded-2xl border border-slate-800 bg-slate-900/40 p-6 space-y-4 relative">
-            <div className="text-xs font-mono text-blue-400 font-bold">01 / INTAKE</div>
-            <h3 className="text-base font-bold text-white">Multimodal Reporting</h3>
+            <div className="text-xs font-mono text-blue-400 font-bold">{t('how_step1_label', '01 / INTAKE')}</div>
+            <h3 className="text-base font-bold text-white">{t('how_step1_title', 'Multimodal Reporting')}</h3>
             <p className="text-xs text-slate-400 leading-relaxed">
-              Citizens submit Hindi/English text, photos, and precise ward coordinates. No rigid municipal taxonomy required.
+              {t(
+                'how_step1_desc',
+                'Citizens submit Hindi/English text, photos, and precise ward coordinates. No rigid municipal taxonomy required.'
+              )}
             </p>
           </div>
 
           {/* Step 2 */}
           <div className="rounded-2xl border border-slate-800 bg-slate-900/40 p-6 space-y-4 relative">
-            <div className="text-xs font-mono text-emerald-400 font-bold">02 / TRIAGE</div>
-            <h3 className="text-base font-bold text-white">Claude Epistemic Audit</h3>
+            <div className="text-xs font-mono text-emerald-400 font-bold">{t('how_step2_label', '02 / TRIAGE')}</div>
+            <h3 className="text-base font-bold text-white">{t('how_step2_title', 'Claude Epistemic Audit')}</h3>
             <p className="text-xs text-slate-400 leading-relaxed">
-              Claude decomposes claims into 7 epistemic dimensions and bounds reasoning against CPCB, IMD, and NGT baseline registries.
+              {t(
+                'how_step2_desc',
+                'Claude decomposes claims into 7 epistemic dimensions and bounds reasoning against CPCB, IMD, and NGT baseline registries.'
+              )}
             </p>
           </div>
 
           {/* Step 3 */}
           <div className="rounded-2xl border border-slate-800 bg-slate-900/40 p-6 space-y-4 relative">
-            <div className="text-xs font-mono text-amber-400 font-bold">03 / RECURRENCE</div>
-            <h3 className="text-base font-bold text-white">Root-Cause Memory</h3>
+            <div className="text-xs font-mono text-amber-400 font-bold">{t('how_step3_label', '03 / RECURRENCE')}</div>
+            <h3 className="text-base font-bold text-white">{t('how_step3_title', 'Root-Cause Memory')}</h3>
             <p className="text-xs text-slate-400 leading-relaxed">
-              Semantic matching clusters related reports across monsoon cycles, diagnosing chronic structural bottlenecks over temporary patching.
+              {t(
+                'how_step3_desc',
+                'Semantic matching clusters related reports across monsoon cycles, diagnosing chronic structural bottlenecks over temporary patching.'
+              )}
             </p>
           </div>
 
           {/* Step 4 */}
           <div className="rounded-2xl border border-slate-800 bg-slate-900/40 p-6 space-y-4 relative">
-            <div className="text-xs font-mono text-rose-400 font-bold">04 / VERIFICATION</div>
-            <h3 className="text-base font-bold text-white">Vision-Audited Resolution</h3>
+            <div className="text-xs font-mono text-rose-400 font-bold">{t('how_step4_label', '04 / VERIFICATION')}</div>
+            <h3 className="text-base font-bold text-white">{t('how_step4_title', 'Vision-Audited Resolution')}</h3>
             <p className="text-xs text-slate-400 leading-relaxed">
-              Resolutions require photographic before/after audits evaluated by Claude Vision to ensure permanent physical restoration.
+              {t(
+                'how_step4_desc',
+                'Resolutions require photographic before/after audits evaluated by Claude Vision to ensure permanent physical restoration.'
+              )}
             </p>
           </div>
         </div>
@@ -650,33 +678,36 @@ export default function DashboardPage() {
         <div className="rounded-3xl border border-slate-800 bg-gradient-to-br from-slate-900/80 via-slate-900/40 to-slate-950 p-8 sm:p-12 space-y-6">
           <div className="max-w-2xl space-y-3">
             <span className="text-xs font-mono text-blue-400 uppercase tracking-wider font-semibold">
-              Bhopal Municipal Corporation & Ramsar Site #1206
+              {t('about_badge', 'Bhopal Municipal Corporation & Ramsar Site #1206')}
             </span>
             <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">
-              Grounded in Verified Environmental & Civic Baselines
+              {t('about_title', 'Grounded in Verified Environmental & Civic Baselines')}
             </h2>
             <p className="text-sm text-slate-300 leading-relaxed">
-              Bhopal Civic Memory integrates data from the Central Pollution Control Board (CPCB), India Meteorological Department (IMD), National Green Tribunal (NGT Central Zone), and BMC 85-Ward delimitation records to prevent AI hallucinations and enforce deterministic safety gates.
+              {t(
+                'about_desc',
+                'Bhopal Civic Memory integrates data from the Central Pollution Control Board (CPCB), India Meteorological Department (IMD), National Green Tribunal (NGT Central Zone), and BMC 85-Ward delimitation records to prevent AI hallucinations and enforce deterministic safety gates.'
+              )}
             </p>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-4">
             <div className="rounded-xl border border-slate-800/80 bg-slate-950/60 p-4">
-              <div className="text-xs text-slate-400 font-mono">Registry Records</div>
-              <div className="text-lg font-bold text-white mt-1">15 Verified Baselines</div>
-              <div className="text-[11px] text-emerald-400 mt-0.5">100% Primary Source Grounding</div>
+              <div className="text-xs text-slate-400 font-mono">{t('about_stat1_label', 'Registry Records')}</div>
+              <div className="text-lg font-bold text-white mt-1">{t('about_stat1_val', '15 Verified Baselines')}</div>
+              <div className="text-[11px] text-emerald-400 mt-0.5">{t('about_stat1_sub', '100% Primary Source Grounding')}</div>
             </div>
 
             <div className="rounded-xl border border-slate-800/80 bg-slate-950/60 p-4">
-              <div className="text-xs text-slate-400 font-mono">Protected Wet Zone</div>
-              <div className="text-lg font-bold text-white mt-1">Bhoj Wetland #1206</div>
-              <div className="text-[11px] text-sky-400 mt-0.5">Ramsar Catchment Buffer Oversight</div>
+              <div className="text-xs text-slate-400 font-mono">{t('about_stat2_label', 'Protected Wet Zone')}</div>
+              <div className="text-lg font-bold text-white mt-1">{t('about_stat2_val', 'Bhoj Wetland #1206')}</div>
+              <div className="text-[11px] text-sky-400 mt-0.5">{t('about_stat2_sub', 'Ramsar Catchment Buffer Oversight')}</div>
             </div>
 
             <div className="rounded-xl border border-slate-800/80 bg-slate-950/60 p-4">
-              <div className="text-xs text-slate-400 font-mono">AI Reasoning Engine</div>
-              <div className="text-lg font-bold text-white mt-1">Claude Sonnet 4.5</div>
-              <div className="text-[11px] text-blue-400 mt-0.5">Live Epistemic Safety Gates</div>
+              <div className="text-xs text-slate-400 font-mono">{t('about_stat3_label', 'AI Reasoning Engine')}</div>
+              <div className="text-lg font-bold text-white mt-1">{t('about_stat3_val', 'Claude Sonnet 4.5')}</div>
+              <div className="text-[11px] text-blue-400 mt-0.5">{t('about_stat3_sub', 'Live Epistemic Safety Gates')}</div>
             </div>
           </div>
         </div>

@@ -4,6 +4,7 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 import { CivicIncident, BhopalWard, CivicPulseMetrics, CitizenReportInput } from '@/types/incident';
 import { INITIAL_INCIDENTS, BHOPAL_WARDS, INITIAL_CIVIC_METRICS } from '@/lib/data/mockIncidents';
 import { getIncidentFromDatabase, saveIncidentToDatabase } from '@/lib/supabase/service';
+import { Language, TranslationKey, TRANSLATIONS } from '@/lib/i18n/translations';
 
 interface CivicContextType {
   incidents: CivicIncident[];
@@ -13,6 +14,9 @@ interface CivicContextType {
   setSelectedWardId: (id: string | 'all') => void;
   selectedCategory: string | 'all';
   setSelectedCategory: (cat: string | 'all') => void;
+  language: Language;
+  setLanguage: (lang: Language) => void;
+  t: (key: TranslationKey, fallback?: string) => string;
   submitCitizenReport: (report: CitizenReportInput) => Promise<CivicIncident>;
   upvoteIncident: (incidentId: string) => Promise<void>;
   getIncidentById: (id: string) => CivicIncident | undefined;
@@ -29,11 +33,33 @@ export function CivicProvider({ children }: { children: React.ReactNode }) {
   const [metrics, setMetrics] = useState<CivicPulseMetrics>(INITIAL_CIVIC_METRICS);
   const [selectedWardId, setSelectedWardId] = useState<string | 'all'>('all');
   const [selectedCategory, setSelectedCategory] = useState<string | 'all'>('all');
+  const [language, setLanguageState] = useState<Language>('en');
   const [isLoading, setIsLoading] = useState(false);
 
-  // Hydrate additional persisted incidents from localStorage on client mount
+  // Set language with persistence
+  const setLanguage = (lang: Language) => {
+    setLanguageState(lang);
+    try {
+      localStorage.setItem('bhopal_civic_lang', lang);
+    } catch {
+      // ignore
+    }
+  };
+
+  // Translation lookup helper
+  const t = (key: TranslationKey, fallback?: string): string => {
+    const langDict = TRANSLATIONS[language] || TRANSLATIONS.en;
+    return (langDict as Record<string, string>)[key] || fallback || key;
+  };
+
+  // Hydrate additional persisted incidents and language from localStorage on client mount
   useEffect(() => {
     try {
+      const savedLang = localStorage.getItem('bhopal_civic_lang');
+      if (savedLang === 'hi' || savedLang === 'en') {
+        setLanguageState(savedLang);
+      }
+
       const localData = localStorage.getItem('bhopal_civic_incidents');
       if (localData) {
         const parsedList: CivicIncident[] = JSON.parse(localData);
@@ -134,6 +160,9 @@ export function CivicProvider({ children }: { children: React.ReactNode }) {
         setSelectedWardId,
         selectedCategory,
         setSelectedCategory,
+        language,
+        setLanguage,
+        t,
         submitCitizenReport,
         upvoteIncident,
         getIncidentById,
