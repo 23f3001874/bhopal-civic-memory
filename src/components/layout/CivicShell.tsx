@@ -33,95 +33,94 @@ export function CivicShell({ children }: { children: React.ReactNode }) {
     return () => clearInterval(interval);
   }, []);
 
+  const [language, setLanguage] = useState<'en' | 'hi'>('en');
+
   const navItems = [
-    { label: 'Dashboard', href: '/', icon: Activity },
-    { label: 'File Report', href: '/report', icon: PlusCircle },
-    { label: 'Tactical Map', href: '/map', icon: MapIcon },
-    { label: 'Incident File', href: '/incidents/inc-003', icon: FileText }
+    { label: 'Map', href: '/map' },
+    { label: 'Intelligence Feed', href: '/#intelligence-feed' },
+    { label: 'Report Issue', href: '/report' },
+    { label: 'About', href: '/#about' },
+    { label: 'How It Works', href: '/#how-it-works' }
   ];
 
   return (
-    <div className="min-h-screen bg-[#090D16] text-slate-100 flex flex-col font-sans selection:bg-sky-500/30 selection:text-white">
-      {/* Refined Minimal Navigation Bar */}
-      <header className="sticky top-0 z-50 border-b border-slate-800/80 bg-[#090D16]/95 backdrop-blur-md">
-        <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3 sm:px-6">
-          {/* Logo & Brand */}
+    <div className="min-h-screen bg-[#070B14] text-slate-100 flex flex-col font-sans selection:bg-blue-500/30 selection:text-white">
+      {/* Refined Dark Navigation Bar */}
+      <header className="sticky top-0 z-50 border-b border-slate-800/80 bg-[#070B14]/95 backdrop-blur-md">
+        <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3.5 sm:px-6">
+          {/* Logo & Brand matching design */}
           <Link href="/" className="flex items-center gap-3 group">
-            <div className="flex h-9 w-9 items-center justify-center rounded-lg border border-slate-700/80 bg-slate-800/80 text-sky-400 group-hover:border-slate-600 transition-colors shadow-sm">
-              <Shield className="h-4 w-4" />
+            <div className="flex h-10 w-10 items-center justify-center rounded-full border border-slate-700/80 bg-slate-900 text-sky-400 group-hover:border-sky-500/50 transition-colors shadow-sm">
+              {/* Taj-ul-Masajid / Bhopal Arch Landmark Emblem SVG */}
+              <svg className="h-5 w-5 text-slate-200 group-hover:text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6">
+                <path d="M3 21h18M4 21V10l8-6 8 6v11M9 21v-6a3 3 0 0 1 6 0v6" />
+                <path d="M12 4v2M7 13v3M17 13v3" strokeLinecap="round" />
+              </svg>
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <span className="text-sm font-semibold tracking-tight text-slate-100 group-hover:text-white transition-colors">
+                <span className="text-base font-semibold tracking-tight text-white group-hover:text-sky-300 transition-colors">
                   Bhopal Civic Memory
                 </span>
-                <span className="rounded bg-slate-800 px-1.5 py-0.5 text-[10px] font-mono text-slate-400 border border-slate-700/60">
-                  v2.0
-                </span>
               </div>
-              <p className="text-xs text-slate-400 hidden sm:block">
-                Municipal Operations & Incident Intelligence
+              <p className="text-[11px] text-amber-300/80 font-medium tracking-wide">
+                Yaad rakhein. Behtar banaayein.
               </p>
             </div>
           </Link>
 
           {/* Desktop Navigation Links */}
-          <nav className="hidden md:flex items-center gap-1">
+          <nav className="hidden md:flex items-center gap-6 text-sm font-medium">
             {navItems.map((item) => {
-              const isActive = pathname === item.href || (item.href !== '/' && pathname.startsWith(item.href));
-              const Icon = item.icon;
+              const isActive = pathname === item.href;
               return (
                 <Link
-                  key={item.href}
+                  key={item.label}
                   href={item.href}
-                  className={`flex items-center gap-2 rounded-lg px-3.5 py-2 text-xs font-medium transition-colors ${
+                  className={`transition-colors text-xs tracking-wide ${
                     isActive
-                      ? 'bg-slate-800 text-white font-semibold'
-                      : 'text-slate-400 hover:bg-slate-850 hover:text-slate-200'
+                      ? 'text-white font-semibold'
+                      : 'text-slate-300 hover:text-white'
                   }`}
                 >
-                  <Icon className={`h-4 w-4 ${isActive ? 'text-sky-400' : 'text-slate-400'}`} />
                   {item.label}
                 </Link>
               );
             })}
           </nav>
 
-          {/* Right Header: Clock & Primary CTA */}
-          <div className="flex items-center gap-3.5">
-            <div className="hidden sm:flex items-center gap-1.5 text-xs text-slate-400 font-mono">
-              <Clock className="h-3.5 w-3.5 text-slate-400" />
-              <span>{timeString || 'LIVE'}</span>
-            </div>
+          {/* Right Header: Language Switcher & Report CTA */}
+          <div className="flex items-center gap-3">
+            {/* Language Switch Pill */}
+            <button
+              onClick={() => setLanguage(l => l === 'en' ? 'hi' : 'en')}
+              className="rounded-full border border-slate-700/80 bg-slate-900/90 px-3.5 py-1.5 text-xs font-medium text-slate-200 hover:border-slate-500 hover:text-white transition-colors"
+              title="Toggle Hindi / English localization"
+            >
+              {language === 'en' ? 'हिंदी / English' : 'English / हिंदी'}
+            </button>
 
             <Link
               href="/report"
-              className="inline-flex items-center gap-1.5 rounded-lg bg-sky-500 px-3.5 py-2 text-xs font-semibold text-slate-950 hover:bg-sky-400 transition-colors shadow-sm"
+              className="hidden sm:inline-flex items-center gap-1.5 rounded-lg bg-blue-600 px-3.5 py-1.5 text-xs font-semibold text-white hover:bg-blue-500 transition-colors shadow-sm"
             >
               <PlusCircle className="h-3.5 w-3.5" />
-              <span>Report Issue</span>
+              <span>Report</span>
             </Link>
           </div>
         </div>
 
         {/* Mobile Navigation */}
-        <div className="flex md:hidden items-center justify-around border-t border-slate-800/80 bg-slate-950/80 px-2 py-2 text-xs">
-          {navItems.map((item) => {
-            const isActive = pathname === item.href;
-            const Icon = item.icon;
-            return (
-              <Link
-                key={item.href}
-                href={item.href}
-                className={`flex flex-col items-center gap-1 p-1.5 ${
-                  isActive ? 'text-sky-400 font-semibold' : 'text-slate-400'
-                }`}
-              >
-                <Icon className="h-4 w-4" />
-                <span className="text-[11px]">{item.label}</span>
-              </Link>
-            );
-          })}
+        <div className="flex md:hidden items-center justify-around border-t border-slate-800/80 bg-slate-950/90 px-2 py-2 text-xs">
+          {navItems.slice(0, 4).map((item) => (
+            <Link
+              key={item.label}
+              href={item.href}
+              className="p-1.5 text-slate-300 hover:text-white text-[11px]"
+            >
+              {item.label}
+            </Link>
+          ))}
         </div>
       </header>
 
